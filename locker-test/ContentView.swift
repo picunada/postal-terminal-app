@@ -8,14 +8,55 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var authState: AuthViewModel
+    
+    @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
+    @StateObject var keysState: KeysViewModel = KeysViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            ZStack {
+                VStack {
+                    TabView() {
+                        HomeView()
+                            .tabItem {
+                                Label("Home", systemImage: "house")
+                            }
+                        ParcelsView(parcelState: parcelState)
+                            .onAppear {
+                                parcelState.subscribe(user: authState.lockerUser!)
+                            }
+                            .onDisappear {
+                                parcelState.unsubscribe()
+                            }
+                            .tabItem {
+                                Label("Parcels", systemImage: "shippingbox")
+                            }
+                        KeysView(keyState: keysState)
+                            .onAppear {
+                                keysState.subscribe(user: authState.lockerUser!)
+                            }
+                            .onDisappear {
+                                keysState.unsubscribe()
+                            }
+                            .tabItem {
+                                Label("Keys", systemImage: "lock.rotation")
+                            }
+                        NotificationsView()
+                            .tabItem {
+                                Label("Notifications", systemImage: "bell")
+                            }
+                        ProfileView()
+                            .tabItem {
+                                Label("Profile", systemImage: "person")
+                            }
+                    }.accentColor(Color(UIColor.systemIndigo))
+                }
+                .padding()
+            }
         }
-        .padding()
+        .accentColor(Color(UIColor.systemIndigo))
     }
 }
 
