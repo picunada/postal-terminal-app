@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CodeScanner
 
 struct ParcelsView: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
@@ -21,37 +22,40 @@ struct ParcelsView: View {
     @State var selectedDate: Date = Date()
     
     var body: some View {
-        ZStack {
+        NavigationView {
+            ZStack {
+                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Parcels")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        Spacer()
+                        Button {
+                            showCreateParcel.toggle()
+                            print("Button clicked")
+                        } label: {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .padding()
+                                .foregroundColor(Color.white)
+                                .background(Color(UIColor.systemIndigo))
+                                .clipShape(Circle())
+                        }
+                        .sheet(isPresented: $showCreateParcel) {
+                            createParcel
+                        }
 
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Parcels")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    Spacer()
-                    Button {
-                        showCreateParcel.toggle()
-                        print("Button clicked")
-                    } label: {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .padding()
-                            .foregroundColor(Color.white)
-                            .background(Color(UIColor.systemIndigo))
-                            .clipShape(Circle())
                     }
-                    .sheet(isPresented: $showCreateParcel) {
-                        createParcel
-                    }
-
+                    .padding(.top, 40)
+                
+                    ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
                 }
-                .padding(.top, 40)
-                .padding(.horizontal)
-            
-                ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
+                .padding()
             }
         }
+        .accentColor(.black)
     }
     
     var createParcel: some View {
@@ -59,6 +63,7 @@ struct ParcelsView: View {
             ScrollView {
                 VStack {
                     TextField("Tracking number", text: $newParcel.trackingNumber)
+                        .modifier(QrButton(text: $newParcel.trackingNumber))
                         .padding()
                         .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
                         .autocapitalization(.none)
@@ -109,6 +114,7 @@ struct ParcelsView: View {
                                 }
                             }
         }
+        .accentColor(.black)
     }
 }
 
@@ -137,15 +143,17 @@ struct ParcelListView: View {
                                 ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "Expected")
                             } label: {
                                 HStack {
-                                    VStack {
-                                        Image(systemName: "shippingbox")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(Color(UIColor.systemIndigo))
-                                            .background(Color(UIColor.secondarySystemBackground))
-                                            .clipShape(Circle())
-                                    }
+                                    Image(systemName: "shippingbox")
+                                        .resizable()
+                                        .padding(.all, 5)
+                                        .frame(width: 41, height: 41)
+                                        .foregroundColor(Color(UIColor.systemIndigo))
+                                        .background(Color(UIColor.systemBackground))
+                                        .overlay(
+                                                    Circle()
+                                                        .stroke(Color.indigo, lineWidth: 1)
+                                                )
+                                        .clipShape(Circle())
                                     VStack(alignment: .leading) {
                                         Text(parcel.serviceName)
                                             .font(.callout)
@@ -153,11 +161,10 @@ struct ParcelListView: View {
                                             .font(.callout)
                                             .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
-                                    .padding(.horizontal)
                                 }
+                                .padding(.vertical, 10)
                             }
                         }
-                        .listRowBackground(Color(uiColor: .secondarySystemBackground))
                     } header: {
                         Text("EXPECTED")
                     }
@@ -172,10 +179,13 @@ struct ParcelListView: View {
                                     VStack {
                                         Image(systemName: "shippingbox")
                                             .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(Color(UIColor.white))
+                                            .frame(width: 41, height: 41)
+                                            .foregroundColor(Color(UIColor.systemIndigo))
                                             .background(Color(UIColor.systemBackground))
+                                            .overlay(
+                                                        Circle()
+                                                            .stroke(Color.indigo, lineWidth: 1)
+                                                    )
                                             .clipShape(Circle())
                                     }
                                     VStack(alignment: .leading) {
@@ -188,14 +198,14 @@ struct ParcelListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("RECEIVED")
                     }
                 }
             }
             .scrollContentBackground(.hidden)
-            .listStyle(.automatic)
+            .listStyle(.insetGrouped)
             .padding(.horizontal, -20)
         } else {
             List {
@@ -270,5 +280,43 @@ struct ParcelListView: View {
             .padding(.horizontal, -20)
         }
         
+    }
+}
+
+
+struct QrButton: ViewModifier
+{
+    @Binding var text: String
+        
+    public func body(content: Content) -> some View
+    {
+        ZStack(alignment: .trailing)
+        {
+            content
+            
+            if !text.isEmpty {
+                Button(action:
+                {
+                    self.text = ""
+                })
+                {
+                    Image(systemName: "delete.left")
+                        .resizable()
+                        .frame(width: 32, height: 26)
+                        .foregroundColor(Color(uiColor: .systemIndigo))
+                }
+                .padding(.trailing, 8)
+            } else {
+                NavigationLink {
+                    ScannerView(text: $text)
+                } label: {
+                    Image(systemName: "qrcode.viewfinder")
+                        .resizable()
+                        .frame(width: 26, height: 26)
+                        .foregroundColor(Color(uiColor: .systemIndigo))
+                }
+                .padding(.trailing, 8)
+            }
+        }
     }
 }

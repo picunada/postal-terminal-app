@@ -23,6 +23,13 @@ struct LockerUser: Identifiable, Codable {
 
 class AuthViewModel: ObservableObject {
     
+    enum State {
+            case idle
+            case loading
+            case failed
+            case loaded
+        }
+    
     static let shared = AuthViewModel()
     
     let db = Firestore.firestore()
@@ -32,6 +39,7 @@ class AuthViewModel: ObservableObject {
         case signedOut
     }
     
+    @Published private(set) var loading = State.idle
     @Published var lockerUser: LockerUser?
     @Published var errorMessage: String?
     
@@ -50,6 +58,8 @@ class AuthViewModel: ObservableObject {
     }
     
     private func fetchUser(userId: String) {
+        loading = .loading
+        
         let docRef = db.collection("users").document(userId)
         
         docRef.getDocument(as: LockerUser.self) { result in
@@ -58,9 +68,11 @@ class AuthViewModel: ObservableObject {
                 // A `City` value was successfully initialized from the DocumentSnapshot.
                 print("User: \(user)")
                 self.lockerUser = user
+                self.loading = .loaded
             case .failure(let error):
                 // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding city: \(error)")
+                self.loading = .failed
             }
         }
     }
