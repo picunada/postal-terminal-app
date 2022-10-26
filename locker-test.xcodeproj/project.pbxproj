@@ -25,6 +25,9 @@
 		E6F82C1728FC9E870075D224 /* KeysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1628FC9E870075D224 /* KeysViewModel.swift */; };
 		E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */; };
 		E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */; };
+		E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C362908B43600783E70 /* LoadingView.swift */; };
+		E6FC3C392908D75B00783E70 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C382908D75B00783E70 /* ScannerView.swift */; };
+		E6FC3C3C2908D88500783E70 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = E6FC3C3B2908D88500783E70 /* CodeScanner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +52,8 @@
 		E6F82C1628FC9E870075D224 /* KeysViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysViewModel.swift; sourceTree = "<group>"; };
 		E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsInfoView.swift; sourceTree = "<group>"; };
 		E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysInfoView.swift; sourceTree = "<group>"; };
+		E6FC3C362908B43600783E70 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E6FC3C382908D75B00783E70 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FC3C3C2908D88500783E70 /* CodeScanner in Frameworks */,
 				19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,6 +97,8 @@
 				E6F82C1428FC9D790075D224 /* ProfileView.swift */,
 				E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */,
 				E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */,
+				E6FC3C362908B43600783E70 /* LoadingView.swift */,
+				E6FC3C382908D75B00783E70 /* ScannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +181,9 @@
 			dependencies = (
 			);
 			name = "locker-test";
+			packageProductDependencies = (
+				E6FC3C3B2908D88500783E70 /* CodeScanner */,
+			);
 			productName = "locker-test";
 			productReference = E67352F028FA6CC1000C25BC /* locker-test.app */;
 			productType = "com.apple.product-type.application";
@@ -201,6 +212,9 @@
 				Base,
 			);
 			mainGroup = E67352E728FA6CC1000C25BC;
+			packageReferences = (
+				E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+			);
 			productRefGroup = E67352F128FA6CC1000C25BC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -271,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */,
+				E6FC3C392908D75B00783E70 /* ScannerView.swift in Sources */,
 				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
 				E660A17528FC6B5F00FE80F1 /* ParcelList.swift in Sources */,
 				E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */,
@@ -278,6 +293,7 @@
 				E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */,
 				E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */,
 				E6F82C1728FC9E870075D224 /* KeysViewModel.swift in Sources */,
+				E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */,
 				E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */,
 				E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */,
 				E6465EFF28FABBDA00499DE1 /* AuthView.swift in Sources */,
@@ -417,6 +433,7 @@
 				DEVELOPMENT_TEAM = XV865J9PDC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,6 +467,7 @@
 				DEVELOPMENT_TEAM = XV865J9PDC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -492,6 +510,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E6FC3C3B2908D88500783E70 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E67352E828FA6CC1000C25BC /* Project object */;
 }

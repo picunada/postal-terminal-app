@@ -14,47 +14,47 @@ struct ContentView: View {
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
     
+    init() {
+        
+        if #available(iOS 15, *) {
+            UITabBar.appearance().backgroundColor = UIColor.systemGray6
+        }
+    }
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack {
-                    TabView() {
-                        HomeView()
-                            .tabItem {
-                                Label("Home", systemImage: "house")
-                            }
-                        ParcelsView(parcelState: parcelState)
-                            .onAppear {
-                                parcelState.subscribe(user: authState.lockerUser!)
-                            }
-                            .onDisappear {
-                                parcelState.unsubscribe()
-                            }
-                            .tabItem {
-                                Label("Parcels", systemImage: "shippingbox")
-                            }
-                        KeysView(keyState: keysState)
-                            .onAppear {
-                                keysState.subscribe(user: authState.lockerUser!)
-                            }
-                            .onDisappear {
-                                keysState.unsubscribe()
-                            }
-                            .tabItem {
-                                Label("Keys", systemImage: "lock.rotation")
-                            }
-                        NotificationsView()
-                            .tabItem {
-                                Label("Notifications", systemImage: "bell")
-                            }
-                        ProfileView()
-                            .tabItem {
-                                Label("Profile", systemImage: "person")
-                            }
-                    }.accentColor(Color(UIColor.systemIndigo))
+        TabView() {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house")
                 }
-                .padding()
-            }
+            ParcelsView(parcelState: parcelState)
+                .onAppear {
+                    parcelState.subscribe(user: authState.lockerUser!)
+                }
+                .onDisappear {
+                    parcelState.unsubscribe()
+                }
+                .tabItem {
+                    Label("Parcels", systemImage: "shippingbox")
+                }
+            KeysView(keyState: keysState)
+                .onAppear {
+                    keysState.subscribe(user: authState.lockerUser!)
+                }
+                .onDisappear {
+                    keysState.unsubscribe()
+                }
+                .tabItem {
+                    Label("Keys", systemImage: "lock.rotation")
+                }
+            NotificationsView()
+                .tabItem {
+                    Label("Notifications", systemImage: "bell")
+                }
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                }
         }
         .accentColor(Color(UIColor.systemIndigo))
     }

@@ -33,12 +33,24 @@ struct lockerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if authState.lockerUser != nil {
-                ContentView()
-                    .environmentObject(authState)
-            } else {
-                AuthView()
-                    .environmentObject(authState)
+            switch authState.loading {
+            case .loading :
+                LoadingView()
+                .transition(.slide)
+            case .loaded:
+                if authState.lockerUser != nil {
+                    ContentView()
+                        .environmentObject(authState)
+                } else {
+                    AuthView()
+                        .environmentObject(authState)
+                }
+            case .idle:
+                LoadingView()
+                .transition(.slide)
+            case .failed:
+                LoadingView()
+                .transition(.slide)
             }
         }
     }

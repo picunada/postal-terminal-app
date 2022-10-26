@@ -19,6 +19,7 @@ struct KeysView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Keys")
@@ -43,11 +44,11 @@ struct KeysView: View {
 
                     }
                     .padding(.top, 40)
-                    .padding(.horizontal)
                 
                     
                     KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
                 }
+                .padding()
             }
         }
         .accentColor(Color(UIColor.systemIndigo))
@@ -176,7 +177,7 @@ struct KeysListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("ACTIVE")
                     }
@@ -208,7 +209,7 @@ struct KeysListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("EXPIRED")
                     }
