@@ -21,6 +21,9 @@ struct LoadingView: View {
                 .onAppear() {
                                 self.isLoading = true
                             }
+            Text("Loading...")
+                .foregroundColor(.indigo)
+                .bold()
         }
     }
 }

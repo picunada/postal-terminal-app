@@ -87,6 +87,11 @@ class AuthViewModel: ObservableObject {
             }
           }
     }
+    
+    func logout() {
+        do { try Auth.auth().signOut() }
+        catch { print("already logged out") }
+    }
 }
 
 

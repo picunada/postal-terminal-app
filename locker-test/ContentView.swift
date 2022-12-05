@@ -14,13 +14,6 @@ struct ContentView: View {
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
     
-    init() {
-        
-        if #available(iOS 15, *) {
-            UITabBar.appearance().backgroundColor = UIColor.systemGray6
-        }
-    }
-    
     var body: some View {
         TabView() {
             HomeView()

@@ -26,6 +26,7 @@ struct KeysInfoView: View {
         
         NavigationView {
             ZStack {
+                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
                 VStack {
                     Rectangle()
                         .frame(width: 250, height: 250)
@@ -69,7 +70,7 @@ struct KeysInfoView: View {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
                                 Text("Delete guest key")
-                                    .font(.title3)
+                                    .font(.title2)
                                     .foregroundColor(.primary)
                             }
                         }
@@ -78,9 +79,9 @@ struct KeysInfoView: View {
                     .padding()
                     .accessibilityLabel("Delete parcel")
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, -150)
             }
-            
         }
     }
     

@@ -15,13 +15,16 @@ struct ScannerView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                CodeScannerView(codeTypes: [.qr]) { response in
-                    switch response {
-                    case .success(let result):
-                        text = result.string
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
+                VStack {
+                    CodeScannerView(codeTypes: [.qr, .code39, .code128]) { response in
+                        switch response {
+                        case .success(let result):
+                            text = result.string
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                }
+                .ignoresSafeArea()
                 }
                 ZStack {
                     Rectangle()

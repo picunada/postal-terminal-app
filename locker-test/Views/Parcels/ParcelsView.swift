@@ -48,59 +48,93 @@ struct ParcelsView: View {
                         }
 
                     }
-                    .padding(.top, 40)
+                    .padding(.top, -8)
                 
                     ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
                 }
-                .padding()
+                .padding(.horizontal)
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .accentColor(.black)
+        .accentColor(.primary)
     }
     
     var createParcel: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    TextField("Tracking number", text: $newParcel.trackingNumber)
-                        .modifier(QrButton(text: $newParcel.trackingNumber))
-                        .padding()
-                        .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
-                        .autocapitalization(.none)
-                    List {
-                        Picker("Select delivery service", selection: $newParcel.serviceName) {
-                            ForEach(deliveryServices , id: \.self) { service in
-                                Text(service)
+            VStack {
+                TextField("Tracking number", text: $newParcel.trackingNumber)
+                    .modifier(QrButton(text: $newParcel.trackingNumber))
+                    .padding()
+                    .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
+                    .autocapitalization(.none)
+                if #available(iOS 16.0, *) {
+                    Form {
+                        Section {
+                            Picker("Select delivery service", selection: $newParcel.serviceName) {
+                                ForEach(deliveryServices , id: \.self) {
+                                    Text($0)
+                                }
                             }
-                        }
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                        DatePicker("Estimated delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
-                            .padding(.top)
                             .foregroundColor(Color(UIColor.secondaryLabel))
-                    }
-                    .frame(maxWidth: .infinity, minHeight: minRowHeight * 3)
-                    .listStyle(.inset)
-                    .padding(/*@START_MENU_TOKEN@*/.top/*@END_MENU_TOKEN@*/)
-                    .background(Color(UIColor.white))
-                    VStack {
-                        Button {
-                            newParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
-                            parcelState.createParcel(parcel: newParcel, user: authState.lockerUser!)
-                            showCreateParcel.toggle()
-                        } label: {
-                            Text("Save")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
+                            DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                .padding(.top)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .accentColor(.indigo)
+                                .pickerStyle(.menu)
                         }
-                        .padding()
-                        .background(Color(UIColor.secondaryLabel).cornerRadius(8))
-                        .accessibilityLabel("Save new parcel")
+                        
                     }
+                    .scrollContentBackground(.hidden)
+                    .listStyle(.inset)
+                    .padding(.horizontal, -20)
+                    .padding(.top, -20)
+                    .background(Color(UIColor.white))
+                } else {
+                    // Fallback on earlier versions
+                    Form {
+                        Section {
+                            Picker("Select delivery service", selection: $newParcel.serviceName) {
+                                ForEach(deliveryServices , id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .foregroundColor(Color(UIColor.secondaryLabel))
+                            .background(Color(.secondarySystemBackground))
+                            DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                .padding(.top)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .accentColor(.indigo)
+                                .pickerStyle(.menu)
+                                .background(Color(.secondarySystemBackground))
+                        }
+                        
+                    }
+                    .onAppear {
+                        UITableView.appearance().backgroundColor = .clear
+                    }
+                    .listStyle(.inset)
+                    .padding(.horizontal, -20)
+                    .padding(.top, -20)
+                    .background(Color(UIColor.white))
                 }
-                .padding()
+                VStack {
+                    Button {
+                        newParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
+                        parcelState.createParcel(parcel: newParcel, user: authState.lockerUser!)
+                        showCreateParcel.toggle()
+                    } label: {
+                        Text("Save")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.white)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .padding()
+                    .background(Color(UIColor.secondaryLabel).cornerRadius(8))
+                    .accessibilityLabel("Save new parcel")
+                }
             }
+            .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Create parcel")
             .toolbar {
@@ -235,7 +269,7 @@ struct ParcelListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                         
                     } header: {
                         Text("EXPECTED")
@@ -267,7 +301,7 @@ struct ParcelListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("RECEIVED")
                     }

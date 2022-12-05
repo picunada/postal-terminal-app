@@ -39,25 +39,26 @@ struct KeysView: View {
                                 .clipShape(Circle())
                         }
                         .sheet(isPresented: $showCreateKey) {
-                            createParcel
+                            createKey
                         }
 
                     }
-                    .padding(.top, 40)
-                
+                    .padding(.top, -8)
                     
                     KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
                 }
-                .padding()
+                .padding(.horizontal)
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .accentColor(Color(UIColor.systemIndigo))
+        .accentColor(.primary)
     }
     
-    var createParcel: some View {
+    var createKey: some View {
         NavigationView {
             ScrollView {
                 VStack {
+                    Text("By creating and sharing a guest key, anyone can open Lockerbot for delivery or pickup. You can specify how long the key as active or even create a key for one-time use.").foregroundColor(.secondary)
                     TextField("Key name", text: $newKey.keyName)
                         .padding()
                         .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
@@ -65,7 +66,7 @@ struct KeysView: View {
 
                     HStack {
                         Toggle(isOn: $newKey.isOneTime, label: {
-                            VStack(alignment: .center) {
+                            VStack(alignment: .leading) {
                                 Text("One-time use key")
                                 Text("Can only be used once")
                                     .font(.callout)
@@ -77,7 +78,7 @@ struct KeysView: View {
                     .padding(.top)
                     HStack {
                         Toggle(isOn: $setExpirationDate, label: {
-                            VStack(alignment: .center) {
+                            VStack(alignment: .leading) {
                                 Text("Set expiration date")
                                 Text("Automatically deactivate key")
                                     .font(.callout)
@@ -107,7 +108,7 @@ struct KeysView: View {
                                 .frame(maxWidth: .infinity)
                         }
                         .padding()
-                        .background(Color(UIColor.secondaryLabel).cornerRadius(8))
+                        .background(Color(.systemIndigo).cornerRadius(8))
                         .accessibilityLabel("Save new key")
                     }
                 }
@@ -248,7 +249,7 @@ struct KeysListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("ACTIVE")
                     }
@@ -280,7 +281,7 @@ struct KeysListView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                        }.listRowBackground(Color(uiColor: .secondarySystemBackground))
+                        }
                     } header: {
                         Text("EXPIRED")
                     }
