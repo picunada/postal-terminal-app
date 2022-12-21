@@ -20,35 +20,40 @@ struct KeysView: View {
         NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Text("Keys")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         Spacer()
-                        Button {
-                            showCreateKey.toggle()
-                            print("Button clicked")
-                        } label: {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .padding()
-                                .foregroundColor(Color.white)
-                                .background(Color(UIColor.systemIndigo))
-                                .clipShape(Circle())
+                        VStack {
+                            Button {
+                                showCreateKey.toggle()
+                                print("Button clicked")
+                            } label: {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .padding()
+                                    .foregroundColor(Color.white)
+                            }
+                            .sheet(isPresented: $showCreateKey) {
+                                createKey
+                            }
                         }
-                        .sheet(isPresented: $showCreateKey) {
-                            createKey
-                        }
+                        .frame(width: 55, height: 55)
+                        .background(Color(UIColor.systemIndigo))
+                        .clipShape(Circle())
+                        
 
                     }
-                    .padding(.top, -8)
+                    .padding(.top, 35)
                     
                     KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
                 }
                 .padding(.horizontal)
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
         }
         .accentColor(.primary)
@@ -57,61 +62,68 @@ struct KeysView: View {
     var createKey: some View {
         NavigationView {
             ScrollView {
-                VStack {
+                VStack(spacing: 0) {
                     Text("By creating and sharing a guest key, anyone can open Lockerbot for delivery or pickup. You can specify how long the key as active or even create a key for one-time use.").foregroundColor(.secondary)
-                    TextField("Key name", text: $newKey.keyName)
-                        .padding()
-                        .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
-                        .autocapitalization(.none)
+                    
+                    VStack {
+                        TextInputField("Key name", text: $newKey.keyName)
+                            .cornerRadius(8)
+                    }
+                    .padding(.top, 35)
 
                     HStack {
                         Toggle(isOn: $newKey.isOneTime, label: {
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text("One-time use key")
                                 Text("Can only be used once")
                                     .font(.callout)
                                     .foregroundColor(Color(UIColor.secondaryLabel))
                             }
                         })
-                        .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemIndigo)))
+                        .toggleStyle(SwitchToggleStyle(tint: Color("AccentColor")))
                     }
-                    .padding(.top)
+                    .padding(.top, 25)
+                    
                     HStack {
                         Toggle(isOn: $setExpirationDate, label: {
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text("Set expiration date")
                                 Text("Automatically deactivate key")
                                     .font(.callout)
                                     .foregroundColor(Color(UIColor.secondaryLabel))
                             }
                         })
-                        .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemIndigo)))
+                        .toggleStyle(SwitchToggleStyle(tint: Color("AccentColor")))
                     }
-                    .padding(.vertical)
-                    
+                    .padding(.top, 25)
                     
                     if setExpirationDate {
                         DatePicker("Set date", selection: Binding<Date>(get: {newKey.expirationDate ?? Date()}, set: {newKey.expirationDate = $0}), in: Date()..., displayedComponents: .date)
-                            .padding(.vertical)
+                            .padding(.top)
                             .foregroundColor(Color(UIColor.secondaryLabel))
                     }
-                    VStack {
-                        Button {
-                            keyState.createKey(key: newKey, user: authState.lockerUser!)
-                            newKey = LockerKey(keyName: "", isOneTime: false)
-                            showCreateKey.toggle()
-                        } label: {
-                            Text("Save")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .padding()
-                        .background(Color(.systemIndigo).cornerRadius(8))
-                        .accessibilityLabel("Save new key")
+                    
+                    
+                    Button {
+                        keyState.createKey(key: newKey, user: authState.lockerUser!)
+                        newKey = LockerKey(keyName: "", isOneTime: false)
+                        showCreateKey.toggle()
+                    } label: {
+                        Text("Create a key")
+                            .font(.title3)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .padding()
                     }
+                    .frame(height: 48)
+                    .background(Color("AccentColor"))
+                    .cornerRadius(8)
+                    .padding(.top, 93)
+                    
+                    Spacer()
                 }
+                .animation(.default, value: setExpirationDate)
                 .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -153,31 +165,33 @@ struct KeysListView: View {
                 if activeKeys.count != 0 {
                     Section {
                         ForEach(activeKeys, id: \.id) { key in
-                            NavigationLink(destination: KeysInfoView(key: key, keyState: keyState, type: "active")) {
+                            NavigationLink {
+                                KeysInfoView(key: key, keyState: keyState, type: "active")
+                                    .navigationTitle("Guest key information")
+                                    .navigationBarTitleDisplayMode(.inline)
+                            } label: {
                                 HStack {
                                     VStack {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                            .frame(width: 41, height: 41)
+                                            .foregroundColor(Color("AccentColor"))
                                     }
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
-                                            .font(.callout)
                                         if key.isOneTime {
                                             Text("One-time use key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         } else {
                                             Text("Multiuse key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         }
-                                        
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("ACTIVE")
@@ -186,30 +200,33 @@ struct KeysListView: View {
                 if inactiveKeys.count != 0 {
                     Section {
                         ForEach(inactiveKeys, id: \.id) { key in
-                            NavigationLink(destination: KeysInfoView(key: key, keyState: keyState, type: "inactive")) {
+                            NavigationLink {
+                                KeysInfoView(key: key, keyState: keyState, type: "inactive")
+                                    .navigationTitle("Guest key information")
+                                    .navigationBarTitleDisplayMode(.inline)
+                            } label: {
                                 HStack {
                                     VStack {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                            .frame(width: 41, height: 41)
+                                            .foregroundColor(Color("AccentColor"))
                                     }
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
-                                            .font(.callout)
                                         if key.isOneTime {
                                             Text("One-time use key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         } else {
                                             Text("Multiuse key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         }
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("EXPIRED")
@@ -217,38 +234,39 @@ struct KeysListView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .listStyle(.automatic)
             .padding(.horizontal, -20)
         } else {
             List {
                 if activeKeys.count != 0 {
                     Section {
                         ForEach(activeKeys, id: \.id) { key in
-                            NavigationLink(destination: KeysInfoView(key: key, keyState: keyState, type: "active").edgesIgnoringSafeArea(.all)) {
+                            NavigationLink {
+                                KeysInfoView(key: key, keyState: keyState, type: "active")
+                                    .navigationTitle("Guest key information")
+                                    .navigationBarTitleDisplayMode(.inline)
+                            } label: {
                                 HStack {
                                     VStack {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                            .frame(width: 41, height: 41)
+                                            .foregroundColor(Color("AccentColor"))
                                     }
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
-                                            .font(.callout)
                                         if key.isOneTime {
                                             Text("One-time use key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         } else {
                                             Text("Multiuse key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         }
-                                        
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("ACTIVE")
@@ -257,30 +275,33 @@ struct KeysListView: View {
                 if inactiveKeys.count != 0 {
                     Section {
                         ForEach(inactiveKeys, id: \.id) { key in
-                            NavigationLink(destination: KeysInfoView(key: key, keyState: keyState, type: "inactive").edgesIgnoringSafeArea(.all)) {
+                            NavigationLink {
+                                KeysInfoView(key: key, keyState: keyState, type: "inactive")
+                                    .navigationTitle("Guest key information")
+                                    .navigationBarTitleDisplayMode(.inline)
+                            } label: {
                                 HStack {
                                     VStack {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                            .frame(width: 41, height: 41)
+                                            .foregroundColor(Color("AccentColor"))
                                     }
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
-                                            .font(.callout)
                                         if key.isOneTime {
                                             Text("One-time use key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         } else {
                                             Text("Multiuse key")
-                                                .font(.callout)
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                         }
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("EXPIRED")

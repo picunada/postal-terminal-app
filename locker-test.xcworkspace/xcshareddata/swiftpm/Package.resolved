@@ -8,6 +8,15 @@
         "branch" : "main",
         "revision" : "9aef09bf5c0274689a89c2fd71794011bebdc43f"
       }
+    },
+    {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "04925668f57e74bc40f21b185a41c5585a84a9fe",
+        "version" : "1.2.2"
+      }
     }
   ],
   "version" : 2

@@ -7,9 +7,26 @@
 
 import SwiftUI
 
+extension Binding {
+    func optionalBinding<T>() -> Binding<T>? where T? == Value {
+        if let wrappedValue = wrappedValue {
+            return Binding<T>(
+                get: { wrappedValue },
+                set: { self.wrappedValue = $0 }
+            )
+        } else {
+            return nil
+        }
+    }
+}
+
 struct TextInputField: View {
+    @Environment(\.isEnabled) var isEnabled
+    
     var title: String
     @Binding var text: String
+    @FocusState private var isFocused: Bool
+    
     
     init(_ title: String, text: Binding<String>) {
         self.title = title
@@ -18,9 +35,13 @@ struct TextInputField: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
+            Color(.secondarySystemBackground)
+            
             HStack {
                 TextField("", text: $text)
                     .autocapitalization(.none)
+                    .padding()
+                    .focused($isFocused)
                 Button {
                     text = ""
                 } label: {
@@ -33,15 +54,12 @@ struct TextInputField: View {
                 .buttonStyle(BorderlessButtonStyle())
                 .disabled(text.isEmpty)
             }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            Text(title)
-                .foregroundColor(text.isEmpty ? Color(.placeholderText) : .accentColor)
-                .background(.clear)
-                .offset(y: text.isEmpty ? 0 : -22)
-                .scaleEffect(text.isEmpty ? 1 : 0.8, anchor: .leading)
-                .padding(.leading, 15)
+            .padding(.trailing)
+            
         }
+        .onTapGesture {
+                        isFocused = true
+                    }
         .animation(.default, value: text.isEmpty)
     }
 }
@@ -49,6 +67,7 @@ struct TextInputField: View {
 struct SecureInputField: View {
     var title: String
     @Binding var text: String
+    @FocusState private var isFocused: Bool
     
     @State var isSecured: Bool = true
     
@@ -59,10 +78,15 @@ struct SecureInputField: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
+            Color(.secondarySystemBackground)
+            
             if(isSecured) {
                 HStack {
                     SecureField("", text: $text)
+                        .font(.custom("Password", fixedSize: 17))
                         .autocapitalization(.none)
+                        .padding()
+                        .focused($isFocused)
                     Button {
                         isSecured.toggle()
                     } label: {
@@ -71,12 +95,14 @@ struct SecureInputField: View {
                     }
                     .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding()
-                .background(Color(.secondarySystemBackground))
+                .padding(.trailing)
             } else {
                 HStack {
                     TextField("", text: $text)
+                        .font(.custom("Password", fixedSize: 17))
                         .autocapitalization(.none)
+                        .padding()
+                        .focused($isFocused)
                     Button {
                         isSecured.toggle()
                     } label: {
@@ -85,16 +111,12 @@ struct SecureInputField: View {
                     }
                     .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding()
-                .background(Color(.secondarySystemBackground))
+                .padding(.trailing)
             }
-            Text(title)
-                .foregroundColor(text.isEmpty ? Color(.placeholderText) : .accentColor)
-                .background(.clear)
-                .offset(y: text.isEmpty ? 0 : -22)
-                .scaleEffect(text.isEmpty ? 1 : 0.8, anchor: .leading)
-                .padding(.leading, 15)
         }
+        .onTapGesture {
+                        isFocused = true
+                    }
         .animation(.default, value: text.isEmpty)
     }
 }

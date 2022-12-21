@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8504312C49BA223DD97FB5D3 /* Pods_locker_test.framework */; };
+		E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E614AD842943857D00044BC7 /* ErrorHandler.swift */; };
 		E62D34EA292F8472004E7505 /* AuthDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62D34E9292F8472004E7505 /* AuthDeviceView.swift */; };
+		E631C22E294B684D003528CF /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E631C22D294B684D003528CF /* GifView.swift */; };
+		E631C231294B6DA8003528CF /* bright_bth.gif in Resources */ = {isa = PBXBuildFile; fileRef = E631C22F294B6DA8003528CF /* bright_bth.gif */; };
+		E631C232294B6DA8003528CF /* 23712-signal-wi-fi.gif in Resources */ = {isa = PBXBuildFile; fileRef = E631C230294B6DA8003528CF /* 23712-signal-wi-fi.gif */; };
 		E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0028FABC3100499DE1 /* HomeView.swift */; };
 		E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0228FABC3D00499DE1 /* ParcelsView.swift */; };
 		E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64B44682937602C00455891 /* LockerPeripheral.swift */; };
@@ -17,7 +21,6 @@
 		E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67352F528FA6CC1000C25BC /* ContentView.swift */; };
 		E67352F828FA6CC2000C25BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E67352F728FA6CC2000C25BC /* Assets.xcassets */; };
 		E67352FB28FA6CC2000C25BC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */; };
-		E67D31EA29360C1E006C673B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D31E929360C1E006C673B /* AuthView.swift */; };
 		E67D31F0293627CB006C673B /* InputFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D31EF293627CB006C673B /* InputFields.swift */; };
 		E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E697E2B428FA709D0027A088 /* GoogleService-Info.plist */; };
 		E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E697E2B728FA71980027A088 /* AuthViewModel.swift */; };
@@ -36,13 +39,19 @@
 		E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */; };
 		E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C362908B43600783E70 /* LoadingView.swift */; };
 		E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C382908D75B00783E70 /* QRScannerView.swift */; };
+		E6FF7296293F638E0080C11B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7295293F638E0080C11B /* AuthView.swift */; };
+		E6FF7299293F813C0080C11B /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = E6FF7298293F813C0080C11B /* Inject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3C5731B93FEBC6DBAD579FE6 /* Pods-locker-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-locker-test.release.xcconfig"; path = "Target Support Files/Pods-locker-test/Pods-locker-test.release.xcconfig"; sourceTree = "<group>"; };
 		527034A5DC7D4A2E538B890C /* Pods-locker-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-locker-test.debug.xcconfig"; path = "Target Support Files/Pods-locker-test/Pods-locker-test.debug.xcconfig"; sourceTree = "<group>"; };
 		8504312C49BA223DD97FB5D3 /* Pods_locker_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_locker_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E614AD842943857D00044BC7 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		E62D34E9292F8472004E7505 /* AuthDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDeviceView.swift; sourceTree = "<group>"; };
+		E631C22D294B684D003528CF /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
+		E631C22F294B6DA8003528CF /* bright_bth.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = bright_bth.gif; path = "locker-test/bright_bth.gif"; sourceTree = SOURCE_ROOT; };
+		E631C230294B6DA8003528CF /* 23712-signal-wi-fi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "23712-signal-wi-fi.gif"; path = "locker-test/23712-signal-wi-fi.gif"; sourceTree = SOURCE_ROOT; };
 		E6465F0028FABC3100499DE1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E6465F0228FABC3D00499DE1 /* ParcelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsView.swift; sourceTree = "<group>"; };
 		E64B44682937602C00455891 /* LockerPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockerPeripheral.swift; sourceTree = "<group>"; };
@@ -52,7 +61,6 @@
 		E67352F528FA6CC1000C25BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E67352F728FA6CC2000C25BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E67D31E929360C1E006C673B /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		E67D31EB29361E72006C673B /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
 		E67D31EF293627CB006C673B /* InputFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFields.swift; sourceTree = "<group>"; };
 		E697E2B428FA709D0027A088 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -71,6 +79,7 @@
 		E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysInfoView.swift; sourceTree = "<group>"; };
 		E6FC3C362908B43600783E70 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E6FC3C382908D75B00783E70 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		E6FF7295293F638E0080C11B /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +89,7 @@
 			files = (
 				E6DFFAEE292F9E7800AEFC4F /* CodeScanner in Frameworks */,
 				19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */,
+				E6FF7299293F813C0080C11B /* Inject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +184,8 @@
 		E67352F928FA6CC2000C25BC /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				E631C230294B6DA8003528CF /* 23712-signal-wi-fi.gif */,
+				E631C22F294B6DA8003528CF /* bright_bth.gif */,
 				E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -184,6 +196,7 @@
 			children = (
 				E6ECC192290A633500D3C13A /* BluetoothManager.swift */,
 				E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */,
+				E614AD842943857D00044BC7 /* ErrorHandler.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -191,8 +204,8 @@
 		E6ECC196290FFD7900D3C13A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				E6FF7295293F638E0080C11B /* AuthView.swift */,
 				E697E2B728FA71980027A088 /* AuthViewModel.swift */,
-				E67D31E929360C1E006C673B /* AuthView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -246,6 +259,7 @@
 			children = (
 				E6FC3C382908D75B00783E70 /* QRScannerView.swift */,
 				E6FC3C362908B43600783E70 /* LoadingView.swift */,
+				E631C22D294B684D003528CF /* GifView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -281,6 +295,7 @@
 			name = "locker-test";
 			packageProductDependencies = (
 				E6DFFAED292F9E7800AEFC4F /* CodeScanner */,
+				E6FF7298293F813C0080C11B /* Inject */,
 			);
 			productName = "locker-test";
 			productReference = E67352F028FA6CC1000C25BC /* locker-test.app */;
@@ -312,6 +327,7 @@
 			mainGroup = E67352E728FA6CC1000C25BC;
 			packageReferences = (
 				E6DFFAEC292F9E7800AEFC4F /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = E67352F128FA6CC1000C25BC /* Products */;
 			projectDirPath = "";
@@ -330,6 +346,8 @@
 				E67352FB28FA6CC2000C25BC /* Preview Assets.xcassets in Resources */,
 				E67352F828FA6CC2000C25BC /* Assets.xcassets in Resources */,
 				E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */,
+				E631C232294B6DA8003528CF /* 23712-signal-wi-fi.gif in Resources */,
+				E631C231294B6DA8003528CF /* bright_bth.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,15 +407,17 @@
 				E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */,
 				E67352F428FA6CC1000C25BC /* lockerApp.swift in Sources */,
 				E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */,
+				E631C22E294B684D003528CF /* GifView.swift in Sources */,
 				E6ECC193290A633500D3C13A /* BluetoothManager.swift in Sources */,
-				E67D31EA29360C1E006C673B /* AuthView.swift in Sources */,
 				E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */,
 				E6F82C1728FC9E870075D224 /* KeysViewModel.swift in Sources */,
 				E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */,
 				E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */,
+				E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */,
 				E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */,
 				E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */,
 				E6C6B00A2938EB5200488E1E /* DisableScrolling.swift in Sources */,
+				E6FF7296293F638E0080C11B /* AuthView.swift in Sources */,
 				E6ECC1A2291003AC00D3C13A /* MainViewModel.swift in Sources */,
 				E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */,
 				E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */,
@@ -533,10 +553,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
-				DEVELOPMENT_TEAM = XV865J9PDC;
+				DEVELOPMENT_TEAM = X47395UTJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Locker";
@@ -557,8 +578,72 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseAuth\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreExtension\"",
+					"-framework",
+					"\"FirebaseCoreInternal\"",
+					"-framework",
+					"\"FirebaseFirestore\"",
+					"-framework",
+					"\"FirebaseFirestoreSwift\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"FirebaseSharedSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleAppMeasurementIdentitySupport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"absl\"",
+					"-framework",
+					"\"grpc\"",
+					"-framework",
+					"\"grpcpp\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-framework",
+					"\"openssl_grpc\"",
+					"-framework",
+					"\"uv\"",
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot.locker-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -572,10 +657,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
-				DEVELOPMENT_TEAM = XV865J9PDC;
+				DEVELOPMENT_TEAM = X47395UTJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Home Locker";
@@ -598,6 +684,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot.locker-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -636,6 +723,14 @@
 				kind = branch;
 			};
 		};
+		E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -643,6 +738,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E6DFFAEC292F9E7800AEFC4F /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		E6FF7298293F813C0080C11B /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

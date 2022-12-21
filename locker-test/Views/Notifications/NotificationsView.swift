@@ -12,7 +12,7 @@ struct NotificationsView: View {
         NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Text("Notifications")
                             .font(.largeTitle)
@@ -24,12 +24,15 @@ struct NotificationsView: View {
                             Text("Clear all")
                         }
                     }
-                    .padding(.top, 3)
+                    .frame(height: 55)
+                    .padding(.horizontal)
                     
                     NotificationsListView()
                 }
-                .padding(.horizontal)
+                .padding(.top, 35)
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
         }
         .accentColor(.primary)
@@ -47,31 +50,36 @@ struct NotificationsListView: View {
                             .frame(width: 25, height: 25)
                             .padding()
                             .foregroundColor(Color(UIColor.systemIndigo))
-                            .background(Color(UIColor.systemBackground))
-                            .clipShape(Circle())
                     }
-                    VStack(alignment: .leading) {
-                        Text("DHL")
-                            .font(.callout)
+                    .frame(width: 41, height: 41)
+                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                    
+                    
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Parcel from DHL")
                         Text("Delivered today, 10:22")
-                            .font(.callout)
                             .foregroundColor(Color(UIColor.secondaryLabel))
                     }
-                    .padding(.horizontal)
+                    .padding(.leading)
+                    
                     Spacer()
+                    
                     Button {
                         //
                     } label: {
                         Image(systemName: "trash")
+                            .resizable()
                             .foregroundColor(.secondary)
+                            .frame(width: 21, height: 23)
+                            .padding(.trailing, 8)
                     }
                     .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding(.trailing, 20)
+                .listRowInsets(EdgeInsets())
+                .padding(.vertical)
+                .padding(.horizontal)
             }
             .scrollContentBackground(.hidden)
-            .listStyle(.automatic)
-            .padding(.horizontal, -20)
         } else {
             // Fallback on earlier versions
             List {
@@ -109,8 +117,6 @@ struct NotificationsListView: View {
                         // cache the current background color
                         UITableView.appearance().backgroundColor = UIColor.clear
                     })
-            .listStyle(.automatic)
-            .padding(.horizontal, -20)
         }
     }
 }

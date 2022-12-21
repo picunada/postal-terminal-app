@@ -10,6 +10,7 @@ import CodeScanner
 
 struct ParcelsView: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
+    @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var authState: AuthViewModel
     @ObservedObject var parcelState: ParcelViewModel
@@ -25,36 +26,43 @@ struct ParcelsView: View {
         NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Text("Parcels")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         Spacer()
-                        Button {
-                            showCreateParcel.toggle()
-                            print("Button clicked")
-                        } label: {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .padding()
-                                .foregroundColor(Color.white)
-                                .background(Color(UIColor.systemIndigo))
-                                .clipShape(Circle())
+                        VStack {
+                            Button {
+                                showCreateParcel.toggle()
+                                print("Button clicked")
+                            } label: {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .padding()
+                                    .foregroundColor(Color.white)
+                            }
+                            .sheet(isPresented: $showCreateParcel) {
+                                createParcel
+                            }
                         }
-                        .sheet(isPresented: $showCreateParcel) {
-                            createParcel
-                        }
-
+                        .frame(width: 55, height: 55)
+                        .background(Color(UIColor.systemIndigo))
+                        .clipShape(Circle())
+                        
                     }
-                    .padding(.top, -8)
+                    .padding(.top, 35)
                 
                     ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
                 }
                 .padding(.horizontal)
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onDisappear {
+            dismiss()
         }
         .accentColor(.primary)
     }
@@ -82,7 +90,7 @@ struct ParcelsView: View {
                                 .accentColor(.indigo)
                                 .pickerStyle(.menu)
                         }
-                        
+                        .listRowInsets(EdgeInsets())
                     }
                     .scrollContentBackground(.hidden)
                     .listStyle(.inset)
@@ -99,15 +107,13 @@ struct ParcelsView: View {
                                 }
                             }
                             .foregroundColor(Color(UIColor.secondaryLabel))
-                            .background(Color(.secondarySystemBackground))
                             DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                 .padding(.top)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 .accentColor(.indigo)
                                 .pickerStyle(.menu)
-                                .background(Color(.secondarySystemBackground))
                         }
-                        
+                        .listRowInsets(EdgeInsets())
                     }
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
@@ -117,6 +123,7 @@ struct ParcelsView: View {
                     .padding(.top, -20)
                     .background(Color(UIColor.white))
                 }
+                
                 VStack {
                     Button {
                         newParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
@@ -129,14 +136,16 @@ struct ParcelsView: View {
                             .foregroundColor(Color.white)
                             .frame(maxWidth: .infinity)
                     }
-                    .padding()
-                    .background(Color(UIColor.secondaryLabel).cornerRadius(8))
+                    .frame(height: 48)
+                    .padding(.horizontal)
+                    .background(Color("AccentColor").cornerRadius(8))
                     .accessibilityLabel("Save new parcel")
                 }
             }
             .padding()
+            .padding(.bottom, 93)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Create parcel")
+            .navigationTitle("Add a new parcel")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button {
@@ -148,11 +157,12 @@ struct ParcelsView: View {
                                 }
                             }
         }
-        .accentColor(.black)
     }
 }
 
 struct ParcelListView: View {
+    
+    @Environment(\.dismiss) private var dismiss
     
     var expectedParcels: [Parcel]
     var receivedParcels: [Parcel]
@@ -174,30 +184,29 @@ struct ParcelListView: View {
                     Section {
                         ForEach(expectedParcels, id: \.id) { parcel in
                             NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "Expected")
+                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser ?? LockerUser(firstName: "", lastName: ""), status: "Expected")
                             } label: {
                                 HStack {
-                                    Image(systemName: "shippingbox")
-                                        .resizable()
-                                        .padding(.all, 5)
-                                        .frame(width: 41, height: 41)
-                                        .foregroundColor(Color(UIColor.systemIndigo))
-                                        .background(Color(UIColor.systemBackground))
-                                        .overlay(
-                                                    Circle()
-                                                        .stroke(Color.indigo, lineWidth: 1)
-                                                )
-                                        .clipShape(Circle())
-                                    VStack(alignment: .leading) {
+                                    VStack {
+                                        Image(systemName: "shippingbox")
+                                            .resizable()
+                                            .frame(width: 25, height: 25)
+                                            .padding()
+                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                    }
+                                    .frame(width: 41, height: 41)
+                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                                    
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(parcel.serviceName)
-                                            .font(.callout)
                                         Text(parcel.trackingNumber)
-                                            .font(.callout)
                                             .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
+                                    .padding(.leading)
                                 }
-                                .padding(.vertical, 10)
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("EXPECTED")
@@ -237,6 +246,9 @@ struct ParcelListView: View {
                         Text("RECEIVED")
                     }
                 }
+            }
+            .onDisappear {
+                dismiss()
             }
             .scrollContentBackground(.hidden)
             .listStyle(.insetGrouped)

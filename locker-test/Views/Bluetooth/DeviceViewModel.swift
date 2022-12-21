@@ -18,12 +18,29 @@ enum Constants {
 }
 
 
+
+
 final class DeviceViewModel: ObservableObject {
+    
+    enum State {
+            case idle
+            case loading
+            case failed
+            case loaded
+        }
+    
+    enum ConnectionState {
+            case bluetoothConnection
+            case loading
+            case failed
+        }
     
     @AppStorage("identifier") var identifier: String = ""
     @Published var state: CBManagerState = .unknown
     @Published var peripheral: CBPeripheral
     @Published var networks: WifiNetworks?
+    @Published var loadingState: State = .idle
+    @Published var error: Swift.Error?
 
     private lazy var manager: BluetoothManager = .shared
     private lazy var cancellables: Set<AnyCancellable> = .init()
@@ -73,6 +90,12 @@ final class DeviceViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        manager.responseSubject
+            .sink { [weak self] response in
+                self?.error = response.error
+            }
+            .store(in: &cancellables)
+        
         manager.connect(self.peripheral)
     }
     
@@ -80,9 +103,9 @@ final class DeviceViewModel: ObservableObject {
         guard let characteristic = WirelessNetworksCharacteristic else {
             return
         }
+        loadingState = .loading
         print(String(data: data, encoding: .utf8))
         peripheral.writeValue(data, for: characteristic, type: .withResponse)
-        print(data)
     }
 }
 

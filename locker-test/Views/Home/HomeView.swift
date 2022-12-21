@@ -20,6 +20,10 @@ struct HomeView: View {
                 VStack {
                     content()
                 }
+                .padding(.bottom, 40)
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+
             }
             .accentColor(.primary)
             .onAppear {
@@ -60,9 +64,13 @@ struct HomeView: View {
             .padding(.bottom, 45)
             Image("Home Screen")
                 .frame(width: 257, height: 271)
-                .padding(.bottom, 204)
+            
+            Spacer()
+            
             NavigationLink {
                 AuthDeviceView()
+                    .navigationTitle("Locker connection")
+                    .navigationBarTitleDisplayMode(.inline)
             } label: {
                 Text("Add locker")
                     .font(.title3)
@@ -71,12 +79,10 @@ struct HomeView: View {
                     .foregroundColor(.white)
                     .padding()
             }
-            .background(Color(.systemIndigo))
+            .frame(height: 48)
+            .background(Color("AccentColor"))
             .cornerRadius(8)
             .padding(.horizontal)
-            
-
-           
         }
     }
     

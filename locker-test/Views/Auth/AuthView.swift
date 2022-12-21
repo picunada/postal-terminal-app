@@ -22,149 +22,164 @@ struct AuthView: View {
     @State var showSignUp: Bool = false
     
     var body: some View {
-        VStack {
-            Image("Logo")
-                .frame(width: 269, height: 55)
-                .padding(.top, 80)
-                .padding(.bottom, 50)
-            if #available(iOS 16.0, *) {
-                Form  {
-                    Section {
-                        TextInputField("Email", text: $credentials.email)
-                    }
-                    .listRowInsets(EdgeInsets())
-                    Section {
-                        SecureInputField("Password", text: $credentials.password)
-                    }
-                    .listRowInsets(EdgeInsets())
-                }
-                .scrollContentBackground(.hidden)
-                .padding(.bottom, 46) 
-            } else {
-                // Fallback on earlier versions
-                Form  {
-                    Section {
-                        TextInputField("Email", text: $credentials.email)
-                    }
-                    .listRowInsets(EdgeInsets())
-                    Section {
-                        SecureInputField("Password", text: $credentials.password)
-                    }
-                    .listRowInsets(EdgeInsets())
-                }
-                .onAppear {
-                    UITableView.appearance().backgroundColor = .clear
-                }
-                .padding(.bottom, 46)
-            }
-            
-            Button {
-                login()
-            } label: {
-                Text("Sign in")
-                    .bold()
-                    .font(.title3)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            .background(Color(.systemIndigo))
-            .cornerRadius(10)
-            .padding(.bottom, 100)
-            .padding(.horizontal)
-            
-            
-            VStack {
-                Text("Dont have an account?")
-                    .padding(.bottom, 19)
-                Button {
-                    showSignUp.toggle()
-                } label: {
-                    Text("Sign up")
-                }
-            }
-            .padding(.bottom, 40)
-            .sheet(isPresented: $showSignUp) {
-                NavigationView {
-                    VStack {
-                        if #available(iOS 16.0, *) {
-                            
-                            
-                            Form  {
-                                Section("Personal info") {
-                                    TextInputField("First name", text: $lockerUser.firstName)
-                                    TextInputField("Last name", text: $lockerUser.lastName)
-                                    TextInputField("Email", text: $credentials.email)
-                                }
-                                .listRowInsets(EdgeInsets())
-                                Section("Account security") {
-                                    SecureInputField("Password", text: $credentials.password)
-                                    SecureInputField("Confirm password", text: $credentials.confirmPassword)
-                                }
-                                .listRowInsets(EdgeInsets())
-                                
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(spacing: 0) {
+                    Image("Logo")
+                        .frame(width: 269, height: 55)
+                        .padding(.top, 97)
+                        .padding(.bottom, 60)
+                    if #available(iOS 16.0, *) {
+                        Form  {
+                            Section {
+                                TextInputField("Email", text: $credentials.email)
                             }
-                            .scrollContentBackground(.hidden)
-                            .navigationBarTitle("Sign up")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarItems(trailing: Button(action: {
-                                showSignUp.toggle()
-                            }, label: {
-                                Image(systemName: "multiply")
-                                    .foregroundColor(.primary)
-                            }))
-                        } else {
-                            // Fallback on earlier versions
-                            Form  {
-                                Section("Personal info") {
-                                    TextInputField("First name", text: $lockerUser.firstName)
-                                    TextInputField("Last name", text: $lockerUser.lastName)
-                                    TextInputField("Email", text: $credentials.email)
-                                }
-                                .listRowInsets(EdgeInsets())
-                                Section("Account security") {
-                                    SecureInputField("Password", text: $credentials.password)
-                                    SecureInputField("Confirm password", text: $credentials.confirmPassword)
-                                }
-                                .listRowInsets(EdgeInsets())
+                            .listRowInsets(EdgeInsets())
+                            Section {
+                                SecureInputField("Password", text: $credentials.password)
                             }
-                            .onAppear {
-                                UITableView.appearance().backgroundColor = .clear
-                            }
-                            .navigationTitle("Sign up")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarItems(trailing: Button(action: {
-                                showSignUp.toggle()
-                            }, label: {
-                                Image(systemName: "multiply")
-                                    .foregroundColor(.primary)
-                            }))
+                            .listRowInsets(EdgeInsets())
                         }
-                        
+                        .frame(height: 200)
+                        .scrollDisabled(true)
+                        .scrollContentBackground(.hidden)
+                    } else {
+                        // Fallback on earlier versions
+                        Form  {
+                            Section {
+                                TextInputField("Email", text: $credentials.email)
+                            }
+                            .listRowInsets(EdgeInsets())
+                            Section {
+                                SecureInputField("Password", text: $credentials.password)
+                            }
+                            .listRowInsets(EdgeInsets())
+                        }
+                        .frame(height: 200)
+                        .onAppear {
+                            UITableView.appearance().backgroundColor = .clear
+                            UITableView.appearance().isScrollEnabled = false
+
+                        }
+                    }
+                    
+                    Button {
+                        login()
+                    } label: {
+                        Text("Sign in")
+                            .bold()
+                            .font(.title3)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    .background(Color("AccentColor"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 30)
+                    
+                    Spacer()
+                    // MARK: Sign up
+                    
+                    VStack(spacing: 19) {
+                        Text("Dont have an account?")
                         Button {
-                            login()
+                            showSignUp.toggle()
                         } label: {
-                            Text("Sign in")
-                                .font(.title3)
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(.white)
-                                .padding()
+                            Text("Sign up")
                         }
-                        .background(Color(.systemIndigo))
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                        .padding(.bottom, 50)
+                    }
+                    .frame(height: 76)
+                    .padding(.bottom, 40)
+                    .sheet(isPresented: $showSignUp) {
+                        NavigationView {
+                            ScrollView {
+                                VStack {
+                                    if #available(iOS 16.0, *) {
+                                        Form  {
+                                            Section("Personal info") {
+                                                TextInputField("First name", text: $lockerUser.firstName)
+                                                TextInputField("Last name", text: $lockerUser.lastName)
+                                                TextInputField("Email", text: $credentials.email)
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                            Section("Account security") {
+                                                SecureInputField("Password", text: $credentials.password)
+                                                SecureInputField("Confirm password", text: $credentials.confirmPassword)
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                            
+                                        }
+                                        .frame(height: 370)
+                                        .scrollContentBackground(.hidden)
+                                        .navigationBarTitle("Sign up")
+                                        .navigationBarTitleDisplayMode(.inline)
+                                        .navigationBarItems(trailing: Button(action: {
+                                            showSignUp.toggle()
+                                        }, label: {
+                                            Image(systemName: "multiply")
+                                                .foregroundColor(.primary)
+                                        }))
+                                    } else {
+                                        // Fallback on earlier versions
+                                        Form  {
+                                            Section("Personal info") {
+                                                TextInputField("First name", text: $lockerUser.firstName)
+                                                TextInputField("Last name", text: $lockerUser.lastName)
+                                                TextInputField("Email", text: $credentials.email)
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                            Section("Account security") {
+                                                SecureInputField("Password", text: $credentials.password)
+                                                SecureInputField("Confirm password", text: $credentials.confirmPassword)
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                        }
+                                        .onAppear {
+                                            UITableView.appearance().backgroundColor = .clear
+                                        }
+                                        .frame(height: 370)
+                                        .navigationTitle("Sign up")
+                                        .navigationBarTitleDisplayMode(.inline)
+                                        .navigationBarItems(trailing: Button(action: {
+                                            showSignUp.toggle()
+                                        }, label: {
+                                            Image(systemName: "multiply")
+                                                .foregroundColor(.primary)
+                                        }))
+                                    }
+                                    
+                                    
+                                    Button {
+                                        signUp()
+                                    } label: {
+                                        Text("Sign up")
+                                            .font(.title3)
+                                            .frame(maxWidth: .infinity)
+                                            .foregroundColor(.white)
+                                            .padding()
+                                    }
+                                    .background(Color(.secondaryLabel))
+                                    .cornerRadius(8)
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 50)
+                                    
+                                    Spacer()
+                                }
+                            }
+                        }
                     }
                 }
-                .accentColor(.indigo)
+                .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
-        .accentColor(.indigo)
-        
+        .ignoresSafeArea(.keyboard)
     }
     
     func login() {
-        Auth.auth().signIn(withEmail: credentials.email, password: credentials.password)
+        Auth.auth().signIn(withEmail: credentials.email, password: credentials.password) { (auth, error) in
+            
+        }
     }
     
     func signUp() {

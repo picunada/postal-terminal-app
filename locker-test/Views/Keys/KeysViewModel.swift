@@ -44,7 +44,7 @@ class KeysViewModel: ObservableObject {
     
     func subscribe(user: LockerUser) {
         if activeListenerRegistration == nil {
-            activeListenerRegistration = db.collection("keys/\(user.lockerId)/active")
+            activeListenerRegistration = db.collection("keys/\(user.lockerId!)/active")
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'active' collection"
@@ -77,7 +77,7 @@ class KeysViewModel: ObservableObject {
                 }
             }
         if inactiveListenerRegistration == nil {
-            inactiveListenerRegistration = db.collection("keys/\(user.lockerId)/inactive")
+            inactiveListenerRegistration = db.collection("keys/\(user.lockerId!)/inactive")
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'inactive' collection"
@@ -112,7 +112,7 @@ class KeysViewModel: ObservableObject {
     }
     
     func createKey (key: LockerKey, user: LockerUser) {
-        let collectionRef = db.collection("keys/\(user.lockerId)/active")
+        let collectionRef = db.collection("keys/\(user.lockerId!)/active")
         do {
           let newDocReference = try collectionRef.addDocument(from: key)
           print("Parcel stored with new document reference: \(newDocReference)")
@@ -124,8 +124,11 @@ class KeysViewModel: ObservableObject {
     
     func deleteKey(key: LockerKey, user: LockerUser, type: String) {
         
+        print(key.id!)
+        print(type)
+        
         if type == "active" {
-            db.collection("keys/\(user.lockerId)/active").document(key.id!).delete() { err in
+            db.collection("keys/\(user.lockerId!)/active").document(key.id!).delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {
@@ -133,7 +136,7 @@ class KeysViewModel: ObservableObject {
                 }
             }
         } else {
-            db.collection("keys/\(user.lockerId)/inactive").document(key.id!).delete() { err in
+            db.collection("keys/\(user.lockerId!)/inactive").document(key.id!).delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {

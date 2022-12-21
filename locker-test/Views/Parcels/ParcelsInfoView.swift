@@ -21,23 +21,23 @@ struct ParcelsInfoView: View {
         NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-                VStack(alignment: .center) {
-                    VStack(alignment: .leading) {
+                VStack(alignment: .center, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .center) {
-                            Image(systemName: "shippingbox")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                                .padding()
-                                .foregroundColor(Color(UIColor.systemIndigo))
-                                .background(Color(UIColor.systemBackground))
-                                .clipShape(Circle())
-                            VStack(alignment: .leading) {
+                            VStack {
+                                Image(systemName: "shippingbox")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .padding()
+                                    .foregroundColor(Color(UIColor.systemIndigo))
+                            }
+                            .frame(width: 41, height: 41)
+                            .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                            
+                            VStack(alignment: .leading, spacing: 10) {
                                 Text("\(status.capitalized) parcel")
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                                    .padding(.bottom, 1)
+                                    .bold()
                                 Text("Status: \(status)")
-                                    .font(.callout)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                                 if receivedDate != nil {
                                     Text(formatDate(date: receivedDate!))
@@ -45,6 +45,7 @@ struct ParcelsInfoView: View {
                                         .foregroundColor(Color(uiColor: .secondaryLabel))
                                 }
                             }
+                            .padding(.leading, 24)
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
@@ -59,32 +60,41 @@ struct ParcelsInfoView: View {
                                 Text(parcel.serviceName)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                             HStack {
                                 Text("Track & Trace")
                                 Spacer()
                                 Text(parcel.trackingNumber)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                             HStack {
                                 Text("Receiver")
                                 Spacer()
                                 Text("\(user.firstName.capitalized) \(user.lastName.capitalized)")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
-                            HStack {
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
+                            HStack(alignment: .top, spacing: 0) {
                                 Text("Estimated delivery date ")
+                                    .frame(width: 155, alignment: .leading)
+                                    .multilineTextAlignment(.leading)
                                 Spacer()
                                 Text("\(formatDateMonth(date: parcel.estimatedDeliveryDate.lowerBound)) - \(formatDateMonth(date: parcel.estimatedDeliveryDate.upperBound))")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
-                            
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                         }
+                        .frame(height: 300)
                         .scrollContentBackground(.hidden)
-                        .padding(.top, 0)
                     } else {
                         List {
                             HStack {
@@ -93,50 +103,61 @@ struct ParcelsInfoView: View {
                                 Text(parcel.serviceName)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                             HStack {
                                 Text("Track & Trace")
                                 Spacer()
                                 Text(parcel.trackingNumber)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                             HStack {
                                 Text("Receiver")
                                 Spacer()
                                 Text("\(user.firstName.capitalized) \(user.lastName.capitalized)")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
-                            HStack {
-                                Text("Estimated delivery date ")
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
+                            HStack(alignment: .top, spacing: 0) {
+                                VStack {
+                                    Text("Estimated delivery\n date ")
+                                        .multilineTextAlignment(.leading)
+                                }
+                                .frame(width: 155, alignment: .leading)
                                 Spacer()
                                 Text("\(formatDateMonth(date: parcel.estimatedDeliveryDate.lowerBound)) - \(formatDateMonth(date: parcel.estimatedDeliveryDate.upperBound))")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            .padding(.vertical)
-                            
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                            .padding(.vertical, 19)
                         }
+                        .frame(height: 300)
                         .onAppear {
                             UITableView.appearance().backgroundColor = .clear
                         }
-                        .padding(.top, 0)
                     }
+                    Spacer()
                     Button {
                         parcelState.deleteParcel(parcel: parcel, user: authState.lockerUser!, type: status.lowercased())
                     } label: {
-                        VStack {
-                            HStack(alignment: .firstTextBaseline) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.red)
-                                Text("Delete parcel")
-                                    .font(.title3)
-                                    .foregroundColor(.primary)
-                            }
+                        HStack(alignment: .center, spacing: 10) {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                            Text("Delete parcel")
+                                .font(.title3)
+                                .foregroundColor(.primary)
                         }
                     }
                     .tint(.clear)
                     .padding()
+                    .padding(.bottom, 49)
                     .accessibilityLabel("Delete parcel")
                 }
                 .padding(.bottom)

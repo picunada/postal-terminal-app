@@ -13,7 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
       
-    Auth.auth().addStateDidChangeListener { auth, user in
+    Auth.auth().addStateDidChangeListener { (auth, user) in
         if user != nil {
             AuthViewModel.shared.state = .signedIn
         } else {
@@ -29,40 +29,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   }
 }
 
-public extension CGFloat {
-    /**
-     Converts pixels to points based on the screen scale. For example, if you
-     call CGFloat(1).pixelsToPoints() on an @2x device, this method will return
-     0.5.
-     
-     - parameter pixels: to be converted into points
-     
-     - returns: a points representation of the pixels
-     */
-    func pixelsToPoints() -> CGFloat {
-        return self / UIScreen.main.scale
-    }
-    
-    /**
-     Returns the number of points needed to make a 1 pixel line, based on the
-     scale of the device's screen.
-     
-     - returns: the number of points needed to make a 1 pixel line
-     */
-    static func onePixelInPoints() -> CGFloat {
-        return CGFloat(1).pixelsToPoints()
-    }
-}
-
-extension View {
-    func disableScrolling(disabled: Bool) -> some View {
-        modifier(DisableScrolling(disabled: disabled))
+extension UINavigationController {
+    // Remove back button text
+    open override func viewWillLayoutSubviews() {
+        navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
 @main
 struct lockerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     
     @StateObject var authState: AuthViewModel = AuthViewModel.shared
     
@@ -71,29 +48,30 @@ struct lockerApp: App {
             switch authState.loading {
             case .loading :
                 LoadingView()
-                .transition(.slide) 
+                    .animation(.default, value: authState.loading == .loading)
             case .loaded:
-                if authState.state == .signedIn {
-                    ContentView()
+                if authState.state != .signedIn {
+                    AuthView()
                         .environmentObject(authState)
                 } else {
-                    AuthView()
+                    ContentView()
+                        .withErrorHandling()
                         .environmentObject(authState)
                 }
             case .idle:
-                if authState.state == .signedIn {
-                    ContentView()
+                if authState.state != .signedIn {
+                    AuthView()
                         .environmentObject(authState)
                 } else {
-                    AuthView()
+                    ContentView()
                         .environmentObject(authState)
                 }
             case .failed:
-                if authState.state == .signedIn {
-                    ContentView()
+                if authState.state != .signedIn {
+                    AuthView()
                         .environmentObject(authState)
                 } else {
-                    AuthView()
+                    ContentView()
                         .environmentObject(authState)
                 }
             }

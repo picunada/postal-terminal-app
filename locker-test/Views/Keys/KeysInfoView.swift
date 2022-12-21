@@ -24,64 +24,70 @@ struct KeysInfoView: View {
     
     var body: some View {
         
-        NavigationView {
-            ZStack {
-                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+        ZStack {
+            Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+            VStack(spacing: 0) {
+//                Spacer()
+                
                 VStack {
-                    Rectangle()
-                        .frame(width: 250, height: 250)
-                        .foregroundColor(.white).cornerRadius(17)
-                        .shadow(color: .primary.opacity(0.2), radius: 30)
-                    Text(key.keyName.capitalized)
-                        .font(.largeTitle)
-                        .padding(.top, 30)
-                    if key.expirationDate != nil {
-                        Text(formatDate(date: key.expirationDate!))
-                            .font(.title3)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            .padding(.top, -10)
-                            .padding(.bottom, 30)
-                    } else {
-                        Text("No expiration date")
-                            .font(.title3)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            .padding(.top, -10)
-                            .padding(.bottom, 30)
-                    }
-                    VStack {
-                        Button {
-                            
-                        } label: {
-                            Text("Share guest key")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .padding()
-                        .background(Color(UIColor.systemIndigo).cornerRadius(8))
-                        .accessibilityLabel("Share guest key")
-                    }
-                    Button {
-                        keyState.deleteKey(key: key, user: authState.lockerUser!, type: type)
-                    } label: {
-                        VStack {
-                            HStack(alignment: .firstTextBaseline) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.red)
-                                Text("Delete guest key")
-                                    .font(.title2)
-                                    .foregroundColor(.primary)
-                            }
-                        }
-                    }
-                    .tint(.clear)
-                    .padding()
-                    .accessibilityLabel("Delete parcel")
+                    
                 }
-                .padding(.horizontal)
-                .padding(.top, -150)
+                .frame(width: 250, height: 250)
+                .background(Color(.white))
+                .cornerRadius(17)
+                .shadow(color: .primary.opacity(0.2), radius: 30)
+                .padding(.top, 50)
+                
+                Text(key.keyName.capitalized)
+                    .font(.custom("Key title", fixedSize: 28))
+                    .padding(.top, 40)
+                    .padding(.bottom, 15)
+                
+                if key.expirationDate != nil {
+                    Text(formatDate(date: key.expirationDate!))
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                        .padding(.bottom, 59)
+                } else {
+                    Text("No expiration date")
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                        .padding(.bottom, 59)
+                }
+                
+                Button {
+                    
+                } label: {
+                    Text("Share guest key")
+                        .font(.title3)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .frame(height: 48)
+                .background(Color("AccentColor"))
+                .cornerRadius(8)
+                
+                Spacer()
+                
+                Button {
+                    keyState.deleteKey(key: key, user: authState.lockerUser!, type: type)
+                } label: {
+                    VStack {
+                        HStack(alignment: .firstTextBaseline) {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                            Text("Delete guest key")
+                                .font(.title2)
+                                .foregroundColor(.primary)
+                        }
+                    }
+                }
+                .tint(.clear)
+                .padding()
+                .padding(.bottom, 53)
+                .accessibilityLabel("Delete parcel")
             }
+            .padding(.horizontal)
         }
     }
     
