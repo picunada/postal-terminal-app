@@ -128,6 +128,7 @@ struct ParcelsView: View {
                     Button {
                         newParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
                         parcelState.createParcel(parcel: newParcel, user: authState.lockerUser!)
+                        newParcel = Parcel(serviceName: "DHL", trackingNumber: "", estimatedDeliveryDate: Date()...Date())
                         showCreateParcel.toggle()
                     } label: {
                         Text("Save")
@@ -138,10 +139,13 @@ struct ParcelsView: View {
                     }
                     .frame(height: 48)
                     .padding(.horizontal)
-                    .background(Color("AccentColor").cornerRadius(8))
+                    .background(newParcel.trackingNumber.isEmpty ? .secondary : Color("AccentColor"))
+                    .cornerRadius(8)
                     .accessibilityLabel("Save new parcel")
+                    .disabled(newParcel.trackingNumber.isEmpty)
                 }
             }
+            .animation(.default, value: newParcel.trackingNumber.isEmpty)
             .padding()
             .padding(.bottom, 93)
             .navigationBarTitleDisplayMode(.inline)

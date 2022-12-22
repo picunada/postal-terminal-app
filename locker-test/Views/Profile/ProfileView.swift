@@ -68,7 +68,7 @@ struct ProfileView: View {
                             self.showSecurity.toggle()
                         } label: {
                             HStack {
-                                Text("Locker information")
+                                Text("Account security")
                                         
                                 
                                 Spacer()
@@ -134,6 +134,7 @@ struct PersonalInfoView: View {
     
     @State var email: String
     @State var user: LockerUser
+    @State var isChanged: Bool = false
     
     var body: some View {
         NavigationView {
@@ -143,10 +144,16 @@ struct PersonalInfoView: View {
                     Form(content: {
                         Section("First name") {
                             TextInputField("First name", text: $user.firstName)
+                                .onChange(of: user.firstName) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         Section("Last name") {
                             TextInputField("Last name", text: $user.lastName)
+                                .onChange(of: user.lastName) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         Section("Email") {
@@ -162,14 +169,21 @@ struct PersonalInfoView: View {
                     Form(content: {
                         Section("First name") {
                             TextInputField("First name", text: $user.firstName)
+                                .onChange(of: user.firstName) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         Section("Last name") {
                             TextInputField("Last name", text: $user.lastName)
+                                .onChange(of: user.lastName) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         Section("Email") {
                             TextInputField("Email", text: $email)
+                                .foregroundColor(.secondary)
                                 .disabled(true)
                         }
                         .listRowInsets(EdgeInsets())
@@ -183,9 +197,8 @@ struct PersonalInfoView: View {
                 VStack {
                     Button {
                         authState.updateUserInfo(lockerUser: user)
-//                        if email.count > 0 {
-//                            authState.updateEmail(email: email)
-//                        }
+                        authState.fetchUser(userId: authState.user!.uid )
+                        show.toggle()
                     } label: {
                         Text("Save")
                             .font(.title3)
@@ -195,8 +208,10 @@ struct PersonalInfoView: View {
                     }
                     .frame(height: 48)
                     .padding(.horizontal)
-                    .background(Color(.secondaryLabel).cornerRadius(8))
-                    .accessibilityLabel("Save new parcel")
+                    .background(isChanged ? Color("AccentColor") : .secondary)
+                    .disabled(!isChanged)
+                    .cornerRadius(8)
+                    .accessibilityLabel("Update profile info")
                 }
                 .padding(.horizontal)
                 .padding(.top, 34)
@@ -283,8 +298,8 @@ struct LockerInfoView: View {
 struct AccountSecurityView: View {
 
     @Binding var show: Bool
-    @State var reAuthCredentials: FirebaseCredentials = .init()
-    @State var credentials: ChangePasswordCredentials = .init()
+    @State var reAuthCredentials: FirebaseCredentials = .init(email: "", password: "")
+    @State var credentials: ChangePasswordCredentials = .init(password: "", confirmPassword: "")
 
     @EnvironmentObject var authState: AuthViewModel
     
@@ -357,7 +372,9 @@ struct AccountSecurityView: View {
                         }
                         .frame(height: 48)
                         .padding(.horizontal)
-                        .background(Color(.secondaryLabel).cornerRadius(8))
+                        .background((reAuthCredentials.password!.isEmpty || credentials.password!.isEmpty || credentials.confirmPassword!.isEmpty) ? .secondary : Color("AccentColor"))
+                        .disabled(reAuthCredentials.password!.isEmpty || credentials.password!.isEmpty || credentials.confirmPassword!.isEmpty)
+                        .cornerRadius(8)
                         .accessibilityLabel("Save password")
                     }
                     .padding(.horizontal)
@@ -387,6 +404,7 @@ struct AccountSecurityView: View {
                                 }
             }
         }
+        .errorAlert(error: $authState.error)
     }
 }
 

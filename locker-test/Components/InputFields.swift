@@ -37,6 +37,12 @@ struct TextInputField: View {
         ZStack(alignment: .leading) {
             Color(.secondarySystemBackground)
             
+            if text.isEmpty {
+                Text("\(title)")
+                    .padding(.leading, 16)
+                    .foregroundColor(.secondary)
+            }
+            
             HStack {
                 TextField("", text: $text)
                     .autocapitalization(.none)
@@ -79,6 +85,13 @@ struct SecureInputField: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Color(.secondarySystemBackground)
+            
+            if text.isEmpty {
+                Text("\(title)")
+                    .padding(.leading, 16)
+                    .foregroundColor(.secondary)
+            }
+            
             
             if(isSecured) {
                 HStack {

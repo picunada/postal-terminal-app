@@ -21,6 +21,14 @@ struct Parcel: Identifiable, Codable, Hashable {
         }
 }
 
+enum ParcelError: LocalizedError {
+    case createError
+    case deleteError
+    case updateError
+    
+    
+}
+
 class ParcelViewModel: ObservableObject {
     
     @Published var expectedParcels: [Parcel] = [Parcel]()

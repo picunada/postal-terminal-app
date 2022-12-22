@@ -159,32 +159,56 @@ struct AuthView: View {
                                             .foregroundColor(.white)
                                             .padding()
                                     }
-                                    .background(Color(.secondaryLabel))
+                                    .background((credentials.password.isEmpty || credentials.confirmPassword.isEmpty || lockerUser.firstName.isEmpty || lockerUser.lastName.isEmpty || credentials.email.isEmpty) ? .secondary : Color("AccentColor"))
                                     .cornerRadius(8)
                                     .padding(.horizontal, 16)
                                     .padding(.bottom, 50)
+                                    .disabled((credentials.password.isEmpty || credentials.confirmPassword.isEmpty || lockerUser.firstName.isEmpty || lockerUser.lastName.isEmpty || credentials.email.isEmpty))
                                     
                                     Spacer()
                                 }
                             }
                         }
+                        .errorAlert(error: $authState.error)
                     }
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
         .ignoresSafeArea(.keyboard)
+        .errorAlert(error: $authState.error)
     }
     
     func login() {
         Auth.auth().signIn(withEmail: credentials.email, password: credentials.password) { (auth, error) in
-            
+            if let error = error as NSError? {
+                let code = AuthErrorCode(_nsError: error)
+                switch code.code {
+                case .emailAlreadyInUse:
+                    authState.error = FBAuthError.emailAlreadyInUse
+                case .missingEmail:
+                    authState.error = FBAuthError.missingEmail
+                default:
+                    authState.error = FBAuthError.defaultAuthError
+                }
+            }
         }
     }
     
     func signUp() {
         if credentials.password == credentials.confirmPassword {
             Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { result, error in
+                if let error = error as NSError? {
+                    let code = AuthErrorCode(_nsError: error)
+                    switch code.code {
+                    case .emailAlreadyInUse:
+                        authState.error = FBAuthError.emailAlreadyInUse
+                    case .missingEmail:
+                        authState.error = FBAuthError.missingEmail
+                    default:
+                        authState.error = FBAuthError.defaultSignUpError
+                    }
+                }
                 if (result != nil) {
                     lockerUser.id = result?.user.uid
                     authState.createUser(user: lockerUser)

@@ -107,6 +107,7 @@ struct KeysView: View {
                     Button {
                         keyState.createKey(key: newKey, user: authState.lockerUser!)
                         newKey = LockerKey(keyName: "", isOneTime: false)
+                        setExpirationDate = false
                         showCreateKey.toggle()
                     } label: {
                         Text("Create a key")

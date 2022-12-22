@@ -31,10 +31,13 @@ struct ChangePasswordCredentials: Codable {
     var confirmPassword: String?
 }
 
-enum AuthError: LocalizedError {
+enum FBAuthError: LocalizedError {
     case reauthenticationNeeded
     case wrongPassword
-    
+    case emailAlreadyInUse
+    case missingEmail
+    case defaultAuthError
+    case defaultSignUpError
     
     var errorDescription: String? {
         switch self {
@@ -42,6 +45,14 @@ enum AuthError: LocalizedError {
             return "Reauthentication error"
         case .wrongPassword:
             return "Credentials error"
+        case .emailAlreadyInUse:
+            return "Email already in use"
+        case .missingEmail:
+            return "Wrong email"
+        case .defaultAuthError:
+            return "Authentication error"
+        case .defaultSignUpError:
+            return "Sign up error"
         }
         
     }
@@ -52,6 +63,14 @@ enum AuthError: LocalizedError {
             return "You need to reauthenticate in order to update your account info"
         case .wrongPassword:
             return "Wrong password"
+        case .emailAlreadyInUse:
+            return "Change email"
+        case .missingEmail:
+            return "Check if email is correct"
+        case .defaultAuthError:
+            return "Check your credentials"
+        case .defaultSignUpError:
+            return "Check credentials for sign up"
         }
     }
 }
@@ -90,7 +109,7 @@ class AuthViewModel: ObservableObject {
     
     @Published var updateSuccess: Bool = false
     
-    private func fetchUser(userId: String) {
+    func fetchUser(userId: String) {
         loading = .loading
         
         let docRef = db.collection("users").document(userId)
@@ -157,23 +176,23 @@ class AuthViewModel: ObservableObject {
         user?.reauthenticate(with: reauthCredential) { i, error   in
           if let error = error {
               print(error)
-              self.error = AuthError.wrongPassword
+              self.error = FBAuthError.wrongPassword
           } else {
               guard credentials.password != nil else {
-                  self.error = AuthError.wrongPassword
+                  self.error = FBAuthError.wrongPassword
                   return
               }
               
               if credentials.password != "" && credentials.password == credentials.confirmPassword {
                   self.user?.updatePassword(to: credentials.password!) { error in
                       if error != nil {
-                          self.error = AuthError.wrongPassword
+                          self.error = FBAuthError.wrongPassword
                       } else {
                           self.updateSuccess = true
                       }
                   }
               } else {
-                  self.error = AuthError.wrongPassword
+                  self.error = FBAuthError.wrongPassword
               }
           }
         }
