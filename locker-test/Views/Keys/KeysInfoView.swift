@@ -30,8 +30,9 @@ struct KeysInfoView: View {
 //                Spacer()
                 
                 VStack {
-                    
+                    QRView(url: key.keyName, size: CGSize(width: 200, height: 200))
                 }
+                .padding()
                 .frame(width: 250, height: 250)
                 .background(Color(.white))
                 .cornerRadius(17)
@@ -97,6 +98,28 @@ struct KeysInfoView: View {
         return date
     }
 }
+
+
+struct QRView: UIViewRepresentable {
+    var logo: UIImage?
+    var url: String?
+    var size: CGSize?
+    
+    func updateUIView(_ uiView: UIImageView, context: Context) {
+        
+    }
+    
+    init(logo: UIImage? = nil, url: String, size: CGSize) {
+        self.logo = logo
+        self.url = url
+        self.size = size
+    }
+
+    func makeUIView(context: Context) -> UIImageView {
+        return UIImageView.init(image: QRCodeDataSet(logo: logo ?? nil, url: url!, backgroundColor: CIColor(color: .white), color: CIColor(color: .black), size: size!).getQRImage())
+    }
+}
+
 
 //struct KeysInfoView_Previews: PreviewProvider {
 //    static var previews: some View {
