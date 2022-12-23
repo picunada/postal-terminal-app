@@ -12,6 +12,8 @@ struct ParcelsInfoView: View {
     @ObservedObject var parcelState: ParcelViewModel
     @EnvironmentObject var authState: AuthViewModel
     
+    @State var isPresentedDeleteConfirm: Bool = false
+    
     var parcel: Parcel
     var user: LockerUser
     var status: String
@@ -145,7 +147,7 @@ struct ParcelsInfoView: View {
                     }
                     Spacer()
                     Button {
-                        parcelState.deleteParcel(parcel: parcel, user: authState.lockerUser!, type: status.lowercased())
+                        isPresentedDeleteConfirm.toggle()
                     } label: {
                         HStack(alignment: .center, spacing: 10) {
                             Image(systemName: "trash")
@@ -163,6 +165,14 @@ struct ParcelsInfoView: View {
                 .padding(.bottom)
             }
             .navigationBarTitleDisplayMode(.inline)
+            .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteConfirm) {
+                Button("Delete", role: .destructive) {
+                    parcelState.deleteParcel(parcel: parcel, user: authState.lockerUser!, type: status.lowercased())
+                }
+            } message: {
+                Text("Are you sure you want to delete parcel?")
+            }
+
         }
     }
 }

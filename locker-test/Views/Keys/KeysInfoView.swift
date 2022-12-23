@@ -13,6 +13,8 @@ struct KeysInfoView: View {
     @EnvironmentObject var authState: AuthViewModel
     @ObservedObject var keyState: KeysViewModel
     
+    @State var isPresentedDeleteConfirm: Bool = false
+    
     var key: LockerKey
     var type: String
     
@@ -71,7 +73,7 @@ struct KeysInfoView: View {
                 Spacer()
                 
                 Button {
-                    keyState.deleteKey(key: key, user: authState.lockerUser!, type: type)
+                    isPresentedDeleteConfirm.toggle()
                 } label: {
                     VStack {
                         HStack(alignment: .firstTextBaseline) {
@@ -90,6 +92,14 @@ struct KeysInfoView: View {
             }
             .padding(.horizontal)
         }
+        .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteConfirm) {
+            Button("Delete", role: .destructive) {
+                keyState.deleteKey(key: key, user: authState.lockerUser!, type: type)
+            }
+        } message: {
+            Text("Are you sure you want to delete key?")
+        }
+
     }
     
     func formatDate(date: Date) -> String {

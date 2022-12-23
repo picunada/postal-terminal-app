@@ -102,20 +102,15 @@ struct ProfileView: View {
                     .background(Color(uiColor: .systemBackground))
                     .cornerRadius(8)
                     .accessibilityLabel("Log out")
-                    .alert("", isPresented: $showAlert, actions: {
-                        VStack {
-                            Button {
-                                authState.logout()
-                            } label: {
-                                Text("Log out")
-                            }
-                            
-                            Button("Cancel", role: .cancel) { }
+                    .confirmationDialog("Are you sure>", isPresented: $showAlert, actions: {
+                        Button(role: .destructive) {
+                            authState.logout()
+                        } label: {
+                            Text("Log out")
                         }
                     }, message: {
                         Text("Are you sure you want to Log out?")
                     })
-                    
                     Spacer()
                 }
                 .padding(.horizontal)
