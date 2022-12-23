@@ -53,6 +53,7 @@ struct ParcelsInfoView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                     }
+                    .padding(.top, 30)
                     .frame(maxWidth: .infinity)
                     if #available(iOS 16.0, *) {
                         List {
@@ -162,7 +163,6 @@ struct ParcelsInfoView: View {
                     .padding(.bottom, 49)
                     .accessibilityLabel("Delete parcel")
                 }
-                .padding(.bottom)
             }
             .navigationBarTitleDisplayMode(.inline)
             .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteConfirm) {
