@@ -12,6 +12,8 @@ struct KeysView: View {
     @EnvironmentObject var authState: AuthViewModel
     @ObservedObject var keyState: KeysViewModel
     
+    @State private var calendarId: Int = 0
+    
     @State var showCreateKey: Bool = false
     @State var newKey: LockerKey = LockerKey(keyName: "", isOneTime: false)
     @State var setExpirationDate: Bool = false
@@ -46,7 +48,8 @@ struct KeysView: View {
                         
 
                     }
-                    .padding(.top, 35)
+                    .padding(.top, 40)
+                    .padding(.bottom, 50)
                     
                     KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
                 }
@@ -64,6 +67,7 @@ struct KeysView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     Text("By creating and sharing a guest key, anyone can open Lockerbot for delivery or pickup. You can specify how long the key as active or even create a key for one-time use.").foregroundColor(.secondary)
+                        .padding(.top, 40)
                     
                     VStack {
                         TextInputField("Key name", text: $newKey.keyName)
@@ -99,6 +103,10 @@ struct KeysView: View {
                     
                     if setExpirationDate {
                         DatePicker("Set date", selection: Binding<Date>(get: {newKey.expirationDate ?? Date()}, set: {newKey.expirationDate = $0}), in: Date()..., displayedComponents: .date)
+                            .id(calendarId)
+                            .onChange(of: newKey.expirationDate, perform: { _ in
+                              calendarId += 1
+                            })
                             .padding(.top)
                             .foregroundColor(Color(UIColor.secondaryLabel))
                     }

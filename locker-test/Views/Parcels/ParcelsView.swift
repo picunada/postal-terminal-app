@@ -51,7 +51,8 @@ struct ParcelsView: View {
                         .clipShape(Circle())
                         
                     }
-                    .padding(.top, 35)
+                    .padding(.top, 40)
+                    .padding(.bottom, 50)
                 
                     ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
                 }
@@ -84,8 +85,10 @@ struct ParcelsView: View {
                                 }
                             }
                             .foregroundColor(Color(UIColor.secondaryLabel))
+                            .padding(.bottom)
                             DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                 .padding(.top)
+                                .padding(.bottom)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 .accentColor(.indigo)
                                 .pickerStyle(.menu)
@@ -148,6 +151,7 @@ struct ParcelsView: View {
             .animation(.default, value: newParcel.trackingNumber.isEmpty)
             .padding()
             .padding(.bottom, 93)
+            .padding(.top, 40)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Add a new parcel")
             .toolbar {
@@ -355,7 +359,6 @@ struct QrButton: ViewModifier
                         .frame(width: 32, height: 26)
                         .foregroundColor(Color(uiColor: .systemIndigo))
                 }
-                .padding(.trailing, 8)
             } else {
                 NavigationLink {
                     ScannerView(text: $text)
@@ -365,7 +368,6 @@ struct QrButton: ViewModifier
                         .frame(width: 26, height: 26)
                         .foregroundColor(Color(uiColor: .systemIndigo))
                 }
-                .padding(.trailing, 8)
             }
         }
     }

@@ -29,7 +29,8 @@ struct NotificationsView: View {
                     
                     NotificationsListView()
                 }
-                .padding(.top, 35)
+                .padding(.top, 40)
+                .padding(.bottom, 50)
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)

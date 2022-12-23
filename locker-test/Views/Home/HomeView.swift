@@ -21,6 +21,7 @@ struct HomeView: View {
                     content()
                 }
                 .padding(.bottom, 40)
+                .padding(.top, 55)
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
 
