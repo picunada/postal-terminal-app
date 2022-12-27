@@ -89,14 +89,27 @@ struct AuthDeviceView: View {
                 Spacer()
 
                 VStack(spacing: 10) {
-                    VStack {
-                        Text("STEP 2")
-                            .font(.caption)
-                            .foregroundColor(.white)
+                    if mvm.connectionState == .connected {
+                        VStack {
+                            Image(systemName: "checkmark")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: 55, height: 55)
+                        .background(Color(.systemGreen))
+                        .clipShape(Circle())
+                    } else {
+                        VStack {
+                            Text("STEP 2")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: 55, height: 55)
+                        .background((mvm.peripheral != nil) ?  Color(.systemGreen) : Color(.systemGray))
+                        .clipShape(Circle())
                     }
-                    .frame(width: 55, height: 55)
-                    .background((mvm.peripheral != nil) ?  Color(.systemGreen) : Color(.systemGray))
-                    .clipShape(Circle())
+                    
                     
                     VStack {
                         Text("Locker connected \n to the Cloud")
@@ -111,8 +124,19 @@ struct AuthDeviceView: View {
             }
             .frame(height: 105)
             
-            if let peripheral = mvm.peripheral {
-                DeviceWifiView(peripheral: peripheral)
+            if mvm.connectionState == .connected {
+                
+                Image("Home Screen")
+                    .frame(width: 256, height: 270)
+                
+                Text("Your locker is connected and ready to receive packages!")
+                    .font(.custom("Connected", size: 20))
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 60)
+                
+            } else if let peripheral = mvm.peripheral {
+                DeviceWifiView(peripheral: peripheral, vm: mvm)
             } else {
                 VStack {
                     
@@ -144,13 +168,17 @@ struct AuthDeviceView: View {
 struct DeviceWifiView: View {
     
     @StateObject private var viewModel: DeviceViewModel
+    @ObservedObject var mvm: MainBluetoothViewModel
     @State private var didAppear: Bool = false
 
     @State var wifiNetwork: WifiNetwork?
+    
+    @State private var cancellables: Set<AnyCancellable> = .init()
 
     
-    init(peripheral: CBPeripheral) { 
+    init(peripheral: CBPeripheral, vm: MainBluetoothViewModel) {
             let viewModel = DeviceViewModel(peripheral: peripheral)
+            self.mvm = vm
             _viewModel = .init(wrappedValue: viewModel)
         }
     
@@ -163,6 +191,11 @@ struct DeviceWifiView: View {
                     }
                     viewModel.connect()
                     didAppear = true
+                    viewModel.$connectionState
+                        .sink { state in
+                            mvm.connectionState = state
+                        }
+                        .store(in: &cancellables)
                 }
         }
     }
@@ -179,6 +212,7 @@ struct DeviceWifiView: View {
                     
                     HStack {
                         Text("AVAILABLE WI-FI NETWORKS")
+                            
                         
                         if viewModel.networks == nil {
                             Image(systemName: "rays")
@@ -195,7 +229,7 @@ struct DeviceWifiView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top, 45)
-                    
+                    .padding(.bottom, 15)
                 
                 if let wifiNetworks = viewModel.networks {
                     VStack {
@@ -226,10 +260,8 @@ struct DeviceWifiView: View {
                         
                     
                     } else {
-                        VStack {
-                            LoadingView()
-                        }
-                        .padding(.top, 15)
+                        ProgressView()
+                            .font(.largeTitle)
                     }
                 }
             }
@@ -266,41 +298,85 @@ struct ConnectWifiView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                
-                SecureInputField("Password", text: $data.password.toUnwrapped(defaultValue: ""))
-                    .frame(height: 55)
-                Button {
-                    if data.password != nil {
-                        data.SSID = network.SSID
-                        data.fb_user_id = authState.user!.uid
-                        vm.write(data.toData()!)
+            if vm.connectionState == .bluetoothConnected {
+                VStack {
+                    
+                    SecureInputField("Password", text: $data.password.toUnwrapped(defaultValue: ""))
+                        .frame(height: 55)
+                        .cornerRadius(8)
+                    
+                    Button {
+                        if data.password != nil {
+                            data.SSID = network.SSID
+                            data.fb_user_id = authState.user!.uid
+                            vm.write(data.toData()!)
+                            vm.connectionState = .wifiConnection
+                        }
+                        
+                    } label: {
+                        Text("Connect")
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(data.password!.isEmpty ? .secondary : Color("AccentColor"))
+                            .disabled(data.password!.isEmpty)
+                            .cornerRadius(8)
+                            .accessibilityLabel("Connect wi-fi")
+                            .padding(.top, 46)
                     }
                     
-                } label: {
-                    Text("Connect")
-                        .bold()
-                        .foregroundColor(.white)
+                    
+                    Spacer()
                 }
                 .padding()
-                .background(Color("AccentColor").cornerRadius(8))
-                .accessibilityLabel("Connect wi-fi")
-                
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(network.SSID)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        presentationMode.wrappedValue.dismiss()
-                                    } label: {
-                                        Image(systemName: "multiply")
-                                            .foregroundColor(.black)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(network.SSID)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        Button {
+                                            presentationMode.wrappedValue.dismiss()
+                                        } label: {
+                                            Image(systemName: "multiply")
+                                                .foregroundColor(.black)
+                                        }
                                     }
                                 }
-                            }
+            } else if vm.connectionState == .wifiConnection {
+                VStack(spacing: 0) {
+                    Image("BluetoothLockerImage")
+                        .padding(.top, 90)
+                    GIFView(type: .name("wi-fi"))
+                        .frame(width: 255, height: 221)
+                }
+                .navigationTitle("Locker connection")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        Button {
+                                            presentationMode.wrappedValue.dismiss()
+                                        } label: {
+                                            Image(systemName: "multiply")
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+            }
+        }
+        .onAppear {
+            vm.$connectionState
+                .sink { state in
+                    if state == .connected {
+                        presentationMode.wrappedValue.dismiss()
+                        vm.peripheral.readValue(for: vm.serialNumberCharacteristic!)
+                    }
+                }
+                .store(in: &cancellables)
+            
+            vm.$serial
+                .sink { serial in
+                    authState.updateLocker(lockerId: serial!)
+                }
+                .store(in: &cancellables)
         }
         .errorAlert(error: $vm.error)
     }

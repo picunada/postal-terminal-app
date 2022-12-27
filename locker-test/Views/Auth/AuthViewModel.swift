@@ -109,24 +109,28 @@ class AuthViewModel: ObservableObject {
     
     @Published var updateSuccess: Bool = false
     
+    private var listenerRegistration: ListenerRegistration?
+    
     func fetchUser(userId: String) {
         loading = .loading
         
-        let docRef = db.collection("users").document(userId)
-        
-        docRef.getDocument(as: LockerUser.self) { result in
-            switch result {
-            case .success(let user):
-                // A `City` value was successfully initialized from the DocumentSnapshot.
-                print("User: \(user)")
-                self.lockerUser = user
-                self.loading = .loaded
-            case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
-                print("Error decoding city: \(error)")
-                self.loading = .failed
+        self.listenerRegistration = db.collection("users").document(userId)
+            .addSnapshotListener {[weak self] (snap, error) in
+                guard let document = snap else {
+                        print("Error fetching document: \(error!)")
+                        return
+                      }
+                let result = Result { try document.data(as: LockerUser.self) }
+                
+                switch result {
+                case .success(let user):
+                    self?.lockerUser = user
+                case .failure(let error):
+                    self?.error = error
+                }
+                
+                self?.loading = .loaded
             }
-        }
     }
     
     func createUser(user: LockerUser) {
@@ -146,6 +150,7 @@ class AuthViewModel: ObservableObject {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
             self.lockerUser = nil
+            self.listenerRegistration?.remove()
         })
     }
     
@@ -168,6 +173,22 @@ class AuthViewModel: ObservableObject {
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
+            }
+        }
+    }
+    
+    func updateLocker(lockerId: String) {
+        if let user = self.lockerUser {
+            let docRef = db.collection("users").document(user.id!)
+            
+            docRef.updateData([
+                "lockerId": lockerId
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
             }
         }
     }

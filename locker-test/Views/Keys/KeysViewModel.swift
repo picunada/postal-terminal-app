@@ -111,8 +111,19 @@ class KeysViewModel: ObservableObject {
             }
     }
     
-    func createKey (key: LockerKey, user: LockerUser) {
+    func createKey(key: LockerKey, user: LockerUser) {
         let collectionRef = db.collection("keys/\(user.lockerId!)/active")
+        do {
+          let newDocReference = try collectionRef.addDocument(from: key)
+          print("Parcel stored with new document reference: \(newDocReference)")
+        }
+        catch {
+          print(error)
+        }
+      }
+    
+    func createMainKey(key: LockerKey, user: LockerUser) {
+        let collectionRef = db.collection("keys/\(user.lockerId!)/main")
         do {
           let newDocReference = try collectionRef.addDocument(from: key)
           print("Parcel stored with new document reference: \(newDocReference)")

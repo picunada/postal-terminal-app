@@ -20,6 +20,7 @@ final class BluetoothManager: NSObject {
     var characteristicsSubject: PassthroughSubject<(CBService, [CBCharacteristic]), Never> = .init()
     var networksSubject: PassthroughSubject<WifiNetworks, Never> = .init()
     var responseSubject: PassthroughSubject<BLEResponse, Never> = .init()
+    var serialSubject: PassthroughSubject<String, Never> = .init()
     
     func start() {
         centralManager = .init(delegate: self, queue: .main)
@@ -68,7 +69,6 @@ extension BluetoothManager: CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-//        print(peripheral.readValue(for: characteristic))
         peripheral.readValue(for: characteristic)
     }
 
@@ -92,6 +92,7 @@ extension BluetoothManager: CBPeripheralDelegate {
                 print(error)
             }
             
+            self.serialSubject.send(string)
         } else {
             print("not a valid UTF-8 sequence")
         }

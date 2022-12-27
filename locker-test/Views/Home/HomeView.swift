@@ -11,6 +11,8 @@ import CoreBluetooth
 struct HomeView: View {
     
     @StateObject private var vm: MainViewModel = .init()
+    @StateObject private var telemetryVM: TelemetryViewModel = .init()
+    @EnvironmentObject var authState: AuthViewModel
     @State private var devicesViewIsPresented = false
     
     var body: some View {
@@ -29,6 +31,7 @@ struct HomeView: View {
             .accentColor(.primary)
             .onAppear {
                 vm.start()
+                telemetryVM.subscribe(user: authState.lockerUser!)
             }
         }
         
@@ -39,51 +42,102 @@ struct HomeView: View {
     @ViewBuilder
     private func content() -> some View {
         VStack(alignment: .center) {
-            HStack(alignment: .center) {
-                Text("Duong 2D")
-                    .bold()
-                    .foregroundColor(Color(.systemGray))
+            if (authState.lockerUser?.lockerId ?? "").isEmpty {
+                HStack(alignment: .center) {
+                    Text("Locker address")
+                        .bold()
+                        .foregroundColor(Color(.systemGray))
+                    Spacer()
+                    HStack {
+                        Image(systemName: "antenna.radiowaves.left.and.right.slash")
+                            .foregroundColor(Color(.systemGray))
+                        Text("Offline")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(Color(.systemGray))
+                    }
+                    HStack {
+                        Image(systemName: "battery.0")
+                            .foregroundColor(Color(.systemGray))
+                        Text("\(telemetryVM.telemetry?.battery ?? "N/A")%" )
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 45)
+                Image("Home Screen")
+                    .frame(width: 257, height: 271)
+                
                 Spacer()
-                HStack {
-                    Image(systemName: "antenna.radiowaves.left.and.right.slash")
-                        .foregroundColor(Color(.systemGray))
-                    Text("Offline")
-                        .font(.subheadline)
+                
+                NavigationLink {
+                    AuthDeviceView()
+                        .navigationTitle("Locker connection")
+                        .navigationBarTitleDisplayMode(.inline)
+                } label: {
+                    Text("Add locker")
+                        .font(.title3)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .frame(height: 48)
+                .background(Color("AccentColor"))
+                .cornerRadius(8)
+                .padding(.horizontal)
+            } else {
+                HStack(alignment: .center) {
+                    Text("Locker address")
                         .bold()
                         .foregroundColor(Color(.systemGray))
+                    Spacer()
+                    HStack {
+                        Image(systemName: "antenna.radiowaves.left.and.right.slash")
+                            .foregroundColor(Color(.systemGray))
+                        Text("Offline")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(Color(.systemGray))
+                    }
+                    HStack {
+                        Image(systemName: "battery.0")
+                            .foregroundColor(Color(.systemGray))
+                        Text("\(telemetryVM.telemetry?.battery  ?? "N/A")%")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(Color(.systemGray))
+                    }
                 }
-                HStack {
-                    Image(systemName: "battery.0")
-                        .foregroundColor(Color(.systemGray))
-                    Text("N/A")
-                        .font(.subheadline)
+                .padding(.horizontal)
+                .padding(.bottom, 45)
+                Image("Home Screen")
+                    .frame(width: 257, height: 271)
+                
+                Spacer()
+                
+                NavigationLink {
+//                    AuthDeviceView()
+//                        .navigationTitle("Locker connection")
+//                        .navigationBarTitleDisplayMode(.inline)
+                } label: {
+                    Text("Open locker")
+                        .font(.title3)
                         .bold()
-                        .foregroundColor(Color(.systemGray))
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .padding()
                 }
+                .frame(height: 48)
+                .background(Color("AccentColor"))
+                .cornerRadius(8)
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            .padding(.bottom, 45)
-            Image("Home Screen")
-                .frame(width: 257, height: 271)
-            
-            Spacer()
-            
-            NavigationLink {
-                AuthDeviceView()
-                    .navigationTitle("Locker connection")
-                    .navigationBarTitleDisplayMode(.inline)
-            } label: {
-                Text("Add locker")
-                    .font(.title3)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            .frame(height: 48)
-            .background(Color("AccentColor"))
-            .cornerRadius(8)
-            .padding(.horizontal)
+        }
+        .onAppear {
+            print(authState.lockerUser)
         }
     }
     

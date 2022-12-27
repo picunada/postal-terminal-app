@@ -44,6 +44,7 @@
 		E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C382908D75B00783E70 /* QRScannerView.swift */; };
 		E6FF7296293F638E0080C11B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7295293F638E0080C11B /* AuthView.swift */; };
 		E6FF7299293F813C0080C11B /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = E6FF7298293F813C0080C11B /* Inject */; };
+		E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		E6FC3C362908B43600783E70 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E6FC3C382908D75B00783E70 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		E6FF7295293F638E0080C11B /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				E6465F0028FABC3100499DE1 /* HomeView.swift */,
+				E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */,
 				E62D0C8529548D2F00469759 /* QRManager.swift in Sources */,
 				E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */,
+				E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */,
 				E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */,
 				E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */,
 				E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */,

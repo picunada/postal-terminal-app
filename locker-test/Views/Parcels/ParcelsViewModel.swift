@@ -130,6 +130,17 @@ class ParcelViewModel: ObservableObject {
         }
       }
     
+    func updateParcel(parcel: Parcel, user: LockerUser, status: String) {
+        if let documentId = parcel.id {
+            do {
+                try db.collection("parcels/\(user.lockerId!)/\(status.lowercased())").document(documentId).setData(from: parcel)
+            }
+            catch {
+              print(error)
+            }
+          }
+    }
+    
     func deleteParcel(parcel: Parcel, user: LockerUser, type: String) {
         
         if type == "expected" {

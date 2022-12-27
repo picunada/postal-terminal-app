@@ -18,6 +18,14 @@ enum Constants {
 }
 
 
+enum ConnectionState {
+        case connected
+        case wifiConnection
+        case bluetoothConnected
+        case bluetoothConnection
+        case idle
+        case failed
+    }
 
 
 final class DeviceViewModel: ObservableObject {
@@ -28,19 +36,17 @@ final class DeviceViewModel: ObservableObject {
             case failed
             case loaded
         }
-    
-    enum ConnectionState {
-            case bluetoothConnection
-            case loading
-            case failed
-        }
+
     
     @AppStorage("identifier") var identifier: String = ""
     @Published var state: CBManagerState = .unknown
+    @Published var connectionState: ConnectionState = .idle
     @Published var peripheral: CBPeripheral
     @Published var networks: WifiNetworks?
     @Published var loadingState: State = .idle
     @Published var error: Swift.Error?
+    @Published var response: BLEResponse?
+    @Published var serial: String?
 
     private lazy var manager: BluetoothManager = .shared
     private lazy var cancellables: Set<AnyCancellable> = .init()
@@ -87,12 +93,29 @@ final class DeviceViewModel: ObservableObject {
         manager.networksSubject
             .sink { [weak self] wifiNetworks in
                 self?.networks = wifiNetworks
+                self?.connectionState = .bluetoothConnected
             }
             .store(in: &cancellables)
         
         manager.responseSubject
             .sink { [weak self] response in
-                self?.error = response.error
+                self?.response = response
+                
+                if let error = response.error {
+                    self?.error = error
+                    self?.connectionState = .bluetoothConnected
+                }
+                
+                if response.status == "success" {
+                    self?.connectionState = .connected
+                    self?.write(BLEData(command: "reboot").toData()!)
+                }
+            }
+            .store(in: &cancellables)
+        
+        manager.serialSubject
+            .sink { [weak self] serial in
+                self?.serial = serial
             }
             .store(in: &cancellables)
         
@@ -104,7 +127,7 @@ final class DeviceViewModel: ObservableObject {
             return
         }
         loadingState = .loading
-        print(String(data: data, encoding: .utf8))
+        print(String(data: data, encoding: .utf8)!)
         peripheral.writeValue(data, for: characteristic, type: .withResponse)
     }
 }

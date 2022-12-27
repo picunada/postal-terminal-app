@@ -16,39 +16,40 @@ final class MainBluetoothViewModel: ObservableObject {
                 update(with: state)
             }
         }
-        @AppStorage("identifier") private var identifier: String = ""
-        @Published var peripheral: CBPeripheral?
+    @AppStorage("identifier") private var identifier: String = ""
+    @Published var peripheral: CBPeripheral?
+    @Published var connectionState: ConnectionState = .idle
 
-        private lazy var manager: BluetoothManager = .shared
-        private lazy var cancellables: Set<AnyCancellable> = .init()
+    private lazy var manager: BluetoothManager = .shared
+    private lazy var cancellables: Set<AnyCancellable> = .init()
 
-        //MARK: - Lifecycle
+    //MARK: - Lifecycle
+
+    func start() {
+        manager.stateSubject.sink { [weak self] state in
+            self?.state = state
+            print(state)
+        }
+        .store(in: &cancellables)
+        manager.start()
+    }
+
+    //MARK: - Private
     
-        func start() {
-            manager.stateSubject.sink { [weak self] state in
-                self?.state = state
-                print(state)
+    private func update(with state: CBManagerState) {
+        guard peripheral == nil else {
+            return
+        }
+        guard state == .poweredOn else {
+            return
+        }
+        manager.peripheralSubject
+            .sink { [weak self] in
+                self?.peripheral = $0
+                print($0)
             }
             .store(in: &cancellables)
-            manager.start()
-        }
-
-        //MARK: - Private
-        
-        private func update(with state: CBManagerState) {
-            guard peripheral == nil else {
-                return
-            }
-            guard state == .poweredOn else {
-                return
-            }
-            manager.peripheralSubject
-                .sink { [weak self] in
-                    self?.peripheral = $0
-                    print($0)
-                }
-                .store(in: &cancellables)
-            manager.scan(services: Constants.serviceUUIDs)
-        }
+        manager.scan(services: Constants.serviceUUIDs)
+    }
     
 }

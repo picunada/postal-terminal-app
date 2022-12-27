@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Inject
+import Combine
 
 struct ContentView: View {
     
@@ -15,6 +16,8 @@ struct ContentView: View {
     
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
+    
+    @State private var cancellables: Set<AnyCancellable> = .init()
     
     @Namespace private var animation
     
@@ -37,40 +40,71 @@ struct ContentView: View {
                             Label("Home", systemImage: "house")
                         }
                         .tag(0)
-                        .background(TabBarAccessor { tabBar in
-                            tabBar.items?[1].isEnabled = authState.lockerUser?.lockerId != ""
-                            tabBar.items?[2].isEnabled = authState.lockerUser?.lockerId != ""
-                            tabBar.items?[3].isEnabled = authState.lockerUser?.lockerId != ""
+                    
+                    if  (authState.lockerUser?.lockerId ?? "").isEmpty {
+                        Label(title: {
+                            Text("Firstly connect locker")
+                        }, icon: {
+                            Image(systemName: "globe.badge.chevron.backward")
                         })
-                    
-                    ParcelsView(parcelState: parcelState)
-                        .onAppear {
-                            parcelState.subscribe(user: authState.lockerUser!)
-                        }
-                        .onDisappear {
-                            parcelState.unsubscribe()
-                        }
-                        .tabItem {
-                            Label("Parcels", systemImage: "shippingbox")
-                        }
-                        .tag(1)
-                    
-                    KeysView(keyState: keysState)
-                        .onAppear {
-                            keysState.subscribe(user: authState.lockerUser!)
-                        }
-                        .onDisappear {
-                            keysState.unsubscribe()
-                        }
-                        .tabItem {
-                            Label("Keys", systemImage: "lock.rotation")
-                        }
-                        .tag(2)
-                    NotificationsView()
-                        .tabItem {
-                            Label("Notifications", systemImage: "bell")
-                        }
-                        .tag(3)
+                            .tabItem {
+                                Label("Parcels", systemImage: "shippingbox")
+                            }
+                            .accentColor(.gray)
+                            .tag(1)
+                        
+                        Label(title: {
+                            Text("Firstly connect locker")
+                        }, icon: {
+                            Image(systemName: "globe.badge.chevron.backward")
+                        })
+                            .tabItem {
+                                Label("Keys", systemImage: "lock.rotation")
+                            }
+                            .accentColor(.gray)
+                            .tag(2)
+                        Label(title: {
+                            Text("Firstly connect locker")
+                        }, icon: {
+                            Image(systemName: "globe.badge.chevron.backward")
+                        })
+                            .tabItem {
+                                Label("Notifications", systemImage: "bell")
+                            }
+                            .accentColor(.gray)
+                            .tag(3)
+                    } else {
+                        ParcelsView(parcelState: parcelState)
+                            .onAppear {
+                                parcelState.subscribe(user: authState.lockerUser!)
+                            }
+                            .onDisappear {
+                                parcelState.unsubscribe()
+                            }
+                            .tabItem {
+                                Label("Parcels", systemImage: "shippingbox")
+                            }
+                            .tag(1)
+                        
+                        KeysView(keyState: keysState)
+                            .onAppear {
+                                keysState.subscribe(user: authState.lockerUser!)
+                            }
+                            .onDisappear {
+                                keysState.unsubscribe()
+                            }
+                            .tabItem {
+                                Label("Keys", systemImage: "lock.rotation")
+                            }
+                            .tag(2)
+                        NotificationsView()
+                            .disabled(true)
+                            .tabItem {
+                                Label("Notifications", systemImage: "bell")
+                            }
+                            .tag(3)
+                    }
+                   
                         
                     
                     ProfileView()
@@ -83,33 +117,6 @@ struct ContentView: View {
             .enableInjection()
         }
         .ignoresSafeArea()
-    }
-}
-
-struct TabBarAccessor: UIViewControllerRepresentable {
-    var callback: (UITabBar) -> Void
-    private let proxyController = ViewController()
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<TabBarAccessor>) ->
-                              UIViewController {
-        proxyController.callback = callback
-        return proxyController
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<TabBarAccessor>) {
-    }
-    
-    typealias UIViewControllerType = UIViewController
-
-    private class ViewController: UIViewController {
-        var callback: (UITabBar) -> Void = { _ in }
-
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            if let tabBar = self.tabBarController {
-                self.callback(tabBar.tabBar)
-            }
-        }
     }
 }
 

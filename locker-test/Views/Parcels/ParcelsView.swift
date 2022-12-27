@@ -19,7 +19,7 @@ struct ParcelsView: View {
     
     @State var showCreateParcel: Bool = false
     @State var newParcel: Parcel = Parcel(serviceName: "DHL", trackingNumber: "", estimatedDeliveryDate: Date()...Date())
-    
+    @State private var calendarId: Int = 0
     @State var selectedDate: Date = Date()
     
     var body: some View {
@@ -87,6 +87,13 @@ struct ParcelsView: View {
                             .foregroundColor(Color(UIColor.secondaryLabel))
                             .padding(.bottom)
                             DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                .id(calendarId)
+                                .onChange(of: selectedDate, perform: { _ in
+                                  calendarId += 1
+                                })
+                                .onTapGesture {
+                                  calendarId += 1
+                                }
                                 .padding(.top)
                                 .padding(.bottom)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
@@ -111,6 +118,13 @@ struct ParcelsView: View {
                             }
                             .foregroundColor(Color(UIColor.secondaryLabel))
                             DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                .id(calendarId)
+                                .onChange(of: selectedDate, perform: { _ in
+                                  calendarId += 1
+                                })
+                                .onTapGesture {
+                                  calendarId += 1
+                                }
                                 .padding(.top)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 .accentColor(.indigo)
