@@ -210,8 +210,7 @@ struct AuthView: View {
                     }
                 }
                 if (result != nil) {
-                    lockerUser.id = result?.user.uid
-                    authState.createUser(user: lockerUser)
+                    authState.createUser(userId: (result?.user.uid)!, user: lockerUser)
                 }
                 
             }

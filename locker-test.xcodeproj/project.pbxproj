@@ -46,6 +46,9 @@
 		E6FF7299293F813C0080C11B /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = E6FF7298293F813C0080C11B /* Inject */; };
 		E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */; };
 		E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8529295B34C7005B1D45 /* MainKeyView.swift */; };
+		E6FF852C295C9D7C005B1D45 /* KeysNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */; };
+		E6FF852E295CA183005B1D45 /* ParcelsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */; };
+		E6FF8530295CA1CA005B1D45 /* NotificationsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +94,9 @@
 		E6FF7295293F638E0080C11B /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryViewModel.swift; sourceTree = "<group>"; };
 		E6FF8529295B34C7005B1D45 /* MainKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainKeyView.swift; sourceTree = "<group>"; };
+		E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNotAvailableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +237,7 @@
 				E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */,
 				E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */,
 				E6465F0228FABC3D00499DE1 /* ParcelsView.swift */,
+				E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */,
 			);
 			path = Parcels;
 			sourceTree = "<group>";
@@ -241,6 +248,7 @@
 				E6F82C1628FC9E870075D224 /* KeysViewModel.swift */,
 				E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */,
 				E6F82C1028FC9D600075D224 /* KeysView.swift */,
+				E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				E6F82C1228FC9D6D0075D224 /* NotificationsView.swift */,
+				E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -425,16 +434,19 @@
 				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
 				E62D34EA292F8472004E7505 /* AuthDeviceView.swift in Sources */,
 				E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */,
+				E6FF852C295C9D7C005B1D45 /* KeysNotAvailableView.swift in Sources */,
 				E67352F428FA6CC1000C25BC /* lockerApp.swift in Sources */,
 				E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */,
 				E631C22E294B684D003528CF /* GifView.swift in Sources */,
 				E6ECC193290A633500D3C13A /* BluetoothManager.swift in Sources */,
 				E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */,
 				E6F82C1728FC9E870075D224 /* KeysViewModel.swift in Sources */,
+				E6FF8530295CA1CA005B1D45 /* NotificationsNotAvailableView.swift in Sources */,
 				E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */,
 				E62D0C8529548D2F00469759 /* QRManager.swift in Sources */,
 				E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */,
 				E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */,
+				E6FF852E295CA183005B1D45 /* ParcelsNotAvailableView.swift in Sources */,
 				E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */,
 				E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */,
 				E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */,

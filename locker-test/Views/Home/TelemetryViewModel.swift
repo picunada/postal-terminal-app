@@ -27,6 +27,8 @@ class TelemetryViewModel: ObservableObject {
     private var listenerRegistration: ListenerRegistration?
     
     func subscribe(user: LockerUser) {
+//        guard let id = Auth.auth().currentUser?.uid else { return }
+        
         self.listenerRegistration = db.collection("telemetry").document(user.lockerId!)
             .addSnapshotListener {[weak self] (snap, error) in
                 guard let document = snap else {

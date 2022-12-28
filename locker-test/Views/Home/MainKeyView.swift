@@ -24,6 +24,7 @@ struct MainKeyView: View {
                 .background(Color(.white))
                 .cornerRadius(17)
                 .shadow(color: .primary.opacity(0.2), radius: 30)
+                .padding(.top, 60)
 
                 
                 Spacer()

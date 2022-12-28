@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreBluetooth
+import Combine
 
 struct HomeView: View {
     
@@ -14,6 +15,7 @@ struct HomeView: View {
     @StateObject private var telemetryVM: TelemetryViewModel = .init()
     @EnvironmentObject var authState: AuthViewModel
     @State private var devicesViewIsPresented = false
+    @State var cancellables: Set<AnyCancellable> = .init()
     
     var body: some View {
         ZStack {
@@ -31,7 +33,15 @@ struct HomeView: View {
             .accentColor(.primary)
             .onAppear {
                 vm.start()
-                telemetryVM.subscribe(user: authState.lockerUser!)
+                authState.$lockerUser
+                    .filter({ user in
+                        return user != nil
+                    })
+                    .sink { user in
+                        telemetryVM.subscribe(user: user!)
+                    }
+                    .store(in: &cancellables)
+                print(authState.lockerUser)
             }
         }
         
@@ -120,6 +130,7 @@ struct HomeView: View {
                 
                 NavigationLink {
                     MainKeyView()
+                        .navigationTitle("Owner's key")
                 } label: {
                     Text("Open locker")
                         .font(.title3)

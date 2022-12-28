@@ -133,15 +133,13 @@ class AuthViewModel: ObservableObject {
             }
     }
     
-    func createUser(user: LockerUser) {
-        if let id = user.id {
-            let docRef = db.collection("users").document(id)
-            do {
-                try docRef.setData(from: user)
-            } catch let error {
-                print("Error writing city to Firestore: \(error)")
-            }
-          }
+    func createUser(userId: String, user: LockerUser) {
+        let docRef = db.collection("users").document(userId)
+        do {
+            try docRef.setData(from: user)
+        } catch let error {
+            print("Error writing city to Firestore: \(error)")
+        }
     }
     
     func logout() {

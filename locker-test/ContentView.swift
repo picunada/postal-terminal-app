@@ -43,32 +43,20 @@ struct ContentView: View {
                         .tag(0)
                     
                     if  (authState.lockerUser?.lockerId ?? "").isEmpty {
-                        Label(title: {
-                            Text("Firstly connect locker")
-                        }, icon: {
-                            Image(systemName: "globe.badge.chevron.backward")
-                        })
+                        ParcelsNotAvailableView()
                             .tabItem {
                                 Label("Parcels", systemImage: "shippingbox")
                             }
                             .accentColor(.gray)
                             .tag(1)
                         
-                        Label(title: {
-                            Text("Firstly connect locker")
-                        }, icon: {
-                            Image(systemName: "globe.badge.chevron.backward")
-                        })
+                        KeysNotAvailableView()
                             .tabItem {
                                 Label("Keys", systemImage: "lock.rotation")
                             }
                             .accentColor(.gray)
                             .tag(2)
-                        Label(title: {
-                            Text("Firstly connect locker")
-                        }, icon: {
-                            Image(systemName: "globe.badge.chevron.backward")
-                        })
+                        NotificationsNotAvailableView()
                             .tabItem {
                                 Label("Notifications", systemImage: "bell")
                             }
