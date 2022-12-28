@@ -36,6 +36,7 @@ struct ContentView: View {
                 
                 TabView(selection: $selection) {
                     HomeView()
+                        .environmentObject(keysState)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }

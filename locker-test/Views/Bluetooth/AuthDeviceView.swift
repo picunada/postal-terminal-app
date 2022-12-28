@@ -278,6 +278,8 @@ struct DeviceWifiView: View {
 
 struct ConnectWifiView: View {
     
+    @StateObject var keysVM: KeysViewModel = .init()
+    
     @ObservedObject var vm: DeviceViewModel
     @EnvironmentObject var authState: AuthViewModel
     @EnvironmentObject var errorHandling: ErrorHandling
@@ -375,6 +377,8 @@ struct ConnectWifiView: View {
             vm.$serial
                 .sink { serial in
                     authState.updateLocker(lockerId: serial!)
+                    let key = LockerKey(keyName: "main", isOneTime: false)
+                    keysVM.createMainKey(key: key, user: authState.lockerUser!)
                 }
                 .store(in: &cancellables)
         }

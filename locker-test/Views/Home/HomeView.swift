@@ -119,9 +119,7 @@ struct HomeView: View {
                 Spacer()
                 
                 NavigationLink {
-//                    AuthDeviceView()
-//                        .navigationTitle("Locker connection")
-//                        .navigationBarTitleDisplayMode(.inline)
+                    MainKeyView()
                 } label: {
                     Text("Open locker")
                         .font(.title3)
@@ -135,9 +133,6 @@ struct HomeView: View {
                 .cornerRadius(8)
                 .padding(.horizontal)
             }
-        }
-        .onAppear {
-            print(authState.lockerUser)
         }
     }
     

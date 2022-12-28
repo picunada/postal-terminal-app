@@ -24,6 +24,7 @@ struct LockerKey: Identifiable, Codable, Hashable {
 class KeysViewModel: ObservableObject {
     @Published var activeKeys: [LockerKey] = [LockerKey]()
     @Published var inactiveKeys: [LockerKey] = [LockerKey]()
+    @Published var mainKey: LockerKey?
     @Published var errorMessage: String?
     
     private var db = Firestore.firestore()
@@ -123,15 +124,28 @@ class KeysViewModel: ObservableObject {
       }
     
     func createMainKey(key: LockerKey, user: LockerUser) {
-        let collectionRef = db.collection("keys/\(user.lockerId!)/main")
-        do {
-          let newDocReference = try collectionRef.addDocument(from: key)
-          print("Parcel stored with new document reference: \(newDocReference)")
-        }
-        catch {
-          print(error)
+        let docRef = db.collection("keys/\(user.lockerId!)/main").document("main")
+        docRef.setData(key.dictionary) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(docRef.documentID)")
+            }
         }
       }
+    
+    func fetchMainKey(user: LockerUser) {
+        let docRef = db.collection("keys/\(user.lockerId!)/main").document("main")
+
+        docRef.getDocument(as: LockerKey.self) { result in
+            switch result {
+            case .success(let key):
+                self.mainKey = key
+            case .failure(let error):
+                print("Error decoding city: \(error)")
+            }
+        }
+    }
     
     func deleteKey(key: LockerKey, user: LockerUser, type: String) {
         

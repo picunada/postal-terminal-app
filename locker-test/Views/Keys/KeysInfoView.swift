@@ -14,6 +14,7 @@ struct KeysInfoView: View {
     @ObservedObject var keyState: KeysViewModel
     
     @State var isPresentedDeleteConfirm: Bool = false
+    @State var isPresentedSharing: Bool = false
     
     var key: LockerKey
     var type: String
@@ -32,7 +33,7 @@ struct KeysInfoView: View {
 //                Spacer()
                 
                 VStack {
-                    QRView(url: key.keyName, size: CGSize(width: 200, height: 200))
+                    QRView(url: "key_\(key.id!)", size: CGSize(width: 200, height: 200))
                 }
                 .padding()
                 .frame(width: 250, height: 250)
@@ -57,7 +58,7 @@ struct KeysInfoView: View {
                 }
                 
                 Button {
-                    
+                    isPresentedSharing.toggle()
                 } label: {
                     Text("Share guest key")
                         .font(.title3)
@@ -66,7 +67,6 @@ struct KeysInfoView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .frame(height: 48)
                 .background(Color("AccentColor"))
                 .cornerRadius(8)
                 
@@ -92,6 +92,9 @@ struct KeysInfoView: View {
             }
             .padding(.horizontal)
         }
+        .sheet(isPresented: $isPresentedSharing, content: {
+            ShareSheet(items: [QRCodeDataSet(url: "key_\(key.id!)", backgroundColor: CIColor(color: .white), color: CIColor(color: .black), size: CGSize(width: 200, height: 200)).getQRImage()!])
+        })
         .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteConfirm) {
             Button("Delete", role: .destructive) {
                 keyState.deleteKey(key: key, user: authState.lockerUser!, type: type)
@@ -130,6 +133,21 @@ struct QRView: UIViewRepresentable {
     }
 }
 
+
+struct ShareSheet: UIViewControllerRepresentable {
+
+    var items: [Any]
+    
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+         
+    }
+}
 
 //struct KeysInfoView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -45,6 +45,7 @@
 		E6FF7296293F638E0080C11B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7295293F638E0080C11B /* AuthView.swift */; };
 		E6FF7299293F813C0080C11B /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = E6FF7298293F813C0080C11B /* Inject */; };
 		E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */; };
+		E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8529295B34C7005B1D45 /* MainKeyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		E6FC3C382908D75B00783E70 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		E6FF7295293F638E0080C11B /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryViewModel.swift; sourceTree = "<group>"; };
+		E6FF8529295B34C7005B1D45 /* MainKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainKeyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 			children = (
 				E6465F0028FABC3100499DE1 /* HomeView.swift */,
 				E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */,
+				E6FF8529295B34C7005B1D45 /* MainKeyView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */,
 				E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */,
 				E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */,
 				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
@@ -584,6 +588,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "For connecting to locker";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "For connecting to locker";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save QRCode";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -689,6 +694,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "For connecting to locker";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "For connecting to locker";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save QRCode";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
