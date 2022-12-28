@@ -125,8 +125,9 @@ struct KeysView: View {
                             .foregroundColor(.white)
                             .padding()
                     }
+                    .disabled(newKey.keyName.isEmpty)
                     .frame(height: 48)
-                    .background(Color("AccentColor"))
+                    .background(newKey.keyName.isEmpty ? .secondary : Color("AccentColor"))
                     .cornerRadius(8)
                     .padding(.top, 93)
                     

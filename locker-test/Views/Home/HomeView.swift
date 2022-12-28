@@ -95,15 +95,15 @@ struct HomeView: View {
                         .foregroundColor(Color(.systemGray))
                     Spacer()
                     HStack {
-                        Image(systemName: "antenna.radiowaves.left.and.right.slash")
+                        Image(systemName: "antenna.radiowaves.left.and.right")
                             .foregroundColor(Color(.systemGray))
-                        Text("Offline")
+                        Text("Online")
                             .font(.subheadline)
                             .bold()
                             .foregroundColor(Color(.systemGray))
                     }
                     HStack {
-                        Image(systemName: "battery.0")
+                        Image(systemName: "battery.\(String(describing: Int(telemetryVM.telemetry?.battery ?? "0")!.rounding(nearest: 25)))")
                             .foregroundColor(Color(.systemGray))
                         Text("\(telemetryVM.telemetry?.battery  ?? "N/A")%")
                             .font(.subheadline)
@@ -138,6 +138,12 @@ struct HomeView: View {
     
     private func add() {
         devicesViewIsPresented = true
+    }
+}
+
+extension Int{
+   func rounding(nearest:Float) -> Int{
+       return Int(nearest * round(Float(self)/nearest))
     }
 }
 

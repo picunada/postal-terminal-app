@@ -213,7 +213,7 @@ struct ParcelListView: View {
                     Section {
                         ForEach(expectedParcels, id: \.id) { parcel in
                             NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser ?? LockerUser(firstName: "", lastName: ""), status: "Expected")
+                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser ?? LockerUser(firstName: "", lastName: ""), status: "active")
                             } label: {
                                 HStack {
                                     VStack {
@@ -245,7 +245,7 @@ struct ParcelListView: View {
                     Section {
                         ForEach(receivedParcels, id: \.id) { parcel in
                             NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "Received")
+                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "inactive")
                             } label: {
                                 HStack {
                                     VStack {
@@ -288,7 +288,7 @@ struct ParcelListView: View {
                     Section {
                         ForEach(expectedParcels, id: \.id) { parcel in
                             NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "Expected")
+                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "active")
                             } label: {
                                 HStack {
                                     VStack {
@@ -320,7 +320,7 @@ struct ParcelListView: View {
                     Section {
                         ForEach(receivedParcels, id: \.id) { parcel in
                             NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "Received")
+                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "inactive")
                             } label: {
                                 HStack {
                                     VStack {

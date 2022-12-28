@@ -52,7 +52,7 @@ class ParcelViewModel: ObservableObject {
     
     func subscribe(user: LockerUser) {
         if expectedListenerRegistration == nil {
-            expectedListenerRegistration = db.collection("parcels/\(user.lockerId!)/expected")
+            expectedListenerRegistration = db.collection("parcels/\(user.lockerId!)/active")
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'expected' collection"
@@ -85,7 +85,7 @@ class ParcelViewModel: ObservableObject {
                 }
             }
         if receivedListenerRegistration == nil {
-            receivedListenerRegistration = db.collection("parcels/\(user.lockerId!)/received")
+            receivedListenerRegistration = db.collection("parcels/\(user.lockerId!)/inactive")
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'received' collection"
@@ -120,7 +120,7 @@ class ParcelViewModel: ObservableObject {
     }
     
     func createParcel(parcel: Parcel, user: LockerUser) {
-        let collectionRef = db.collection("parcels/\(user.lockerId!)/expected")
+        let collectionRef = db.collection("parcels/\(user.lockerId!)/active")
         do {
           let newDocReference = try collectionRef.addDocument(from: parcel)
           print("Parcel stored with new document reference: \(newDocReference)")
@@ -143,8 +143,8 @@ class ParcelViewModel: ObservableObject {
     
     func deleteParcel(parcel: Parcel, user: LockerUser, type: String) {
         
-        if type == "expected" {
-            db.collection("parcels/\(user.lockerId!)/expected").document(parcel.id!).delete() { err in
+        if type == "active" {
+            db.collection("parcels/\(user.lockerId!)/active").document(parcel.id!).delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {
@@ -152,7 +152,7 @@ class ParcelViewModel: ObservableObject {
                 }
             }
         } else {
-            db.collection("parcels/\(user.lockerId!)/received").document(parcel.id!).delete() { err in
+            db.collection("parcels/\(user.lockerId!)/inactive").document(parcel.id!).delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {

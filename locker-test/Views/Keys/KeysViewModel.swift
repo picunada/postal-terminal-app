@@ -124,13 +124,17 @@ class KeysViewModel: ObservableObject {
       }
     
     func createMainKey(key: LockerKey, user: LockerUser) {
-        let docRef = db.collection("keys/\(user.lockerId!)/main").document("main")
-        docRef.setData(key.dictionary) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(docRef.documentID)")
+        let docRef = db.collection("keys").document("\(user.lockerId!)")
+        do {
+            try docRef.setData(from: key) { err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(docRef.documentID)")
+                }
             }
+        } catch {
+            print(error)
         }
       }
     

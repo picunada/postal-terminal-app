@@ -56,7 +56,7 @@ struct KeysInfoView: View {
                         .foregroundColor(Color(UIColor.secondaryLabel))
                         .padding(.bottom, 59)
                 }
-                
+                  
                 Button {
                     isPresentedSharing.toggle()
                 } label: {
@@ -67,6 +67,7 @@ struct KeysInfoView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
+                .frame(height: 48)
                 .background(Color("AccentColor"))
                 .cornerRadius(8)
                 

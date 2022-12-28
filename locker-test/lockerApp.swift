@@ -50,7 +50,7 @@ struct lockerApp: App {
                 LoadingView()
                     .animation(.default, value: authState.loading == .loading)
             case .loaded:
-                if authState.state != .signedIn {
+                if authState.lockerUser == nil {
                     AuthView()
                         .environmentObject(authState)
                 } else {
@@ -59,7 +59,7 @@ struct lockerApp: App {
                         .environmentObject(authState)
                 }
             case .idle:
-                if authState.state != .signedIn {
+                if authState.lockerUser == nil {
                     AuthView()
                         .environmentObject(authState)
                 } else {
@@ -67,7 +67,7 @@ struct lockerApp: App {
                         .environmentObject(authState)
                 }
             case .failed:
-                if authState.state != .signedIn {
+                if authState.lockerUser == nil {
                     AuthView()
                         .environmentObject(authState)
                 } else {
