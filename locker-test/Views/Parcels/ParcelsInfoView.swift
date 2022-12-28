@@ -196,6 +196,7 @@ struct ParcelDetailEditView: View {
     @State var editedParcel: Parcel
     @State var selectedDate: Date = Date()
     @State private var calendarId: Int = 0
+    @State var isDisabled: Bool = true
     
     var status: String
     
@@ -203,113 +204,123 @@ struct ParcelDetailEditView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                TextField("Tracking number", text: $editedParcel.trackingNumber)
-                    .modifier(QrButton(text: $editedParcel.trackingNumber))
-                    .padding()
-                    .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
-                    .autocapitalization(.none)
-                if #available(iOS 16.0, *) {
-                    Form {
-                        Section {
-                            Picker("Select delivery service", selection: $editedParcel.serviceName) {
-                                ForEach(deliveryServices , id: \.self) {
-                                    Text($0)
-                                }
-                            }
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            .padding(.bottom)
-                            DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
-                                .id(calendarId)
-                                .onChange(of: selectedDate, perform: { _ in
-                                  calendarId += 1
-                                })
-                                .onTapGesture {
-                                  calendarId += 1
-                                }
-                                .padding(.top)
-                                .padding(.bottom)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                                .accentColor(.indigo)
-                                .pickerStyle(.menu)
-                        }
-                        .listRowInsets(EdgeInsets())
-                    }
-                    .scrollContentBackground(.hidden)
-                    .listStyle(.inset)
-                    .padding(.horizontal, -20)
-                    .padding(.top, -20)
-                    .background(Color(UIColor.white))
-                } else {
-                    // Fallback on earlier versions
-                    Form {
-                        Section {
-                            Picker("Select delivery service", selection: $editedParcel.serviceName) {
-                                ForEach(deliveryServices , id: \.self) {
-                                    Text($0)
-                                }
-                            }
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
-                                .id(calendarId)
-                                .onChange(of: selectedDate, perform: { _ in
-                                  calendarId += 1
-                                })
-                                .onTapGesture {
-                                  calendarId += 1
-                                }
-                                .padding(.top)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                                .accentColor(.indigo)
-                                .pickerStyle(.menu)
-                        }
-                        .listRowInsets(EdgeInsets())
-                    }
-                    .onAppear {
-                        UITableView.appearance().backgroundColor = .clear
-                    }
-                    .listStyle(.inset)
-                    .padding(.horizontal, -20)
-                    .padding(.top, -20)
-                    .background(Color(UIColor.white))
-                }
-                
+            ScrollView {
                 VStack {
-                    Button {
-                        editedParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
-                        parcelState.updateParcel(parcel: editedParcel, user: authState.lockerUser!, status: status)
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("Save")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.white)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .frame(height: 48)
-                    .padding(.horizontal)
-                    .background(editedParcel.trackingNumber.isEmpty ? .secondary : Color("AccentColor"))
-                    .cornerRadius(8)
-                    .accessibilityLabel("Save new parcel")
-                    .disabled(editedParcel.trackingNumber.isEmpty)
-                }
-            }
-            .animation(.default, value: editedParcel.trackingNumber.isEmpty)
-            .padding()
-            .padding(.bottom, 93)
-            .padding(.top, 40)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Add a new parcel")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        presentationMode.wrappedValue.dismiss()
-                                    } label: {
-                                        Image(systemName: "multiply")
-                                            .foregroundColor(.black)
+                    TextField("Tracking number", text: $editedParcel.trackingNumber)
+                        .modifier(QrButton(text: $editedParcel.trackingNumber))
+                        .padding()
+                        .background(Color(UIColor.secondarySystemBackground).cornerRadius(8))
+                        .autocapitalization(.none)
+                    if #available(iOS 16.0, *) {
+                        Form {
+                            Section {
+                                Picker("Select delivery service", selection: $editedParcel.serviceName) {
+                                    ForEach(deliveryServices , id: \.self) {
+                                        Text($0)
                                     }
                                 }
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .padding(.bottom)
+                                DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                    .id(calendarId)
+                                    .onChange(of: selectedDate, perform: { _ in
+                                      calendarId += 1
+                                    })
+                                    .onTapGesture {
+                                      calendarId += 1
+                                    }
+                                    .padding(.top)
+                                    .padding(.bottom)
+                                    .foregroundColor(Color(UIColor.secondaryLabel))
+                                    .accentColor(.indigo)
+                                    .pickerStyle(.menu)
                             }
+                            .listRowInsets(EdgeInsets())
+                        }
+                        .frame(height: 150)
+                        .scrollContentBackground(.hidden)
+                        .listStyle(.inset)
+                        .padding(.horizontal, -20)
+                        .padding(.top, -20)
+                        .background(Color(UIColor.white))
+                    } else {
+                        // Fallback on earlier versions
+                        Form {
+                            Section {
+                                Picker("Select delivery service", selection: $editedParcel.serviceName) {
+                                    ForEach(deliveryServices , id: \.self) {
+                                        Text($0)
+                                    }
+                                }
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
+                                    .id(calendarId)
+                                    .onChange(of: selectedDate, perform: { _ in
+                                      calendarId += 1
+                                    })
+                                    .onTapGesture {
+                                      calendarId += 1
+                                    }
+                                    .padding(.top)
+                                    .foregroundColor(Color(UIColor.secondaryLabel))
+                                    .accentColor(.indigo)
+                                    .pickerStyle(.menu)
+                            }
+                            .listRowInsets(EdgeInsets())
+                        }
+                        .onAppear {
+                            UITableView.appearance().backgroundColor = .clear
+                        }
+                        .frame(height: 150)
+                        .listStyle(.inset)
+                        .padding(.horizontal, -20)
+                        .padding(.top, -20)
+                        .background(Color(UIColor.white))
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Button {
+                            editedParcel.estimatedDeliveryDate = selectedDate...Calendar.current.date(byAdding: .day, value: 2, to: selectedDate)!
+                            parcelState.updateParcel(parcel: editedParcel, user: authState.lockerUser!, status: status)
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Text("Save")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.white)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .frame(height: 48)
+                        .padding(.horizontal)
+                        .background((editedParcel.trackingNumber.isEmpty || isDisabled) ? .secondary : Color("AccentColor"))
+                        .cornerRadius(8)
+                        .accessibilityLabel("Save new parcel")
+                        .disabled(isDisabled || editedParcel.trackingNumber.isEmpty)
+                        .onChange(of: editedParcel.trackingNumber) { newValue in
+                            isDisabled = false
+                        }
+                    }
+                    .padding(.top, 235)
+                }
+                .animation(.default, value: editedParcel.trackingNumber.isEmpty)
+                .padding()
+                .padding(.bottom, 93)
+                .padding(.top, 40)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Edit parcel information")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        Button {
+                                            presentationMode.wrappedValue.dismiss()
+                                        } label: {
+                                            Image(systemName: "multiply")
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+            }
         }
     }
 

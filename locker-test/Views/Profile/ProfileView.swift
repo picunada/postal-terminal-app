@@ -58,6 +58,7 @@ struct ProfileView: View {
                                     .foregroundColor(Color(.secondaryLabel))
                             }
                         }
+                        .disabled(true)
                         .sheet(isPresented: $showLockerInfo, content: {
                             LockerInfoView(show: $showLockerInfo)
                         })
