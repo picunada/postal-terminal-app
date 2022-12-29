@@ -94,7 +94,8 @@ struct KeysInfoView: View {
             .padding(.horizontal)
         }
         .sheet(isPresented: $isPresentedSharing, content: {
-            ShareSheet(items: [QRCodeDataSet(url: "key_\(key.id!)", backgroundColor: CIColor(color: .white), color: CIColor(color: .black), size: CGSize(width: 200, height: 200)).getQRImage()!])
+            // MARK: Not working with telegram
+            ShareSheet(items: [QRCodeDataSet(url: "key_\(key.id!)", backgroundColor: CIColor(color: .white), color: CIColor(color: .black), size: CGSize(width: 1000, height: 1000)).getQRImage()!])
         })
         .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteConfirm) {
             Button("Delete", role: .destructive) {

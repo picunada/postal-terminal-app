@@ -10,7 +10,6 @@ import CodeScanner
 
 struct ParcelsView: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
-    @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var authState: AuthViewModel
     @ObservedObject var parcelState: ParcelViewModel
@@ -35,7 +34,6 @@ struct ParcelsView: View {
                         VStack {
                             Button {
                                 showCreateParcel.toggle()
-                                print("Button clicked")
                             } label: {
                                 Image(systemName: "plus")
                                     .resizable()
@@ -61,9 +59,6 @@ struct ParcelsView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .onDisappear {
-            dismiss()
         }
         .accentColor(.primary)
     }
@@ -168,7 +163,7 @@ struct ParcelsView: View {
                     }
                     .padding(.top, 235)
                 }
-                .animation(.default, value: newParcel.trackingNumber.isEmpty)
+//                .animation(.default, value: newParcel.trackingNumber.isEmpty)
                 .padding()
                 .padding(.bottom, 93)
                 .padding(.top, 40)

@@ -47,36 +47,5 @@ struct NotificationsNotAvailableView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .accentColor(.primary)
-        
-//        NavigationView {
-//            ZStack {
-//                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-//                VStack(alignment: .leading, spacing: 0) {
-//                    HStack {
-//
-//                    }
-//                    .frame(height: 55)
-//                    .padding(.horizontal)
-//
-//                    VStack(alignment: .center, spacing: 0) {
-//                        Image("NotAvailable")
-//                        //                            .padding(.top)
-//                        Image("WifiNotAvailable")
-//                            .padding(.top, 20)
-//                        Text("Please connect your Locker first")
-//                            .bold()
-//                            .font(.custom("Not connected", size: 20))
-//                            .padding(.top, 60)
-//                        Spacer()
-//                    }
-//                    .padding(.top, 40)
-//                    .padding(.bottom, 50)
-//                }
-//                .navigationBarTitle("")
-//                .navigationBarHidden(true)
-//                .navigationBarTitleDisplayMode(.inline)
-//            }
-//            .accentColor(.primary)
-//        }
     }
 }

@@ -83,6 +83,13 @@ struct QRCodeDataSet {
         return combinedFilter.outputImage
     }
     
+    func getCGImage() -> CGImage! {
+        guard var image  = createCIImage() else { return nil}
+        
+        let context = CIContext(options: nil)
+        return context.createCGImage(image, from: image.extent)
+    }
+    
     private func createCIImage() -> CIImage? {
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
             return nil

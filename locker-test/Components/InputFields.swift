@@ -70,6 +70,67 @@ struct TextInputField: View {
     }
 }
 
+struct TextQRField: View {
+    @Environment(\.isEnabled) var isEnabled
+    
+    var title: String
+    @Binding var text: String
+    @FocusState private var isFocused: Bool
+    
+    
+    init(_ title: String, text: Binding<String>) {
+        self.title = title
+        self._text = text
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            Color(.secondarySystemBackground)
+            
+            if text.isEmpty {
+                Text("\(title)")
+                    .padding(.leading, 16)
+                    .foregroundColor(.secondary)
+            }
+            
+            HStack {
+                TextField("", text: $text)
+                    .autocapitalization(.none)
+                    .padding()
+                    .focused($isFocused)
+                
+                if (!text.isEmpty)
+                {
+                    Button {
+                        text = ""
+                    } label: {
+                        Image(systemName: "multiply")
+                            .foregroundColor(.accentColor)
+                        
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .disabled(text.isEmpty)
+                } else {
+                    NavigationLink {
+                        ScannerView(text: $text)
+                    } label: {
+                        Image(systemName: "qrcode.viewfinder")
+                            .resizable()
+                            .frame(width: 26, height: 26)
+                            .foregroundColor(Color(uiColor: .systemIndigo))
+                    }
+                }
+            }
+            .padding(.trailing)
+            
+        }
+        .onTapGesture {
+                        isFocused = true
+                    }
+        .animation(.default, value: text.isEmpty)
+    }
+}
+
 struct SecureInputField: View {
     var title: String
     @Binding var text: String
