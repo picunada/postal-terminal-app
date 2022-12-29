@@ -352,6 +352,7 @@ struct ConnectWifiView: View {
                         .frame(width: 255, height: 221)
                 }
                 .navigationTitle("Locker connection")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                                         Button {
@@ -376,9 +377,13 @@ struct ConnectWifiView: View {
             
             vm.$serial
                 .sink { serial in
-                    authState.updateLocker(lockerId: serial!)
-                    let key = LockerKey(keyName: "main", isOneTime: false)
-                    keysVM.createMainKey(key: key, user: authState.lockerUser!)
+                    guard let serial = serial else {
+                        print(serial)
+                        return
+                    }
+                    
+                    authState.updateLocker(lockerId: serial)
+                    keysVM.createMainKey(serial: serial)
                 }
                 .store(in: &cancellables)
         }

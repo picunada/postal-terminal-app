@@ -51,7 +51,7 @@ struct KeysView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 50)
                     
-                    if (keyState.activeKeys.isEmpty || keyState.inactiveKeys.isEmpty) {
+                    if (keyState.activeKeys.isEmpty && keyState.inactiveKeys.isEmpty) {
                         EmptyKeysView()
                     } else {
                         KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
@@ -159,6 +159,7 @@ struct KeysView: View {
 struct KeysListView: View {
     
     @ObservedObject var keyState: KeysViewModel
+    @EnvironmentObject var authState: AuthViewModel
     
     var activeKeys: [LockerKey]
     var inactiveKeys: [LockerKey]
@@ -224,7 +225,7 @@ struct KeysListView: View {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
                                             .frame(width: 41, height: 41)
-                                            .foregroundColor(Color("AccentColor"))
+                                            .foregroundColor(.secondary)
                                     }
                                     VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
@@ -247,6 +248,7 @@ struct KeysListView: View {
                     }
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .scrollContentBackground(.hidden)
             .padding(.horizontal, -20)
         } else {
@@ -289,20 +291,17 @@ struct KeysListView: View {
                 if inactiveKeys.count != 0 {
                     Section {
                         ForEach(inactiveKeys, id: \.id) { key in
-                            NavigationLink {
-                                KeysInfoView(key: key, keyState: keyState, type: "inactive")
-                                    .navigationTitle("Guest key information")
-                                    .navigationBarTitleDisplayMode(.inline)
-                            } label: {
+                            ZStack {
                                 HStack {
                                     VStack {
                                         Image(systemName: "key.viewfinder")
                                             .resizable()
                                             .frame(width: 41, height: 41)
-                                            .foregroundColor(Color("AccentColor"))
+                                            .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
                                     VStack(alignment: .leading, spacing: 5) {
                                         Text(key.keyName)
+                                            .foregroundColor(Color(UIColor.secondaryLabel))
                                         if key.isOneTime {
                                             Text("One-time use key")
                                                 .foregroundColor(Color(UIColor.secondaryLabel))
@@ -312,16 +311,51 @@ struct KeysListView: View {
                                         }
                                     }
                                     .padding(.leading)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "trash")
+                                        .foregroundColor(Color(UIColor.secondaryLabel))
                                 }
+                                
+                                NavigationLink {
+                                } label: {
+                                    HStack {
+                                        VStack {
+                                            Image(systemName: "key.viewfinder")
+                                                .resizable()
+                                                .frame(width: 41, height: 41)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text(key.keyName)
+                                            if key.isOneTime {
+                                                Text("One-time use key")
+                                                    .foregroundColor(Color(UIColor.secondaryLabel))
+                                            } else {
+                                                Text("Multiuse key")
+                                                    .foregroundColor(Color(UIColor.secondaryLabel))
+                                            }
+                                        }
+                                        .padding(.leading)
+                                    }
+                                }
+                                .opacity(0)
+                                .disabled(true)
+                                .listRowInsets(EdgeInsets())
+                                .padding()
                             }
-                            .listRowInsets(EdgeInsets())
-                            .padding()
                         }
+                        .onDelete { i in
+                            keyState.delete(at: i, lockerId: (authState.lockerUser?.lockerId!)!)
+                        }
+                            
                     } header: {
                         Text("EXPIRED")
                     }
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .onAppear(perform: {
                         // cache the current background color
                         UITableView.appearance().backgroundColor = UIColor.clear

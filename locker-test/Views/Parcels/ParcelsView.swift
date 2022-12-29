@@ -52,7 +52,7 @@ struct ParcelsView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 50)
                     
-                    if (parcelState.expectedParcels.isEmpty || parcelState.receivedParcels.isEmpty) {
+                    if (parcelState.expectedParcels.isEmpty && parcelState.receivedParcels.isEmpty) {
                         EmptyParcelsView()
                     } else {
                         ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
@@ -105,7 +105,6 @@ struct ParcelsView: View {
                         .frame(height: 150)
                         .scrollContentBackground(.hidden)
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     } else {
@@ -127,6 +126,7 @@ struct ParcelsView: View {
                                       calendarId += 1
                                     }
                                     .padding(.top)
+                                    .padding(.bottom)
                                     .foregroundColor(Color(UIColor.secondaryLabel))
                                     .accentColor(.indigo)
                                     .pickerStyle(.menu)
@@ -138,7 +138,6 @@ struct ParcelsView: View {
                             UITableView.appearance().backgroundColor = .clear
                         }
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     }
@@ -220,7 +219,7 @@ struct ParcelListView: View {
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .padding()
-                                            .foregroundColor(Color(UIColor.systemIndigo))
+                                            .foregroundColor(Color("AccentColor"))
                                     }
                                     .frame(width: 41, height: 41)
                                     .overlay(Circle().stroke(.secondary, lineWidth: 1))
@@ -250,25 +249,22 @@ struct ParcelListView: View {
                                     VStack {
                                         Image(systemName: "shippingbox")
                                             .resizable()
-                                            .frame(width: 41, height: 41)
-                                            .foregroundColor(Color(UIColor.systemIndigo))
-                                            .background(Color(UIColor.systemBackground))
-                                            .overlay(
-                                                        Circle()
-                                                            .stroke(Color.indigo, lineWidth: 1)
-                                                    )
-                                            .clipShape(Circle())
+                                            .frame(width: 25, height: 25)
+                                            .padding()
+                                            .foregroundColor(.secondary)
                                     }
-                                    VStack(alignment: .leading) {
+                                    .frame(width: 41, height: 41)
+                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(parcel.serviceName)
-                                            .font(.callout)
                                         Text(parcel.trackingNumber)
-                                            .font(.callout)
                                             .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("RECEIVED")
@@ -279,7 +275,7 @@ struct ParcelListView: View {
                 dismiss()
             }
             .scrollContentBackground(.hidden)
-            .listStyle(.insetGrouped)
+            .listStyle(InsetGroupedListStyle())
             .padding(.horizontal, -20)
         } else {
             List {
@@ -295,20 +291,20 @@ struct ParcelListView: View {
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .padding()
-                                            .foregroundColor(Color(UIColor.systemIndigo))
-                                            .background(Color(UIColor.systemBackground))
-                                            .clipShape(Circle())
+                                            .foregroundColor(Color("AccentColor"))
                                     }
-                                    VStack(alignment: .leading) {
+                                    .frame(width: 41, height: 41)
+                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(parcel.serviceName)
-                                            .font(.callout)
                                         Text(parcel.trackingNumber)
-                                            .font(.callout)
                                             .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                         
                     } header: {
@@ -327,26 +323,27 @@ struct ParcelListView: View {
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .padding()
-                                            .foregroundColor(Color(UIColor.white))
-                                            .background(Color(UIColor.systemBackground))
-                                            .clipShape(Circle())
+                                            .foregroundColor(.secondary)
                                     }
-                                    VStack(alignment: .leading) {
+                                    .frame(width: 41, height: 41)
+                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(parcel.serviceName)
-                                            .font(.callout)
                                         Text(parcel.trackingNumber)
-                                            .font(.callout)
                                             .foregroundColor(Color(UIColor.secondaryLabel))
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.leading)
                                 }
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding()
                         }
                     } header: {
                         Text("RECEIVED")
                     }
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .onAppear(perform: {
                         UITableView.appearance().backgroundColor = UIColor.clear
                     })

@@ -27,7 +27,8 @@ struct NotificationsView: View {
                     .frame(height: 55)
                     .padding(.horizontal)
                     
-                    NotificationsListView()
+//                    NotificationsListView()
+                    EmptyNotificationsView()
                 }
                 .padding(.top, 40)
                 .padding(.bottom, 50)
@@ -129,7 +130,7 @@ struct EmptyNotificationsView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             Image("EmptyNotifications")
-                .padding(.top, 109)
+                .padding(.top, 176)
             Text("There are currently no notifications")
                 .bold()
                 .font(.custom("empty parcels", size: 17))

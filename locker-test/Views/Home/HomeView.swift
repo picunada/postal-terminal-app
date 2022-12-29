@@ -33,6 +33,8 @@ struct HomeView: View {
             .accentColor(.primary)
             .onAppear {
                 vm.start()
+
+                
                 authState.$lockerUser
                     .filter({ user in
                         return user != nil
@@ -41,7 +43,6 @@ struct HomeView: View {
                         telemetryVM.subscribe(user: user!)
                     }
                     .store(in: &cancellables)
-                print(authState.lockerUser)
             }
         }
         
@@ -54,7 +55,7 @@ struct HomeView: View {
         VStack(alignment: .center) {
             if (authState.lockerUser?.lockerId ?? "").isEmpty {
                 HStack(alignment: .center) {
-                    Text("Locker address")
+                    Text("")
                         .bold()
                         .foregroundColor(Color(.systemGray))
                     Spacer()
@@ -69,7 +70,7 @@ struct HomeView: View {
                     HStack {
                         Image(systemName: "battery.0")
                             .foregroundColor(Color(.systemGray))
-                        Text("\(telemetryVM.telemetry?.battery ?? "N/A")%" )
+                        Text("N/A")
                             .font(.subheadline)
                             .bold()
                             .foregroundColor(Color(.systemGray))
@@ -100,7 +101,7 @@ struct HomeView: View {
                 .padding(.horizontal)
             } else {
                 HStack(alignment: .center) {
-                    Text("Locker address")
+                    Text(telemetryVM.telemetry?.name?.capitalized ?? "")
                         .bold()
                         .foregroundColor(Color(.systemGray))
                     Spacer()
@@ -131,6 +132,7 @@ struct HomeView: View {
                 NavigationLink {
                     MainKeyView()
                         .navigationTitle("Owner's key")
+                        .navigationBarTitleDisplayMode(.inline)
                 } label: {
                     Text("Open locker")
                         .font(.title3)

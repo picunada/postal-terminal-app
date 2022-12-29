@@ -81,6 +81,7 @@ extension BluetoothManager: CBPeripheralDelegate {
             do {
                 let networks = try decoder.decode(WifiNetworks.self, from: jsonData)
                 networksSubject.send(networks)
+                return
             } catch {
                 print(error)
             }
@@ -88,6 +89,7 @@ extension BluetoothManager: CBPeripheralDelegate {
             do {
                 let response = try decoder.decode(BLEResponse.self, from: jsonData)
                 responseSubject.send(response)
+                return
             } catch {
                 print(error)
             }

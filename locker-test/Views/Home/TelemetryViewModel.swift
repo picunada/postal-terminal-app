@@ -15,6 +15,8 @@ struct LockerTelemetry: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var battery: String
     var lock_status: String
+    var name: String?
+    var address: String?
 }
 
 
@@ -27,9 +29,10 @@ class TelemetryViewModel: ObservableObject {
     private var listenerRegistration: ListenerRegistration?
     
     func subscribe(user: LockerUser) {
-//        guard let id = Auth.auth().currentUser?.uid else { return }
+        guard let id = user.lockerId else { return }
+        guard !id.isEmpty else { return }
         
-        self.listenerRegistration = db.collection("telemetry").document(user.lockerId!)
+        self.listenerRegistration = db.collection("telemetry").document(id)
             .addSnapshotListener {[weak self] (snap, error) in
                 guard let document = snap else {
                         print("Error fetching document: \(error!)")
@@ -42,7 +45,6 @@ class TelemetryViewModel: ObservableObject {
                     print(telemetry)
                     self?.telemetry = telemetry
                 case .failure(_): break
-//                    self?.error = error
                 }
                 
             }
@@ -50,5 +52,13 @@ class TelemetryViewModel: ObservableObject {
     
     func unsubscribe() {
         listenerRegistration?.remove()
+    }
+    
+    func updateLockerInfo(_ id: String, telemetry: LockerTelemetry) {
+        do {
+            try db.collection("telemetry").document(id).setData(from: telemetry)
+        } catch let error {
+            print("Error writing telemetry to Firestore: \(error)")
+        }
     }
 }

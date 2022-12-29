@@ -176,10 +176,12 @@ struct ParcelsInfoView: View {
 
         }
         .toolbar {
-                    Button("Edit") {
-                        isPresentedEditView = true
-                    }
-                    .foregroundColor(Color(uiColor: .systemBlue))
+            if status == "active" {
+                Button("Edit") {
+                    isPresentedEditView = true
+                }
+                .foregroundColor(Color(uiColor: .systemBlue))
+            }
                 }
         .sheet(isPresented: $isPresentedEditView) {
             ParcelDetailEditView(parcelState: parcelState, editedParcel: parcel, status: status)

@@ -17,7 +17,10 @@ struct MainKeyView: View {
             VStack(spacing: 0) {
                 
                 VStack {
-                    QRView(url: "key_\(keysState.mainKey?.id ?? "null")", size: CGSize(width: 270, height: 270))
+                    if keysState.mainKey?.mainKey != nil {
+                        QRView(url: "master-key_\(keysState.mainKey?.mainKey! ?? "null")", size: CGSize(width: 270, height: 270))
+                    }
+                    
                 }
                 .padding()
                 .frame(width: 318, height: 318)
@@ -34,15 +37,9 @@ struct MainKeyView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 15)
                 
-                if keysState.mainKey?.expirationDate != nil {
-                    Text(formatDate(date: (keysState.mainKey?.expirationDate)!))
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                        .padding(.bottom, 59)
-                } else {
-                    Text("No expiration date")
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                        .padding(.bottom, 59)
-                }
+                Text("No expiration date")
+                    .foregroundColor(Color(UIColor.secondaryLabel))
+                    .padding(.bottom, 59)
                 
                 Spacer()
             }

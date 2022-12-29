@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import CryptoKit
 
 struct LockerKey: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
@@ -21,10 +22,15 @@ struct LockerKey: Identifiable, Codable, Hashable {
         }
 }
 
+struct MainKey: Identifiable, Codable, Hashable {
+    @DocumentID var id: String?
+    var mainKey: String?
+}
+
 class KeysViewModel: ObservableObject {
     @Published var activeKeys: [LockerKey] = [LockerKey]()
     @Published var inactiveKeys: [LockerKey] = [LockerKey]()
-    @Published var mainKey: LockerKey?
+    @Published var mainKey: MainKey?
     @Published var errorMessage: String?
     
     private var db = Firestore.firestore()
@@ -123,30 +129,33 @@ class KeysViewModel: ObservableObject {
         }
       }
     
-    func createMainKey(key: LockerKey, user: LockerUser) {
-        let docRef = db.collection("keys").document("\(user.lockerId!)")
-        do {
-            try docRef.setData(from: key) { err in
-                if let err = err {
-                    print("Error adding document: \(err)")
-                } else {
-                    print("Document added with ID: \(docRef.documentID)")
-                }
-            }
-        } catch {
-            print(error)
-        }
+    func createMainKey(serial: String) {
+        guard !serial.isEmpty else { return }
+        
+        let inputData = Data(serial.utf8)
+        let hashed = SHA256.hash(data: inputData)
+        let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+        
+        let docRef = db.collection("keys").document("\(serial)")
+        
+        docRef.setData(["mainKey": hashString])
+        
+        print("main key creation")
       }
     
     func fetchMainKey(user: LockerUser) {
-        let docRef = db.collection("keys/\(user.lockerId!)/main").document("main")
+        guard let id = user.lockerId else { return }
+        guard !id.isEmpty else { return }
+        
+        let docRef = db.collection("keys").document(id)
 
-        docRef.getDocument(as: LockerKey.self) { result in
+        docRef.getDocument(as: MainKey.self) { result in
             switch result {
             case .success(let key):
                 self.mainKey = key
+                print("fetched key")
             case .failure(let error):
-                print("Error decoding city: \(error)")
+                print("Error decoding key: \(error)")
             }
         }
     }
@@ -174,5 +183,18 @@ class KeysViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func delete(at offsets: IndexSet, lockerId: String) {
+      offsets.map { inactiveKeys[$0] }.forEach { key in
+          guard let keyId = key.id else { return }
+          db.collection("keys/\(lockerId)/inactive").document(keyId).delete() { err in
+          if let err = err {
+            print("Error removing document: \(err)")
+          } else {
+            print("Document successfully removed!")
+          }
+        }
+      }
     }
 }

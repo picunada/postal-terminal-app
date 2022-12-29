@@ -7,12 +7,16 @@
 
 import SwiftUI
 import Firebase
+import Combine
 
 struct ProfileView: View {
     @State var showPersonalInfo: Bool = false
     @State var showLockerInfo: Bool = false
     @State var showSecurity: Bool = false
     @State var showAlert: Bool = false
+    @State var cancellables: Set<AnyCancellable> = .init()
+    
+    @StateObject private var telemetryVM: TelemetryViewModel = .init()
     
     @EnvironmentObject var authState: AuthViewModel
     
@@ -58,9 +62,11 @@ struct ProfileView: View {
                                     .foregroundColor(Color(.secondaryLabel))
                             }
                         }
-                        .disabled(true)
+                        .disabled(authState.lockerUser == nil || (authState.lockerUser?.lockerId?.isEmpty) == true)
                         .sheet(isPresented: $showLockerInfo, content: {
-                            LockerInfoView(show: $showLockerInfo)
+                            if let telemetry = telemetryVM.telemetry {
+                                LockerInfoView(show: $showLockerInfo, telemetryVM: telemetryVM, telemetry: telemetry)
+                            }
                         })
                         .listRowInsets(EdgeInsets())
                         .padding()
@@ -118,10 +124,22 @@ struct ProfileView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
             }
+            .onAppear {
+                authState.$lockerUser
+                    .filter({ user in
+                        return user != nil
+                    })
+                    .sink { user in
+                        telemetryVM.subscribe(user: user!)
+                    }
+                    .store(in: &cancellables)
+            }
             .navigationTitle("Profile")
         }
     }
 }
+
+// MARK: Personal Info
 
 struct PersonalInfoView: View {
     
@@ -232,14 +250,20 @@ struct PersonalInfoView: View {
     }
 }
 
+// MARK: Locker Info
+
 struct LockerInfoView: View {
     
-    @Binding var show: Bool
-    @State var address: String = ""
-    @State var lockerName: String = ""
+    @Environment(\.presentationMode) var presentationMode
     
+    @Binding var show: Bool
     @EnvironmentObject var authState: AuthViewModel
-
+    
+    @ObservedObject var telemetryVM: TelemetryViewModel
+    
+    @State var telemetry: LockerTelemetry
+    @State var isChanged: Bool = false
+    @State var cancellables: Set<AnyCancellable> = .init()
     
     var body: some View {
         NavigationView {
@@ -247,33 +271,68 @@ struct LockerInfoView: View {
                 if #available(iOS 16.0, *) {
                     Form {
                         Section("Address") {
-                            TextInputField("Address", text: $address)
+                            TextInputField("Address", text: $telemetry.address.toUnwrapped(defaultValue: ""))
+                                .onChange(of: telemetry.address) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         Section("Locker's name") {
-                            TextInputField("Locker's name", text: $lockerName)
+                            TextInputField("Locker's name", text: $telemetry.name.toUnwrapped(defaultValue: ""))
+                                .onChange(of: telemetry.name) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                     }
+                    .frame(height: 210)
                     .scrollContentBackground(.hidden)
                 } else {
                     // Fallback on earlier versions
                     Form {
                         Section("Address") {
-                            TextInputField("First name", text: $address)
+                            TextInputField("Address", text: $telemetry.address.toUnwrapped(defaultValue: ""))
+                                .onChange(of: telemetry.address) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
-                        Section("Last name") {
-                            TextInputField("Last name", text: $lockerName)
+                        Section("Locker's name") {
+                            TextInputField("Locker's name", text: $telemetry.name.toUnwrapped(defaultValue: ""))
+                                .onChange(of: telemetry.name) { newValue in
+                                    isChanged = true
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                     }
+                    .frame(height: 210)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
                     }
                 }
                 
+                VStack {
+                    Button {
+                        telemetryVM.updateLockerInfo((authState.lockerUser?.lockerId)!, telemetry: telemetry)
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Save")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.white)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .frame(height: 48)
+                    .padding(.horizontal)
+                    .background(isChanged ? Color("AccentColor") : .secondary)
+                    .disabled(!isChanged)
+                    .cornerRadius(8)
+                    .accessibilityLabel("Update profile info")
+                }
+                .padding(.horizontal)
+                .padding(.top, 34)
                 
+                Spacer()
             }
             .padding(.horizontal, 0)
             .navigationBarTitleDisplayMode(.inline)
