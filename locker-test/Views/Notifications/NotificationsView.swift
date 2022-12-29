@@ -122,8 +122,30 @@ struct NotificationsListView: View {
     }
 }
 
+// MARK: Empty view
+
+struct EmptyNotificationsView: View {
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Image("EmptyNotifications")
+                .padding(.top, 109)
+            Text("There are currently no notifications")
+                .bold()
+                .font(.custom("empty parcels", size: 17))
+                .frame(width: 343)
+                .multilineTextAlignment(.center)
+                .padding(.top, 40)
+                
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+}
+
 struct NotificationsView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationsView()
+        EmptyNotificationsView()
     }
 }

@@ -51,8 +51,12 @@ struct ParcelsView: View {
                     }
                     .padding(.top, 40)
                     .padding(.bottom, 50)
-                
-                    ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
+                    
+                    if (parcelState.expectedParcels.isEmpty || parcelState.receivedParcels.isEmpty) {
+                        EmptyParcelsView()
+                    } else {
+                        ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -351,6 +355,27 @@ struct ParcelListView: View {
         }
         
     }
+}
+
+// MARK: Empty view
+
+struct EmptyParcelsView: View {
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Image("EmptyParcels")
+                .padding(.top, 109)
+            Text("There are no expected packages yet.\n You can add a parcel by clicking on the\n button above.")
+                .bold()
+                .multilineTextAlignment(.center) 
+                .font(.custom("empty parcels", size: 17))
+                .padding(.top, 40)
+            Spacer()
+        }
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity)
+    }
+    
 }
 
 

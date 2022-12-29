@@ -51,7 +51,11 @@ struct KeysView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 50)
                     
-                    KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
+                    if (keyState.activeKeys.isEmpty || keyState.inactiveKeys.isEmpty) {
+                        EmptyKeysView()
+                    } else {
+                        KeysListView(activeKeys: keyState.activeKeys, inactiveKeys: keyState.inactiveKeys, keyState: keyState)
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -328,8 +332,31 @@ struct KeysListView: View {
     }
 }
 
+// MARK: Empty view
+
+struct EmptyKeysView: View {
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Image("EmptyKeys")
+                .padding(.top, 109)
+            Text("You can give people one-time or recurring access to your home locker. ")
+                .bold()
+                .font(.custom("empty parcels", size: 17))
+                .frame(width: 343)
+                .multilineTextAlignment(.center)
+                .padding(.top, 40)
+                
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+}
+
+
 //struct KeysView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        KeysView()
+//        EmptyKeysView()
 //    }
 //}
