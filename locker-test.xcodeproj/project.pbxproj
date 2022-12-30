@@ -49,6 +49,7 @@
 		E6FF852C295C9D7C005B1D45 /* KeysNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */; };
 		E6FF852E295CA183005B1D45 /* ParcelsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */; };
 		E6FF8530295CA1CA005B1D45 /* NotificationsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */; };
+		E6FF8533295ECF65005B1D45 /* ServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,7 @@
 		E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysNotAvailableView.swift; sourceTree = "<group>"; };
 		E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsNotAvailableView.swift; sourceTree = "<group>"; };
 		E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 		E67352F228FA6CC1000C25BC /* locker-test */ = {
 			isa = PBXGroup;
 			children = (
+				E6FF8531295ECF0A005B1D45 /* ViewModels */,
 				E6C7665F2955D40600FDEA5A /* Info.plist */,
 				E64B44672937601100455891 /* Mock */,
 				E6ECC191290A631800D3C13A /* Managers */,
@@ -226,7 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				E6FF7295293F638E0080C11B /* AuthView.swift */,
-				E697E2B728FA71980027A088 /* AuthViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -235,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */,
-				E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */,
 				E6465F0228FABC3D00499DE1 /* ParcelsView.swift */,
 				E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */,
 			);
@@ -245,7 +246,6 @@
 		E6ECC198290FFD9C00D3C13A /* Keys */ = {
 			isa = PBXGroup;
 			children = (
-				E6F82C1628FC9E870075D224 /* KeysViewModel.swift */,
 				E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */,
 				E6F82C1028FC9D600075D224 /* KeysView.swift */,
 				E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */,
@@ -257,7 +257,6 @@
 			isa = PBXGroup;
 			children = (
 				E6465F0028FABC3100499DE1 /* HomeView.swift */,
-				E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */,
 				E6FF8529295B34C7005B1D45 /* MainKeyView.swift */,
 			);
 			path = Home;
@@ -293,12 +292,24 @@
 		E6ECC19D290FFDDB00D3C13A /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
-				E6ECC194290A942000D3C13A /* DeviceViewModel.swift */,
-				E6ECC1A1291003AC00D3C13A /* MainViewModel.swift */,
 				E62D34E9292F8472004E7505 /* AuthDeviceView.swift */,
-				E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */,
 			);
 			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		E6FF8531295ECF0A005B1D45 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E697E2B728FA71980027A088 /* AuthViewModel.swift */,
+				E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */,
+				E6F82C1628FC9E870075D224 /* KeysViewModel.swift */,
+				E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */,
+				E6ECC1A1291003AC00D3C13A /* MainViewModel.swift */,
+				E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */,
+				E6ECC194290A942000D3C13A /* DeviceViewModel.swift */,
+				E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,6 +441,7 @@
 			files = (
 				E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */,
 				E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */,
+				E6FF8533295ECF65005B1D45 /* ServicesViewModel.swift in Sources */,
 				E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */,
 				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
 				E62D34EA292F8472004E7505 /* AuthDeviceView.swift in Sources */,

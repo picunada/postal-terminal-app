@@ -196,6 +196,7 @@ struct ParcelListView: View {
     
     @ObservedObject var parcelState: ParcelViewModel
     @EnvironmentObject var authState: AuthViewModel
+    @StateObject var serviceVM: ServicesViewModel = .init()
     
     init(expectedParcels: [Parcel], receivedParcels: [Parcel], parcelState: ParcelViewModel) {
         self.expectedParcels = expectedParcels
@@ -215,11 +216,20 @@ struct ParcelListView: View {
                             } label: {
                                 HStack {
                                     VStack {
-                                        Image(systemName: "shippingbox")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(Color("AccentColor"))
+                                        if !serviceVM.services.isEmpty {
+                                            AsyncImage(url: URL(string: serviceVM.services[serviceVM.services.firstIndex { i in
+                                                i.name == parcel.serviceName
+                                            } ?? 0].image))
+                                                .frame(width: 40, height: 40)
+                                                .padding()
+                                                .foregroundColor(Color("AccentColor"))
+                                        } else {
+                                            Image(systemName: "shippingbox")
+                                                .resizable()
+                                                .frame(width: 25, height: 25)
+                                                .padding()
+                                                .foregroundColor(Color("AccentColor"))
+                                        }
                                     }
                                     .frame(width: 41, height: 41)
                                     .overlay(Circle().stroke(.secondary, lineWidth: 1))
@@ -271,8 +281,8 @@ struct ParcelListView: View {
                     }
                 }
             }
-            .onDisappear {
-                dismiss()
+            .onAppear {
+                serviceVM.fetchServices()
             }
             .scrollContentBackground(.hidden)
             .listStyle(InsetGroupedListStyle())
@@ -345,7 +355,8 @@ struct ParcelListView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .onAppear(perform: {
-                        UITableView.appearance().backgroundColor = UIColor.clear
+                UITableView.appearance().backgroundColor = UIColor.clear
+                serviceVM.fetchServices()
                     })
             .listStyle(.automatic)
             .padding(.horizontal, -20)
