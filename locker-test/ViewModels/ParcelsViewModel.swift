@@ -21,6 +21,17 @@ struct Parcel: Identifiable, Codable, Hashable {
         }
 }
 
+<<<<<<< HEAD
+=======
+enum ParcelError: LocalizedError {
+    case createError
+    case deleteError
+    case updateError
+    
+    
+}
+
+>>>>>>> github/ios
 class ParcelViewModel: ObservableObject {
     
     @Published var expectedParcels: [Parcel] = [Parcel]()
@@ -44,7 +55,11 @@ class ParcelViewModel: ObservableObject {
     
     func subscribe(user: LockerUser) {
         if expectedListenerRegistration == nil {
+<<<<<<< HEAD
             expectedListenerRegistration = db.collection("parcels/\(user.lockerId)/expected")
+=======
+            expectedListenerRegistration = db.collection("parcels/\(user.lockerId!)/active")
+>>>>>>> github/ios
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'expected' collection"
@@ -77,7 +92,11 @@ class ParcelViewModel: ObservableObject {
                 }
             }
         if receivedListenerRegistration == nil {
+<<<<<<< HEAD
             receivedListenerRegistration = db.collection("parcels/\(user.lockerId)/received")
+=======
+            receivedListenerRegistration = db.collection("parcels/\(user.lockerId!)/inactive")
+>>>>>>> github/ios
                 .addSnapshotListener { [weak self] (querySnapshot, error) in
                   guard let documents = querySnapshot?.documents else {
                     self?.errorMessage = "No documents in 'received' collection"
@@ -112,7 +131,11 @@ class ParcelViewModel: ObservableObject {
     }
     
     func createParcel(parcel: Parcel, user: LockerUser) {
+<<<<<<< HEAD
         let collectionRef = db.collection("parcels/\(user.lockerId)/expected")
+=======
+        let collectionRef = db.collection("parcels/\(user.lockerId!)/active")
+>>>>>>> github/ios
         do {
           let newDocReference = try collectionRef.addDocument(from: parcel)
           print("Parcel stored with new document reference: \(newDocReference)")
@@ -122,10 +145,28 @@ class ParcelViewModel: ObservableObject {
         }
       }
     
+<<<<<<< HEAD
     func deleteParcel(parcel: Parcel, user: LockerUser, type: String) {
         
         if type == "expected" {
             db.collection("parcels/\(user.lockerId)/expected").document(parcel.id!).delete() { err in
+=======
+    func updateParcel(parcel: Parcel, user: LockerUser, status: String) {
+        if let documentId = parcel.id {
+            do {
+                try db.collection("parcels/\(user.lockerId!)/\(status.lowercased())").document(documentId).setData(from: parcel)
+            }
+            catch {
+              print(error)
+            }
+          }
+    }
+    
+    func deleteParcel(parcel: Parcel, user: LockerUser, type: String) {
+        
+        if type == "active" {
+            db.collection("parcels/\(user.lockerId!)/active").document(parcel.id!).delete() { err in
+>>>>>>> github/ios
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {
@@ -133,7 +174,11 @@ class ParcelViewModel: ObservableObject {
                 }
             }
         } else {
+<<<<<<< HEAD
             db.collection("parcels/\(user.lockerId)/received").document(parcel.id!).delete() { err in
+=======
+            db.collection("parcels/\(user.lockerId!)/inactive").document(parcel.id!).delete() { err in
+>>>>>>> github/ios
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {

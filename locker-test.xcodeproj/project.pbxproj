@@ -8,17 +8,45 @@
 
 /* Begin PBXBuildFile section */
 		19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8504312C49BA223DD97FB5D3 /* Pods_locker_test.framework */; };
+<<<<<<< HEAD
 		E6465EFF28FABBDA00499DE1 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465EFE28FABBDA00499DE1 /* AuthView.swift */; };
 		E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0028FABC3100499DE1 /* HomeView.swift */; };
 		E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0228FABC3D00499DE1 /* ParcelsView.swift */; };
 		E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */; };
 		E660A17528FC6B5F00FE80F1 /* ParcelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E660A17428FC6B5F00FE80F1 /* ParcelList.swift */; };
+=======
+		E608C7312954964F00E251B1 /* 1024px.png in Resources */ = {isa = PBXBuildFile; fileRef = E608C7302954964F00E251B1 /* 1024px.png */; };
+		E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E614AD842943857D00044BC7 /* ErrorHandler.swift */; };
+		E62D0C8529548D2F00469759 /* QRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62D0C8429548D2F00469759 /* QRManager.swift */; };
+		E62D34EA292F8472004E7505 /* AuthDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62D34E9292F8472004E7505 /* AuthDeviceView.swift */; };
+		E631C22E294B684D003528CF /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E631C22D294B684D003528CF /* GifView.swift */; };
+		E631C231294B6DA8003528CF /* bright_bth.gif in Resources */ = {isa = PBXBuildFile; fileRef = E631C22F294B6DA8003528CF /* bright_bth.gif */; };
+		E631C232294B6DA8003528CF /* wi-fi.gif in Resources */ = {isa = PBXBuildFile; fileRef = E631C230294B6DA8003528CF /* wi-fi.gif */; };
+		E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0028FABC3100499DE1 /* HomeView.swift */; };
+		E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0228FABC3D00499DE1 /* ParcelsView.swift */; };
+		E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64B44682937602C00455891 /* LockerPeripheral.swift */; };
+		E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */; };
+>>>>>>> github/ios
 		E67352F428FA6CC1000C25BC /* lockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67352F328FA6CC1000C25BC /* lockerApp.swift */; };
 		E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67352F528FA6CC1000C25BC /* ContentView.swift */; };
 		E67352F828FA6CC2000C25BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E67352F728FA6CC2000C25BC /* Assets.xcassets */; };
 		E67352FB28FA6CC2000C25BC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */; };
+<<<<<<< HEAD
 		E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E697E2B428FA709D0027A088 /* GoogleService-Info.plist */; };
 		E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E697E2B728FA71980027A088 /* AuthViewModel.swift */; };
+=======
+		E67D31F0293627CB006C673B /* InputFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D31EF293627CB006C673B /* InputFields.swift */; };
+		E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E697E2B428FA709D0027A088 /* GoogleService-Info.plist */; };
+		E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E697E2B728FA71980027A088 /* AuthViewModel.swift */; };
+		E6C6B0062938A23700488E1E /* MainBluetoothViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */; };
+		E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */; };
+		E6C6B00A2938EB5200488E1E /* DisableScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0092938EB5200488E1E /* DisableScrolling.swift */; };
+		E6C766612955D90500FDEA5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6C766602955D90500FDEA5A /* LaunchScreen.storyboard */; };
+		E6DFFAEE292F9E7800AEFC4F /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = E6DFFAED292F9E7800AEFC4F /* CodeScanner */; };
+		E6ECC193290A633500D3C13A /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ECC192290A633500D3C13A /* BluetoothManager.swift */; };
+		E6ECC195290A942000D3C13A /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ECC194290A942000D3C13A /* DeviceViewModel.swift */; };
+		E6ECC1A2291003AC00D3C13A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ECC1A1291003AC00D3C13A /* MainViewModel.swift */; };
+>>>>>>> github/ios
 		E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1028FC9D600075D224 /* KeysView.swift */; };
 		E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1228FC9D6D0075D224 /* NotificationsView.swift */; };
 		E6F82C1528FC9D790075D224 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1428FC9D790075D224 /* ProfileView.swift */; };
@@ -26,26 +54,67 @@
 		E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */; };
 		E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */; };
 		E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C362908B43600783E70 /* LoadingView.swift */; };
+<<<<<<< HEAD
 		E6FC3C392908D75B00783E70 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C382908D75B00783E70 /* ScannerView.swift */; };
 		E6FC3C3C2908D88500783E70 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = E6FC3C3B2908D88500783E70 /* CodeScanner */; };
+=======
+		E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC3C382908D75B00783E70 /* QRScannerView.swift */; };
+		E6FF7296293F638E0080C11B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7295293F638E0080C11B /* AuthView.swift */; };
+		E6FF7299293F813C0080C11B /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = E6FF7298293F813C0080C11B /* Inject */; };
+		E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */; };
+		E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8529295B34C7005B1D45 /* MainKeyView.swift */; };
+		E6FF852C295C9D7C005B1D45 /* KeysNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */; };
+		E6FF852E295CA183005B1D45 /* ParcelsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */; };
+		E6FF8530295CA1CA005B1D45 /* NotificationsNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */; };
+		E6FF8533295ECF65005B1D45 /* ServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */; };
+>>>>>>> github/ios
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3C5731B93FEBC6DBAD579FE6 /* Pods-locker-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-locker-test.release.xcconfig"; path = "Target Support Files/Pods-locker-test/Pods-locker-test.release.xcconfig"; sourceTree = "<group>"; };
 		527034A5DC7D4A2E538B890C /* Pods-locker-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-locker-test.debug.xcconfig"; path = "Target Support Files/Pods-locker-test/Pods-locker-test.debug.xcconfig"; sourceTree = "<group>"; };
 		8504312C49BA223DD97FB5D3 /* Pods_locker_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_locker_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+<<<<<<< HEAD
 		E6465EFE28FABBDA00499DE1 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		E6465F0028FABC3100499DE1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E6465F0228FABC3D00499DE1 /* ParcelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsView.swift; sourceTree = "<group>"; };
 		E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsViewModel.swift; sourceTree = "<group>"; };
 		E660A17428FC6B5F00FE80F1 /* ParcelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelList.swift; sourceTree = "<group>"; };
+=======
+		E608C7302954964F00E251B1 /* 1024px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1024px.png; path = "locker-test/Assets.xcassets/Images/LogoIcon.imageset/1024px.png"; sourceTree = SOURCE_ROOT; };
+		E614AD842943857D00044BC7 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		E62D0C8429548D2F00469759 /* QRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRManager.swift; sourceTree = "<group>"; };
+		E62D34E9292F8472004E7505 /* AuthDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDeviceView.swift; sourceTree = "<group>"; };
+		E631C22D294B684D003528CF /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
+		E631C22F294B6DA8003528CF /* bright_bth.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = bright_bth.gif; path = "locker-test/bright_bth.gif"; sourceTree = SOURCE_ROOT; };
+		E631C230294B6DA8003528CF /* wi-fi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "wi-fi.gif"; path = "locker-test/wi-fi.gif"; sourceTree = SOURCE_ROOT; };
+		E6465F0028FABC3100499DE1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E6465F0228FABC3D00499DE1 /* ParcelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsView.swift; sourceTree = "<group>"; };
+		E64B44682937602C00455891 /* LockerPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockerPeripheral.swift; sourceTree = "<group>"; };
+		E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsViewModel.swift; sourceTree = "<group>"; };
+>>>>>>> github/ios
 		E67352F028FA6CC1000C25BC /* locker-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "locker-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67352F328FA6CC1000C25BC /* lockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lockerApp.swift; sourceTree = "<group>"; };
 		E67352F528FA6CC1000C25BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E67352F728FA6CC2000C25BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		E697E2B428FA709D0027A088 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E697E2B728FA71980027A088 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+=======
+		E67D31EB29361E72006C673B /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		E67D31EF293627CB006C673B /* InputFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFields.swift; sourceTree = "<group>"; };
+		E697E2B428FA709D0027A088 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E697E2B728FA71980027A088 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBluetoothViewModel.swift; sourceTree = "<group>"; };
+		E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDataManager.swift; sourceTree = "<group>"; };
+		E6C6B0092938EB5200488E1E /* DisableScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableScrolling.swift; sourceTree = "<group>"; };
+		E6C7665F2955D40600FDEA5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E6C766602955D90500FDEA5A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E6ECC192290A633500D3C13A /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		E6ECC194290A942000D3C13A /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
+		E6ECC1A1291003AC00D3C13A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+>>>>>>> github/ios
 		E6F82C1028FC9D600075D224 /* KeysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysView.swift; sourceTree = "<group>"; };
 		E6F82C1228FC9D6D0075D224 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E6F82C1428FC9D790075D224 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -53,7 +122,18 @@
 		E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsInfoView.swift; sourceTree = "<group>"; };
 		E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysInfoView.swift; sourceTree = "<group>"; };
 		E6FC3C362908B43600783E70 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		E6FC3C382908D75B00783E70 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+=======
+		E6FC3C382908D75B00783E70 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		E6FF7295293F638E0080C11B /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryViewModel.swift; sourceTree = "<group>"; };
+		E6FF8529295B34C7005B1D45 /* MainKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainKeyView.swift; sourceTree = "<group>"; };
+		E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNotAvailableView.swift; sourceTree = "<group>"; };
+		E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModel.swift; sourceTree = "<group>"; };
+>>>>>>> github/ios
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +141,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				E6FC3C3C2908D88500783E70 /* CodeScanner in Frameworks */,
 				19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */,
+=======
+				E6DFFAEE292F9E7800AEFC4F /* CodeScanner in Frameworks */,
+				19B1221DA617BE69A17FB68F /* Pods_locker_test.framework in Frameworks */,
+				E6FF7299293F813C0080C11B /* Inject in Frameworks */,
+>>>>>>> github/ios
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +158,10 @@
 		6150D179318F9C1A33023806 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				E67D31EB29361E72006C673B /* FirebaseAnalytics.xcframework */,
+>>>>>>> github/ios
 				8504312C49BA223DD97FB5D3 /* Pods_locker_test.framework */,
 			);
 			name = Frameworks;
@@ -89,6 +179,7 @@
 		E6465EFD28FABBC900499DE1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				E6465EFE28FABBDA00499DE1 /* AuthView.swift */,
 				E6465F0028FABC3100499DE1 /* HomeView.swift */,
 				E6465F0228FABC3D00499DE1 /* ParcelsView.swift */,
@@ -99,14 +190,41 @@
 				E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */,
 				E6FC3C362908B43600783E70 /* LoadingView.swift */,
 				E6FC3C382908D75B00783E70 /* ScannerView.swift */,
+=======
+				E6C766602955D90500FDEA5A /* LaunchScreen.storyboard */,
+				E6ECC19D290FFDDB00D3C13A /* Bluetooth */,
+				E6ECC19C290FFDD400D3C13A /* Utils */,
+				E6ECC19B290FFDC600D3C13A /* Profile */,
+				E6ECC19A290FFDB900D3C13A /* Notifications */,
+				E6ECC199290FFDB100D3C13A /* Home */,
+				E6ECC198290FFD9C00D3C13A /* Keys */,
+				E6ECC197290FFD8900D3C13A /* Parcels */,
+				E6ECC196290FFD7900D3C13A /* Auth */,
+>>>>>>> github/ios
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+<<<<<<< HEAD
+		E660A17328FC6B4400FE80F1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E660A17428FC6B5F00FE80F1 /* ParcelList.swift */,
+=======
+		E64B44672937601100455891 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				E64B44682937602C00455891 /* LockerPeripheral.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		E660A17328FC6B4400FE80F1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E660A17428FC6B5F00FE80F1 /* ParcelList.swift */,
+				E67D31EF293627CB006C673B /* InputFields.swift */,
+				E6C6B0092938EB5200488E1E /* DisableScrolling.swift */,
+>>>>>>> github/ios
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -133,9 +251,18 @@
 		E67352F228FA6CC1000C25BC /* locker-test */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				E660A17328FC6B4400FE80F1 /* Components */,
 				E6465EFD28FABBC900499DE1 /* Views */,
 				E697E2B628FA71810027A088 /* ViewModels */,
+=======
+				E6FF8531295ECF0A005B1D45 /* ViewModels */,
+				E6C7665F2955D40600FDEA5A /* Info.plist */,
+				E64B44672937601100455891 /* Mock */,
+				E6ECC191290A631800D3C13A /* Managers */,
+				E660A17328FC6B4400FE80F1 /* Components */,
+				E6465EFD28FABBC900499DE1 /* Views */,
+>>>>>>> github/ios
 				E697E2B428FA709D0027A088 /* GoogleService-Info.plist */,
 				E67352F328FA6CC1000C25BC /* lockerApp.swift */,
 				E67352F528FA6CC1000C25BC /* ContentView.swift */,
@@ -148,17 +275,118 @@
 		E67352F928FA6CC2000C25BC /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				E608C7302954964F00E251B1 /* 1024px.png */,
+				E631C230294B6DA8003528CF /* wi-fi.gif */,
+				E631C22F294B6DA8003528CF /* bright_bth.gif */,
+>>>>>>> github/ios
 				E67352FA28FA6CC2000C25BC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		E697E2B628FA71810027A088 /* ViewModels */ = {
+=======
+		E6ECC191290A631800D3C13A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				E6ECC192290A633500D3C13A /* BluetoothManager.swift */,
+				E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */,
+				E614AD842943857D00044BC7 /* ErrorHandler.swift */,
+				E62D0C8429548D2F00469759 /* QRManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		E6ECC196290FFD7900D3C13A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				E6FF7295293F638E0080C11B /* AuthView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		E6ECC197290FFD8900D3C13A /* Parcels */ = {
+			isa = PBXGroup;
+			children = (
+				E6F82C1828FCB5080075D224 /* ParcelsInfoView.swift */,
+				E6465F0228FABC3D00499DE1 /* ParcelsView.swift */,
+				E6FF852D295CA183005B1D45 /* ParcelsNotAvailableView.swift */,
+			);
+			path = Parcels;
+			sourceTree = "<group>";
+		};
+		E6ECC198290FFD9C00D3C13A /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				E6F82C1A28FCB52B0075D224 /* KeysInfoView.swift */,
+				E6F82C1028FC9D600075D224 /* KeysView.swift */,
+				E6FF852B295C9D7C005B1D45 /* KeysNotAvailableView.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		E6ECC199290FFDB100D3C13A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E6465F0028FABC3100499DE1 /* HomeView.swift */,
+				E6FF8529295B34C7005B1D45 /* MainKeyView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E6ECC19A290FFDB900D3C13A /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				E6F82C1228FC9D6D0075D224 /* NotificationsView.swift */,
+				E6FF852F295CA1CA005B1D45 /* NotificationsNotAvailableView.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		E6ECC19B290FFDC600D3C13A /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E6F82C1428FC9D790075D224 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		E6ECC19C290FFDD400D3C13A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E6FC3C382908D75B00783E70 /* QRScannerView.swift */,
+				E6FC3C362908B43600783E70 /* LoadingView.swift */,
+				E631C22D294B684D003528CF /* GifView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E6ECC19D290FFDDB00D3C13A /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				E62D34E9292F8472004E7505 /* AuthDeviceView.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		E6FF8531295ECF0A005B1D45 /* ViewModels */ = {
+>>>>>>> github/ios
 			isa = PBXGroup;
 			children = (
 				E697E2B728FA71980027A088 /* AuthViewModel.swift */,
 				E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */,
 				E6F82C1628FC9E870075D224 /* KeysViewModel.swift */,
+<<<<<<< HEAD
+=======
+				E6FF8527295B0214005B1D45 /* TelemetryViewModel.swift */,
+				E6ECC1A1291003AC00D3C13A /* MainViewModel.swift */,
+				E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */,
+				E6ECC194290A942000D3C13A /* DeviceViewModel.swift */,
+				E6FF8532295ECF65005B1D45 /* ServicesViewModel.swift */,
+>>>>>>> github/ios
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -182,7 +410,12 @@
 			);
 			name = "locker-test";
 			packageProductDependencies = (
+<<<<<<< HEAD
 				E6FC3C3B2908D88500783E70 /* CodeScanner */,
+=======
+				E6DFFAED292F9E7800AEFC4F /* CodeScanner */,
+				E6FF7298293F813C0080C11B /* Inject */,
+>>>>>>> github/ios
 			);
 			productName = "locker-test";
 			productReference = E67352F028FA6CC1000C25BC /* locker-test.app */;
@@ -213,7 +446,12 @@
 			);
 			mainGroup = E67352E728FA6CC1000C25BC;
 			packageReferences = (
+<<<<<<< HEAD
 				E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+=======
+				E6DFFAEC292F9E7800AEFC4F /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */,
+>>>>>>> github/ios
 			);
 			productRefGroup = E67352F128FA6CC1000C25BC /* Products */;
 			projectDirPath = "";
@@ -229,9 +467,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				E67352FB28FA6CC2000C25BC /* Preview Assets.xcassets in Resources */,
 				E67352F828FA6CC2000C25BC /* Assets.xcassets in Resources */,
 				E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */,
+=======
+				E608C7312954964F00E251B1 /* 1024px.png in Resources */,
+				E67352FB28FA6CC2000C25BC /* Preview Assets.xcassets in Resources */,
+				E67352F828FA6CC2000C25BC /* Assets.xcassets in Resources */,
+				E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */,
+				E6C766612955D90500FDEA5A /* LaunchScreen.storyboard in Resources */,
+				E631C232294B6DA8003528CF /* wi-fi.gif in Resources */,
+				E631C231294B6DA8003528CF /* bright_bth.gif in Resources */,
+>>>>>>> github/ios
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */,
 				E6FC3C392908D75B00783E70 /* ScannerView.swift in Sources */,
 				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
@@ -300,6 +549,41 @@
 				E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */,
 				E6F82C1528FC9D790075D224 /* ProfileView.swift in Sources */,
 				E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */,
+=======
+				E6FF852A295B34C7005B1D45 /* MainKeyView.swift in Sources */,
+				E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */,
+				E6FF8533295ECF65005B1D45 /* ServicesViewModel.swift in Sources */,
+				E6FC3C392908D75B00783E70 /* QRScannerView.swift in Sources */,
+				E6F82C1328FC9D6D0075D224 /* NotificationsView.swift in Sources */,
+				E62D34EA292F8472004E7505 /* AuthDeviceView.swift in Sources */,
+				E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */,
+				E6FF852C295C9D7C005B1D45 /* KeysNotAvailableView.swift in Sources */,
+				E67352F428FA6CC1000C25BC /* lockerApp.swift in Sources */,
+				E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */,
+				E631C22E294B684D003528CF /* GifView.swift in Sources */,
+				E6ECC193290A633500D3C13A /* BluetoothManager.swift in Sources */,
+				E6F82C1B28FCB52B0075D224 /* KeysInfoView.swift in Sources */,
+				E6F82C1728FC9E870075D224 /* KeysViewModel.swift in Sources */,
+				E6FF8530295CA1CA005B1D45 /* NotificationsNotAvailableView.swift in Sources */,
+				E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */,
+				E62D0C8529548D2F00469759 /* QRManager.swift in Sources */,
+				E6FC3C372908B43600783E70 /* LoadingView.swift in Sources */,
+				E6FF8528295B0214005B1D45 /* TelemetryViewModel.swift in Sources */,
+				E6FF852E295CA183005B1D45 /* ParcelsNotAvailableView.swift in Sources */,
+				E614AD852943857D00044BC7 /* ErrorHandler.swift in Sources */,
+				E6F82C1128FC9D600075D224 /* KeysView.swift in Sources */,
+				E6F82C1928FCB5080075D224 /* ParcelsInfoView.swift in Sources */,
+				E6C6B00A2938EB5200488E1E /* DisableScrolling.swift in Sources */,
+				E6FF7296293F638E0080C11B /* AuthView.swift in Sources */,
+				E6ECC1A2291003AC00D3C13A /* MainViewModel.swift in Sources */,
+				E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */,
+				E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */,
+				E6F82C1528FC9D790075D224 /* ProfileView.swift in Sources */,
+				E6C6B0062938A23700488E1E /* MainBluetoothViewModel.swift in Sources */,
+				E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */,
+				E6ECC195290A942000D3C13A /* DeviceViewModel.swift in Sources */,
+				E67D31F0293627CB006C673B /* InputFields.swift in Sources */,
+>>>>>>> github/ios
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +640,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+>>>>>>> github/ios
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -410,7 +698,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+>>>>>>> github/ios
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -427,6 +719,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
@@ -440,17 +733,115 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+=======
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
+				DEVELOPMENT_TEAM = X47395UTJ6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "locker-test/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Home Locker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "For connecting to locker";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "For connecting to locker";
+				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save QRCode";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+>>>>>>> github/ios
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot.locker-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseAuth\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreExtension\"",
+					"-framework",
+					"\"FirebaseCoreInternal\"",
+					"-framework",
+					"\"FirebaseFirestore\"",
+					"-framework",
+					"\"FirebaseFirestoreSwift\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"FirebaseSharedSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleAppMeasurementIdentitySupport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"absl\"",
+					"-framework",
+					"\"grpc\"",
+					"-framework",
+					"\"grpcpp\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-framework",
+					"\"openssl_grpc\"",
+					"-framework",
+					"\"uv\"",
+					"-Xlinker",
+					"-interposable",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot1.locker-test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> github/ios
 			};
 			name = Debug;
 		};
@@ -461,6 +852,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
@@ -474,17 +866,52 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+=======
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"locker-test/Preview Content\"";
+				DEVELOPMENT_TEAM = X47395UTJ6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "locker-test/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Home Locker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "For connecting to locker";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "For connecting to locker";
+				INFOPLIST_KEY_NSCameraUsageDescription = "For scanning qr codes";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save QRCode";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+>>>>>>> github/ios
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot.locker-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = "lockerbot1.locker-test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> github/ios
 			};
 			name = Release;
 		};
@@ -512,22 +939,52 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+<<<<<<< HEAD
 		E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/CodeScanner";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
+=======
+		E6DFFAEC292F9E7800AEFC4F /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+>>>>>>> github/ios
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+<<<<<<< HEAD
 		E6FC3C3B2908D88500783E70 /* CodeScanner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E6FC3C3A2908D88500783E70 /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
 		};
+=======
+		E6DFFAED292F9E7800AEFC4F /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6DFFAEC292F9E7800AEFC4F /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		E6FF7298293F813C0080C11B /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6FF7297293F813C0080C11B /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
+		};
+>>>>>>> github/ios
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E67352E828FA6CC1000C25BC /* Project object */;
