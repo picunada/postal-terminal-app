@@ -10,24 +10,26 @@ import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 
-struct DeliveryService: Codable {
+struct DeliveryService: Codable, Identifiable {
     @DocumentID var id: String?
     var name: String
     var imageURL: String
     
-    func getImage() -> Image? {
+    func getImage() -> UIImage? {
         let storageRef = Storage.storage().reference()
         let fileRef = storageRef.child(self.imageURL)
-        var image: Image?
-        fileRef.getData(maxSize: 1 * 1024 * 1024) { result in
-            switch result {
-            case .success(let data):
-                image = Image(uiImage: UIImage(data: data)!)
-            case .failure(let error):
-                print(error)
-                image = nil
-            }
+        var image: UIImage?
+        
+        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+          if let error = error {
+              print(error)
+          } else {
+            // Data for "images/island.jpg" is returned
+            print(dataz)
+            image = UIImage(data: data!)
+          }
         }
+        
         return image
     }
 }

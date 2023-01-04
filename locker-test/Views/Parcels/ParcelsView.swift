@@ -206,6 +206,13 @@ struct ParcelListView: View {
     
     
     var body: some View {
+        ForEach(serviceVM.services) { service in
+            if let image = service.getImage() {
+                Image(uiImage: image)
+            }
+            
+        }
+        
         if #available(iOS 16.0, *) {
             List {
                 if expectedParcels.count != 0 {
@@ -216,13 +223,17 @@ struct ParcelListView: View {
                             } label: {
                                 HStack {
                                     VStack {
-                                        if !serviceVM.services.isEmpty {
-                                            AsyncImage(url: URL(string: serviceVM.services[serviceVM.services.firstIndex { i in
-                                                i.name == parcel.serviceName
-                                            } ?? 0].image))
-                                                .frame(width: 40, height: 40)
-                                                .padding()
-                                                .foregroundColor(Color("AccentColor"))
+                                        if let service = serviceVM.services.first(where: { service in
+                                            return service.name == parcel.serviceName
+                                        }) {
+                                            if let image = service.getImage() {
+                                                Image(uiImage: image)
+                                                    .resizable()
+                                                    .frame(width: 41, height: 41)
+                                                    .padding()
+                                            } else {
+                                                Text("NO")
+                                            }
                                         } else {
                                             Image(systemName: "shippingbox")
                                                 .resizable()
