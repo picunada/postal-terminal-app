@@ -243,7 +243,6 @@ struct ParcelDetailEditView: View {
                         .frame(height: 150)
                         .scrollContentBackground(.hidden)
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     } else {
@@ -276,7 +275,6 @@ struct ParcelDetailEditView: View {
                         }
                         .frame(height: 150)
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     }

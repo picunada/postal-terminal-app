@@ -12,6 +12,7 @@ target 'locker-test' do
   pod 'FirebaseFirestore'
   pod 'FirebaseFirestoreSwift'
   pod 'FirebaseMessaging'
+  pod 'FirebaseStorage'
   pod 'FLAnimatedImage'
 
   # Pods for locker-test

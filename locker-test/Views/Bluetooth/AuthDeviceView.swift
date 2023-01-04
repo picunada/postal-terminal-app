@@ -53,6 +53,14 @@ struct AuthDeviceView: View {
                         .frame(width: 55, height: 55)
                         .background(Color(.systemGreen))
                         .clipShape(Circle())
+                        
+                        VStack {
+                            Text("Locker found by \n Bluetooth")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("BLE", fixedSize: 16))
+                                .lineSpacing(5)
+                        }
+                        .frame(height: 42)
                     } else {
                         VStack {
                             Text("STEP 1")
@@ -60,18 +68,17 @@ struct AuthDeviceView: View {
                                 .foregroundColor(.white)
                         }
                         .frame(width: 55, height: 55)
-                        .background(Color(.systemGreen))
+                        .background(Color("AccentColor"))
                         .clipShape(Circle())
+                        
+                        VStack {
+                            Text("Locker connects\n via Bluetooth ")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("BLE", fixedSize: 16))
+                                .lineSpacing(5)
+                        }
+                        .frame(height: 42)
                     }
-                    
-                    
-                    VStack {
-                        Text("Locker found by \n Bluetooth")
-                            .multilineTextAlignment(.center)
-                            .font(.custom("BLE", fixedSize: 16))
-                            .lineSpacing(5)
-                    }
-                    .frame(height: 42)
                 }
                 .frame(width: 139)
                 .animation(.default, value: mvm.peripheral != nil)
@@ -99,6 +106,15 @@ struct AuthDeviceView: View {
                         .frame(width: 55, height: 55)
                         .background(Color(.systemGreen))
                         .clipShape(Circle())
+                        
+                        VStack {
+                            Text("Locker connected \n to the Cloud")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("BLE", fixedSize: 16))
+                                .lineSpacing(5)
+                        }
+                        .frame(height: 42)
+                        .frame(maxWidth: .infinity)
                     } else {
                         VStack {
                             Text("STEP 2")
@@ -106,19 +122,21 @@ struct AuthDeviceView: View {
                                 .foregroundColor(.white)
                         }
                         .frame(width: 55, height: 55)
-                        .background((mvm.peripheral != nil) ?  Color(.systemGreen) : Color(.systemGray))
+                        .background((mvm.peripheral != nil) ?  Color("AccentColor") : Color(.systemGray))
                         .clipShape(Circle())
+                        
+                        VStack {
+                            Text("Locker connects to\n the Cloud")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("BLE", fixedSize: 16))
+                                .lineSpacing(5)
+                        }
+                        .frame(height: 42)
+                        .frame(maxWidth: .infinity)
                     }
                     
                     
-                    VStack {
-                        Text("Locker connected \n to the Cloud")
-                            .multilineTextAlignment(.center)
-                            .font(.custom("BLE", fixedSize: 16))
-                            .lineSpacing(5)
-                    }
-                    .frame(height: 42)
-                    .frame(maxWidth: .infinity)
+                    
                 }
                 .frame(width: 139)
             }
@@ -218,11 +236,13 @@ struct DeviceWifiView: View {
                             Image(systemName: "rays")
                                 .resizable()
                                 .frame(width: 28, height: 28)
-                                .rotationEffect(Angle(degrees: 360))
-                                .animation(Animation.linear(duration: 3).repeatForever(autoreverses: false), value: viewModel.loadingState)
+                                .rotationEffect(Angle(degrees: viewModel.loadingState == .loading ? 360 : 0))
                                 .onAppear() {
-                                    viewModel.loadingState = .loading
-                                            }
+                                    withAnimation(.spring()
+                                        .speed(0.1).repeatForever(autoreverses: false)) {
+                                            viewModel.loadingState = .loading
+                                    }
+                                }
                         }
                         
                         Spacer()
@@ -260,8 +280,12 @@ struct DeviceWifiView: View {
                         
                     
                     } else {
-                        ProgressView()
-                            .font(.largeTitle)
+                        VStack {
+                            Spacer()
+                            ProgressView()
+                                .font(.largeTitle)
+                            Spacer()
+                        }
                     }
                 }
             }
