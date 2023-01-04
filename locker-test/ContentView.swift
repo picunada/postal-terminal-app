@@ -6,68 +6,17 @@
 //
 
 import SwiftUI
-<<<<<<< HEAD
-=======
 import Inject
 import Combine
->>>>>>> github/ios
 
 struct ContentView: View {
     
     @EnvironmentObject var authState: AuthViewModel
-<<<<<<< HEAD
-=======
     @ObservedObject private var iO = Inject.observer
->>>>>>> github/ios
     
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
     
-<<<<<<< HEAD
-    init() {
-        
-        if #available(iOS 15, *) {
-            UITabBar.appearance().backgroundColor = UIColor.systemGray6
-        }
-    }
-    
-    var body: some View {
-        TabView() {
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-            ParcelsView(parcelState: parcelState)
-                .onAppear {
-                    parcelState.subscribe(user: authState.lockerUser!)
-                }
-                .onDisappear {
-                    parcelState.unsubscribe()
-                }
-                .tabItem {
-                    Label("Parcels", systemImage: "shippingbox")
-                }
-            KeysView(keyState: keysState)
-                .onAppear {
-                    keysState.subscribe(user: authState.lockerUser!)
-                }
-                .onDisappear {
-                    keysState.unsubscribe()
-                }
-                .tabItem {
-                    Label("Keys", systemImage: "lock.rotation")
-                }
-            NotificationsView()
-                .tabItem {
-                    Label("Notifications", systemImage: "bell")
-                }
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-        }
-        .accentColor(Color(UIColor.systemIndigo))
-=======
     @State private var cancellables: Set<AnyCancellable> = .init()
     
     @Namespace private var animation
@@ -157,7 +106,6 @@ struct ContentView: View {
             .enableInjection()
         }
         .ignoresSafeArea()
->>>>>>> github/ios
     }
 }
 

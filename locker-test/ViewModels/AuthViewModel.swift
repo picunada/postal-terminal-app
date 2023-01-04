@@ -13,11 +13,7 @@ struct LockerUser: Identifiable, Codable {
     @DocumentID var id: String?
     var firstName: String
     var lastName: String
-<<<<<<< HEAD
-    var lockerId: String
-=======
     var lockerId: String?
->>>>>>> github/ios
     
     var dictionary: [String: Any] {
             let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -25,8 +21,6 @@ struct LockerUser: Identifiable, Codable {
         }
 }
 
-<<<<<<< HEAD
-=======
 struct FirebaseCredentials: Codable {
     var email: String?
     var password: String?
@@ -81,7 +75,6 @@ enum FBAuthError: LocalizedError {
     }
 }
 
->>>>>>> github/ios
 class AuthViewModel: ObservableObject {
     
     enum State {
@@ -102,49 +95,18 @@ class AuthViewModel: ObservableObject {
     
     @Published private(set) var loading = State.idle
     @Published var lockerUser: LockerUser?
-<<<<<<< HEAD
-    @Published var errorMessage: String?
-=======
     @Published var user: User?
     @Published var error: Swift.Error?
->>>>>>> github/ios
     
     @Published var state: SignInState = .signedOut {
         didSet {
             if state != .signedOut {
                 self.fetchUser(userId: Auth.auth().currentUser!.uid)
-<<<<<<< HEAD
-            } else {
-                self.lockerUser = nil
-=======
                 self.user = Auth.auth().currentUser
->>>>>>> github/ios
             }
         }
     }
     
-<<<<<<< HEAD
-    init() {
-        
-    }
-    
-    private func fetchUser(userId: String) {
-        loading = .loading
-        
-        let docRef = db.collection("users").document(userId)
-        
-        docRef.getDocument(as: LockerUser.self) { result in
-            switch result {
-            case .success(let user):
-                // A `City` value was successfully initialized from the DocumentSnapshot.
-                print("User: \(user)")
-                self.lockerUser = user
-                self.loading = .loaded
-            case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
-                print("Error decoding city: \(error)")
-                self.loading = .failed
-=======
     @Published var updateSuccess: Bool = false
     
     private var listenerRegistration: ListenerRegistration?
@@ -194,22 +156,10 @@ class AuthViewModel: ObservableObject {
         Auth.auth().currentUser?.updateEmail(to: email) { error in
             if let error = error {
                 print(error.localizedDescription)
->>>>>>> github/ios
             }
         }
     }
     
-<<<<<<< HEAD
-    func createUser(user: LockerUser) {
-        if let id = user.id {
-            let docRef = db.collection("users").document(id)
-            do {
-                try docRef.setData(from: user)
-            } catch let error {
-                print("Error writing city to Firestore: \(error)")
-            }
-          }
-=======
     func updateUserInfo(lockerUser: LockerUser) {
         let docRef = db.collection("users").document(lockerUser.id!)
         
@@ -265,7 +215,6 @@ class AuthViewModel: ObservableObject {
               }
           }
         }
->>>>>>> github/ios
     }
 }
 

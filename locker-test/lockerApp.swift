@@ -7,34 +7,23 @@
 
 import SwiftUI
 import Firebase
-<<<<<<< HEAD
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-=======
 import FirebaseMessaging
 import UserNotifications
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
     
->>>>>>> github/ios
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
       
-<<<<<<< HEAD
-    Auth.auth().addStateDidChangeListener { auth, user in
-=======
     Auth.auth().addStateDidChangeListener { (auth, user) in
->>>>>>> github/ios
         if user != nil {
             AuthViewModel.shared.state = .signedIn
         } else {
             AuthViewModel.shared.state = .signedOut
         }
     }
-<<<<<<< HEAD
-=======
       
       UINavigationBar.appearance().backIndicatorImage = UIImage(systemName: "arrow.left")
       UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.left")
@@ -76,14 +65,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
            completionHandler(UIBackgroundFetchResult.newData)
          }
->>>>>>> github/ios
 
     return true
   }
 }
 
-<<<<<<< HEAD
-=======
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
 
@@ -141,15 +127,11 @@ extension UINavigationController {
     }
 }
 
->>>>>>> github/ios
 @main
 struct lockerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-<<<<<<< HEAD
-=======
     
->>>>>>> github/ios
     @StateObject var authState: AuthViewModel = AuthViewModel.shared
     
     var body: some Scene {
@@ -157,23 +139,6 @@ struct lockerApp: App {
             switch authState.loading {
             case .loading :
                 LoadingView()
-<<<<<<< HEAD
-                .transition(.slide)
-            case .loaded:
-                if authState.lockerUser != nil {
-                    ContentView()
-                        .environmentObject(authState)
-                } else {
-                    AuthView()
-                        .environmentObject(authState)
-                }
-            case .idle:
-                LoadingView()
-                .transition(.slide)
-            case .failed:
-                LoadingView()
-                .transition(.slide)
-=======
                     .animation(.default, value: authState.loading == .loading)
             case .loaded:
                 if authState.state != .signedIn {
@@ -200,7 +165,6 @@ struct lockerApp: App {
                     ContentView()
                         .environmentObject(authState)
                 }
->>>>>>> github/ios
             }
         }
     }
