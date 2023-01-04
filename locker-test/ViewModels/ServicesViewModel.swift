@@ -25,7 +25,7 @@ struct DeliveryService: Codable, Identifiable {
               print(error)
           } else {
             // Data for "images/island.jpg" is returned
-            print(dataz)
+            print(data)
             image = UIImage(data: data!)
           }
         }
