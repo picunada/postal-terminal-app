@@ -15,7 +15,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
+      
+      // 1
+      FirebaseApp.configure()
+      // 2
+      FirebaseConfiguration.shared.setLoggerLevel(.min)
       
     Auth.auth().addStateDidChangeListener { (auth, user) in
         if user != nil {
@@ -57,6 +61,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
            completionHandler(UIBackgroundFetchResult.newData)
          }
+      
+        if #available(iOS 10.0, *) {
+           UNUserNotificationCenter.current().delegate = self
+          }
 
     return true
   }

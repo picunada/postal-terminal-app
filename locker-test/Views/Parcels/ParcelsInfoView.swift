@@ -180,7 +180,6 @@ struct ParcelsInfoView: View {
                 Button("Edit") {
                     isPresentedEditView = true
                 }
-                .foregroundColor(Color(uiColor: .systemBlue))
             }
                 }
         .sheet(isPresented: $isPresentedEditView) {
@@ -188,6 +187,8 @@ struct ParcelsInfoView: View {
                 }
     }
 }
+
+// MARK: Edit
 
 struct ParcelDetailEditView: View {
     
@@ -222,15 +223,19 @@ struct ParcelDetailEditView: View {
                                         Text($0)
                                     }
                                 }
+                                .onChange(of: editedParcel.serviceName, perform: { _ in
+                                    isDisabled = false
+                                })
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 .padding(.bottom)
                                 DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                     .id(calendarId)
                                     .onChange(of: selectedDate, perform: { _ in
-                                      calendarId += 1
+                                        calendarId += 1
+                                        isDisabled = false
                                     })
                                     .onTapGesture {
-                                      calendarId += 1
+                                        calendarId += 1
                                     }
                                     .padding(.top)
                                     .padding(.bottom)
@@ -254,14 +259,18 @@ struct ParcelDetailEditView: View {
                                         Text($0)
                                     }
                                 }
+                                .onChange(of: editedParcel.serviceName, perform: { _ in
+                                    isDisabled = false
+                                })
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                     .id(calendarId)
                                     .onChange(of: selectedDate, perform: { _ in
-                                      calendarId += 1
+                                        calendarId += 1
+                                        isDisabled = false
                                     })
                                     .onTapGesture {
-                                      calendarId += 1
+                                        calendarId += 1
                                     }
                                     .padding(.top)
                                     .foregroundColor(Color(UIColor.secondaryLabel))
