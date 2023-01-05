@@ -13,7 +13,7 @@ import UserNotifications
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
     
-  func application(_ application: UIApplication,
+    func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       
       // 1
@@ -21,53 +21,42 @@ class AppDelegate: NSObject, UIApplicationDelegate {
       // 2
       FirebaseConfiguration.shared.setLoggerLevel(.min)
       
-    Auth.auth().addStateDidChangeListener { (auth, user) in
-        if user != nil {
-            AuthViewModel.shared.state = .signedIn
-        } else {
+      Auth.auth().addStateDidChangeListener { (auth, user) in
+          if user != nil {
+              AuthViewModel.shared.state = .signedIn
+          } else {
             AuthViewModel.shared.state = .signedOut
-        }
-    }
+          }
+      }
       
       UINavigationBar.appearance().backIndicatorImage = UIImage(systemName: "arrow.left")
       UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.left")
       UINavigationBar.appearance().tintColor = .black
       
+      UNUserNotificationCenter.current().delegate = self
+      // 2
+      let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+      UNUserNotificationCenter.current().requestAuthorization(
+        options: authOptions) { _, _ in }
+      // 3
+      application.registerForRemoteNotifications()
       
-
-         func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-             
-             UNUserNotificationCenter.current().delegate = self
-             // 2
-             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-             UNUserNotificationCenter.current().requestAuthorization(
-               options: authOptions) { _, _ in }
-             // 3
-             application.registerForRemoteNotifications()
-             
-             Messaging.messaging().delegate = self
-             
-             return true
-         }
-
-         func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                          fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-
-           if let messageID = userInfo[gcmMessageIDKey] {
-             print("Message ID: \(messageID)")
-           }
-
-           print(userInfo)
-
-           completionHandler(UIBackgroundFetchResult.newData)
-         }
+      Messaging.messaging().delegate = self
       
-        if #available(iOS 10.0, *) {
-           UNUserNotificationCenter.current().delegate = self
-          }
+      return true
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-    return true
-  }
+      if let messageID = userInfo[gcmMessageIDKey] {
+        print("Message ID: \(messageID)")
+      }
+
+      print(userInfo)
+
+      completionHandler(UIBackgroundFetchResult.newData)
+    }
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -83,10 +72,8 @@ extension AppDelegate: MessagingDelegate {
   }
 }
 
-@available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
-  // Receive displayed notifications for iOS 10 devices.
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
