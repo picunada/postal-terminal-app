@@ -7,14 +7,16 @@
 
 import SwiftUI
 import CodeScanner
+import FirebaseStorage
 
 struct ParcelsView: View {
     @Environment(\.defaultMinListRowHeight) var minRowHeight
     
     @EnvironmentObject var authState: AuthViewModel
     @ObservedObject var parcelState: ParcelViewModel
+    @StateObject var serviceVM: ServicesViewModel = .init()
     
-    let deliveryServices = ["DHL", "EMS", "Shopee Xpress", "LEX VN", "FedEx", "Standart Express", "Aliepress Standart"]
+//    let deliveryServices = ["DHL", "EMS", "Shopee Xpress", "LEX VN", "FedEx", "Standart Express", "Aliepress Standart"]
     
     @State var showCreateParcel: Bool = false
     @State var newParcel: Parcel = Parcel(serviceName: "DHL", trackingNumber: "", estimatedDeliveryDate: Date()...Date())
@@ -55,7 +57,7 @@ struct ParcelsView: View {
                     if (parcelState.expectedParcels.isEmpty && parcelState.receivedParcels.isEmpty) {
                         EmptyParcelsView()
                     } else {
-                        ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState)
+                        ParcelListView(expectedParcels: parcelState.expectedParcels, receivedParcels: parcelState.receivedParcels, parcelState: parcelState, serviceVM: serviceVM)
                     }
                 }
                 .padding(.horizontal)
@@ -63,6 +65,9 @@ struct ParcelsView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear {
+            serviceVM.fetchServices()
         }
         .accentColor(.primary)
     }
@@ -80,8 +85,9 @@ struct ParcelsView: View {
                         Form {
                             Section {
                                 Picker("Select delivery service", selection: $newParcel.serviceName) {
-                                    ForEach(deliveryServices , id: \.self) {
-                                        Text($0)
+                                    ForEach(serviceVM.services , id: \.id) { service in
+                                        Text(service.name)
+                                            .tag(service.name)
                                     }
                                 }
                                 .foregroundColor(Color(UIColor.secondaryLabel))
@@ -112,8 +118,8 @@ struct ParcelsView: View {
                         Form {
                             Section {
                                 Picker("Select delivery service", selection: $newParcel.serviceName) {
-                                    ForEach(deliveryServices , id: \.self) {
-                                        Text($0)
+                                    ForEach(serviceVM.services , id: \.self) {
+                                        Text($0.name)
                                     }
                                 }
                                 .foregroundColor(Color(UIColor.secondaryLabel))
@@ -196,65 +202,24 @@ struct ParcelListView: View {
     
     @ObservedObject var parcelState: ParcelViewModel
     @EnvironmentObject var authState: AuthViewModel
-    @StateObject var serviceVM: ServicesViewModel = .init()
+    @ObservedObject var serviceVM: ServicesViewModel
     
-    init(expectedParcels: [Parcel], receivedParcels: [Parcel], parcelState: ParcelViewModel) {
+    init(expectedParcels: [Parcel], receivedParcels: [Parcel], parcelState: ParcelViewModel, serviceVM: ServicesViewModel) {
         self.expectedParcels = expectedParcels
         self.receivedParcels = receivedParcels
         self.parcelState = parcelState
+        self.serviceVM = serviceVM
     }
     
     
     var body: some View {
-        ForEach(serviceVM.services) { service in
-            if let image = service.getImage() {
-                Image(uiImage: image)
-            }
-            
-        }
         
         if #available(iOS 16.0, *) {
             List {
                 if expectedParcels.count != 0 {
                     Section {
                         ForEach(expectedParcels, id: \.id) { parcel in
-                            NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser ?? LockerUser(firstName: "", lastName: ""), status: "active")
-                            } label: {
-                                HStack {
-                                    VStack {
-                                        if let service = serviceVM.services.first(where: { service in
-                                            return service.name == parcel.serviceName
-                                        }) {
-                                            if let image = service.getImage() {
-                                                Image(uiImage: image)
-                                                    .resizable()
-                                                    .frame(width: 41, height: 41)
-                                                    .padding()
-                                            } else {
-                                                Text("NO")
-                                            }
-                                        } else {
-                                            Image(systemName: "shippingbox")
-                                                .resizable()
-                                                .frame(width: 25, height: 25)
-                                                .padding()
-                                                .foregroundColor(Color("AccentColor"))
-                                        }
-                                    }
-                                    .frame(width: 41, height: 41)
-                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
-                                    
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(parcel.serviceName)
-                                        Text(parcel.trackingNumber)
-                                            .foregroundColor(Color(UIColor.secondaryLabel))
-                                    }
-                                    .padding(.leading)
-                                }
-                            }
-                            .listRowInsets(EdgeInsets())
-                            .padding()
+                            ParcelItem(parcelState: parcelState, serviceVM: serviceVM, parcel: parcel, status: "active")
                         }
                     } header: {
                         Text("EXPECTED")
@@ -263,29 +228,7 @@ struct ParcelListView: View {
                 if receivedParcels.count != 0 {
                     Section {
                         ForEach(receivedParcels, id: \.id) { parcel in
-                            NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "inactive")
-                            } label: {
-                                HStack {
-                                    VStack {
-                                        Image(systemName: "shippingbox")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .frame(width: 41, height: 41)
-                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(parcel.serviceName)
-                                        Text(parcel.trackingNumber)
-                                            .foregroundColor(Color(UIColor.secondaryLabel))
-                                    }
-                                    .padding(.leading)
-                                }
-                            }
-                            .listRowInsets(EdgeInsets())
-                            .padding()
+                            ParcelItem(parcelState: parcelState, serviceVM: serviceVM, parcel: parcel, status: "inactive")
                         }
                     } header: {
                         Text("RECEIVED")
@@ -303,29 +246,7 @@ struct ParcelListView: View {
                 if expectedParcels.count != 0 {
                     Section {
                         ForEach(expectedParcels, id: \.id) { parcel in
-                            NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "active")
-                            } label: {
-                                HStack {
-                                    VStack {
-                                        Image(systemName: "shippingbox")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(Color("AccentColor"))
-                                    }
-                                    .frame(width: 41, height: 41)
-                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(parcel.serviceName)
-                                        Text(parcel.trackingNumber)
-                                            .foregroundColor(Color(UIColor.secondaryLabel))
-                                    }
-                                    .padding(.leading)
-                                }
-                            }
-                            .listRowInsets(EdgeInsets())
-                            .padding()
+                            ParcelItem(parcelState: parcelState, serviceVM: serviceVM, parcel: parcel, status: "active")
                         }
                         
                     } header: {
@@ -335,29 +256,7 @@ struct ParcelListView: View {
                 if receivedParcels.count != 0 {
                     Section {
                         ForEach(receivedParcels, id: \.id) { parcel in
-                            NavigationLink {
-                                ParcelsInfoView(parcelState: parcelState, parcel: parcel, user: authState.lockerUser!, status: "inactive")
-                            } label: {
-                                HStack {
-                                    VStack {
-                                        Image(systemName: "shippingbox")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding()
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .frame(width: 41, height: 41)
-                                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(parcel.serviceName)
-                                        Text(parcel.trackingNumber)
-                                            .foregroundColor(Color(UIColor.secondaryLabel))
-                                    }
-                                    .padding(.leading)
-                                }
-                            }
-                            .listRowInsets(EdgeInsets())
-                            .padding()
+                            ParcelItem(parcelState: parcelState, serviceVM: serviceVM, parcel: parcel, status: "inactive")
                         }
                     } header: {
                         Text("RECEIVED")
@@ -367,7 +266,6 @@ struct ParcelListView: View {
             .listStyle(InsetGroupedListStyle())
             .onAppear(perform: {
                 UITableView.appearance().backgroundColor = UIColor.clear
-                serviceVM.fetchServices()
                     })
             .listStyle(.automatic)
             .padding(.horizontal, -20)
@@ -430,5 +328,72 @@ struct QrButton: ViewModifier
                 }
             }
         }
+    }
+}
+
+struct ParcelItem: View {
+    
+    @EnvironmentObject var authState: AuthViewModel
+    @ObservedObject var parcelState: ParcelViewModel
+    @ObservedObject var serviceVM: ServicesViewModel
+    var parcel: Parcel
+    var status: String
+    
+    @State var image: UIImage?
+    
+    var body: some View {
+        NavigationLink {
+            ParcelsInfoView(parcelState: parcelState, serviceVM: serviceVM, image: image, parcel: parcel, user: authState.lockerUser ?? LockerUser(firstName: "", lastName: ""), status: status)
+        } label: {
+            HStack {
+                VStack {
+                    if let service = serviceVM.services.first(where: { service in
+                        return service.name == parcel.serviceName
+                    }) {
+                        
+                        
+                        if image != nil {
+                            Image(uiImage: image!)
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 41, height: 41)
+                                .padding()
+                                .saturation(status == "active" ? 1 : 0)
+                                
+                        } else {
+                            Image(systemName: "shippingbox")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                                .saturation(status == "active" ? 1 : 0)
+                                .padding()
+                                .foregroundColor(Color("AccentColor"))
+                                .onAppear {
+                                    let storageRef = Storage.storage().reference()
+                                    let fileRef = storageRef.child(service.imageURL)
+                                    
+                                    fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                                      if let error = error {
+                                          print(error)
+                                      } else {
+                                           image = UIImage(data: data!)
+                                      }
+                                    }
+                                }
+                        }
+                    }
+                }
+                .frame(width: 41, height: 41)
+                .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(parcel.serviceName)
+                    Text(parcel.trackingNumber)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                }
+                .padding(.leading)
+            }
+        }
+        .listRowInsets(EdgeInsets())
+        .padding()
     }
 }

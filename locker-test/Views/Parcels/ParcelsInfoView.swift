@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct ParcelsInfoView: View {
     
     @ObservedObject var parcelState: ParcelViewModel
     @EnvironmentObject var authState: AuthViewModel
+    @ObservedObject var serviceVM: ServicesViewModel
     
     @State var isPresentedDeleteConfirm: Bool = false
     @State private var isPresentedEditView = false
+    @State var image: UIImage?
     
     var parcel: Parcel
     var user: LockerUser
@@ -28,19 +31,34 @@ struct ParcelsInfoView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .center) {
                             VStack {
-                                Image(systemName: "shippingbox")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .padding()
-                                    .foregroundColor(Color(UIColor.systemIndigo))
+                                if image != nil {
+                                    Image(uiImage: image!)
+                                        .resizable()
+                                        .clipShape(Circle())
+                                        .frame(width: 55, height: 55)
+                                        .padding()
+                                        .saturation(status == "active" ? 1 : 0)
+                                        
+                                } else {
+                                    Image(systemName: "shippingbox")
+                                        .resizable()
+                                        .frame(width: 41, height: 41)
+                                        .saturation(status == "active" ? 1 : 0)
+                                        .padding()
+                                        .foregroundColor(Color(UIColor.systemIndigo))
+                                }
                             }
-                            .frame(width: 41, height: 41)
+                            .frame(width: 55, height: 55)
                             .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                            VStack {
+                                
+                            }
+                            
                             
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("\(status.capitalized) parcel")
+                                Text("\(status == "active" ? "Expected" : "Received") parcel")
                                     .bold()
-                                Text("Status: \(status)")
+                                Text("Status: \(status == "active" ? "expected" : "received")")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                                 if receivedDate != nil {
                                     Text(formatDate(date: receivedDate!))

@@ -8,30 +8,12 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
-import FirebaseStorage
 
-struct DeliveryService: Codable, Identifiable {
+struct DeliveryService: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var name: String
     var imageURL: String
-    
-    func getImage() -> UIImage? {
-        let storageRef = Storage.storage().reference()
-        let fileRef = storageRef.child(self.imageURL)
-        var image: UIImage?
         
-        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-          if let error = error {
-              print(error)
-          } else {
-            // Data for "images/island.jpg" is returned
-            print(data)
-            image = UIImage(data: data!)
-          }
-        }
-        
-        return image
-    }
 }
 
 
