@@ -5,6 +5,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/CodeScanner",
       "state" : {
+<<<<<<< HEAD
+        "revision" : "c7859712034a08bb5a018fbe8751c1f1edc4b248",
+        "version" : "2.2.1"
+=======
         "branch" : "main",
         "revision" : "9aef09bf5c0274689a89c2fd71794011bebdc43f"
       }
@@ -16,6 +20,7 @@
       "state" : {
         "revision" : "04925668f57e74bc40f21b185a41c5585a84a9fe",
         "version" : "1.2.2"
+>>>>>>> github/ios
       }
     }
   ],

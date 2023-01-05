@@ -17,7 +17,6 @@
 		E631C232294B6DA8003528CF /* wi-fi.gif in Resources */ = {isa = PBXBuildFile; fileRef = E631C230294B6DA8003528CF /* wi-fi.gif */; };
 		E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0028FABC3100499DE1 /* HomeView.swift */; };
 		E6465F0328FABC3E00499DE1 /* ParcelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6465F0228FABC3D00499DE1 /* ParcelsView.swift */; };
-		E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64B44682937602C00455891 /* LockerPeripheral.swift */; };
 		E660A17228FC197F00FE80F1 /* ParcelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */; };
 		E67352F428FA6CC1000C25BC /* lockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67352F328FA6CC1000C25BC /* lockerApp.swift */; };
 		E67352F628FA6CC1000C25BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67352F528FA6CC1000C25BC /* ContentView.swift */; };
@@ -65,7 +64,6 @@
 		E631C230294B6DA8003528CF /* wi-fi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "wi-fi.gif"; path = "locker-test/wi-fi.gif"; sourceTree = SOURCE_ROOT; };
 		E6465F0028FABC3100499DE1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E6465F0228FABC3D00499DE1 /* ParcelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsView.swift; sourceTree = "<group>"; };
-		E64B44682937602C00455891 /* LockerPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockerPeripheral.swift; sourceTree = "<group>"; };
 		E660A17128FC197E00FE80F1 /* ParcelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcelsViewModel.swift; sourceTree = "<group>"; };
 		E67352F028FA6CC1000C25BC /* locker-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "locker-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67352F328FA6CC1000C25BC /* lockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lockerApp.swift; sourceTree = "<group>"; };
@@ -149,14 +147,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		E64B44672937601100455891 /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				E64B44682937602C00455891 /* LockerPeripheral.swift */,
-			);
-			path = Mock;
-			sourceTree = "<group>";
-		};
 		E660A17328FC6B4400FE80F1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,7 +180,6 @@
 			children = (
 				E6FF8531295ECF0A005B1D45 /* ViewModels */,
 				E6C7665F2955D40600FDEA5A /* Info.plist */,
-				E64B44672937601100455891 /* Mock */,
 				E6ECC191290A631800D3C13A /* Managers */,
 				E660A17328FC6B4400FE80F1 /* Components */,
 				E6465EFD28FABBC900499DE1 /* Views */,
@@ -465,7 +454,6 @@
 				E6C6B00A2938EB5200488E1E /* DisableScrolling.swift in Sources */,
 				E6FF7296293F638E0080C11B /* AuthView.swift in Sources */,
 				E6ECC1A2291003AC00D3C13A /* MainViewModel.swift in Sources */,
-				E64B44692937602C00455891 /* LockerPeripheral.swift in Sources */,
 				E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */,
 				E6F82C1528FC9D790075D224 /* ProfileView.swift in Sources */,
 				E6C6B0062938A23700488E1E /* MainBluetoothViewModel.swift in Sources */,
