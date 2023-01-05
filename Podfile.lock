@@ -627,11 +627,13 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAppCheckInterop (10.3.0)
   - FirebaseAuth (10.0.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (~> 2.1)
+  - FirebaseAuthInterop (10.3.0)
   - FirebaseCore (10.0.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -663,9 +665,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-<<<<<<< HEAD
-  - FirebaseSharedSwift (10.0.0)
-=======
   - FirebaseMessaging (10.3.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
@@ -676,8 +675,13 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseSharedSwift (10.0.0)
+  - FirebaseStorage (10.3.0):
+    - FirebaseAppCheckInterop (~> 10.0)
+    - FirebaseAuthInterop (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - FLAnimatedImage (1.0.17)
->>>>>>> github/ios
   - GoogleAppMeasurement (10.0.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.0.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
@@ -698,13 +702,10 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-<<<<<<< HEAD
-=======
   - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
->>>>>>> github/ios
   - GoogleUtilities/AppDelegateSwizzler (7.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -795,11 +796,9 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
   - FirebaseFirestoreSwift
-<<<<<<< HEAD
-=======
   - FirebaseMessaging
+  - FirebaseStorage
   - FLAnimatedImage
->>>>>>> github/ios
 
 SPEC REPOS:
   trunk:
@@ -807,23 +806,21 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAppCheckInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
-<<<<<<< HEAD
-    - FirebaseSharedSwift
-    - GoogleAppMeasurement
-=======
     - FirebaseMessaging
     - FirebaseSharedSwift
+    - FirebaseStorage
     - FLAnimatedImage
     - GoogleAppMeasurement
     - GoogleDataTransport
->>>>>>> github/ios
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -838,23 +835,21 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   Firebase: 1b810f3d0c0532e27a48f1961f8c0400a668a2cf
   FirebaseAnalytics: 9921a52739f4ab66099da31b6e0243db78a3ac0a
+  FirebaseAppCheckInterop: 9fc57dfa08f0abb737b185ea065422b55355c909
   FirebaseAuth: 493382cf533cc45e2862b00e9aa4cfe4c98daf71
+  FirebaseAuthInterop: 7a766bd56971347e0de4b7674aaa62ddc7820097
   FirebaseCore: 97f48a3a567a72b8d4daa0f03c3aadb78df4e995
   FirebaseCoreExtension: 449595a035812f16314ca88cebf959e3bb77dd67
   FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
   FirebaseFirestore: 5007583f3db2129de8e87f18ee63f4c86f07e7a3
   FirebaseFirestoreSwift: a67b697245c5f6e721612fc86e1f26384c90ddcf
   FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
-<<<<<<< HEAD
-  FirebaseSharedSwift: eae0978bbb46dbfc21975e88a79654f614822ce4
-  GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
-=======
   FirebaseMessaging: e345b219fd15d325f0cf2fef28cb8ce00d851b3f
   FirebaseSharedSwift: eae0978bbb46dbfc21975e88a79654f614822ce4
+  FirebaseStorage: 0efbff0ac978981866d89804191688ae50d64033
   FLAnimatedImage: bbf914596368867157cc71b38a8ec834b3eeb32b
   GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
->>>>>>> github/ios
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
@@ -864,10 +859,6 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
 
-<<<<<<< HEAD
-PODFILE CHECKSUM: 686abf627970001359cfce1540bcb1d83155e6d9
-=======
 PODFILE CHECKSUM: 770d85b70719424db6386a76c32d633539547b96
->>>>>>> github/ios
 
 COCOAPODS: 1.11.3

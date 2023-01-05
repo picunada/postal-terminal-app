@@ -133,7 +133,7 @@ class KeysViewModel: ObservableObject {
         guard !serial.isEmpty else { return }
         
         let inputData = Data(serial.utf8)
-        let hashed = SHA256.hash(data: inputData)
+        let hashed = Insecure.MD5.hash(data: inputData)
         let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
         
         let docRef = db.collection("keys").document("\(serial)")

@@ -9,20 +9,11 @@ import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
 
-struct DeliveryService: Codable {
+struct DeliveryService: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var name: String
-    var image: String
-    
-//    func getImage() -> Image? {
-//        guard let stringData = Data(base64Encoded: self.image),
-//              let uiImage = UIImage(data: stringData) else {
-//                  print("Error: couldn't create UIImage")
-//                  return nil
-//              }
-//        /// Convert UIImage to SwiftUI Image
-//        return Image(uiImage: uiImage)
-//    }
+    var imageURL: String
+        
 }
 
 

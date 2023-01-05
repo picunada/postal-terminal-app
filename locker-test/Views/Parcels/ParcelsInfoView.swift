@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct ParcelsInfoView: View {
     
     @ObservedObject var parcelState: ParcelViewModel
     @EnvironmentObject var authState: AuthViewModel
+    @ObservedObject var serviceVM: ServicesViewModel
     
     @State var isPresentedDeleteConfirm: Bool = false
     @State private var isPresentedEditView = false
+    @State var image: UIImage?
     
     var parcel: Parcel
     var user: LockerUser
@@ -28,19 +31,34 @@ struct ParcelsInfoView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .center) {
                             VStack {
-                                Image(systemName: "shippingbox")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .padding()
-                                    .foregroundColor(Color(UIColor.systemIndigo))
+                                if image != nil {
+                                    Image(uiImage: image!)
+                                        .resizable()
+                                        .clipShape(Circle())
+                                        .frame(width: 55, height: 55)
+                                        .padding()
+                                        .saturation(status == "active" ? 1 : 0)
+                                        
+                                } else {
+                                    Image(systemName: "shippingbox")
+                                        .resizable()
+                                        .frame(width: 41, height: 41)
+                                        .saturation(status == "active" ? 1 : 0)
+                                        .padding()
+                                        .foregroundColor(Color(UIColor.systemIndigo))
+                                }
                             }
-                            .frame(width: 41, height: 41)
+                            .frame(width: 55, height: 55)
                             .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                            VStack {
+                                
+                            }
+                            
                             
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("\(status.capitalized) parcel")
+                                Text("\(status == "active" ? "Expected" : "Received") parcel")
                                     .bold()
-                                Text("Status: \(status)")
+                                Text("Status: \(status == "active" ? "expected" : "received")")
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                                 if receivedDate != nil {
                                     Text(formatDate(date: receivedDate!))
@@ -180,7 +198,6 @@ struct ParcelsInfoView: View {
                 Button("Edit") {
                     isPresentedEditView = true
                 }
-                .foregroundColor(Color(uiColor: .systemBlue))
             }
                 }
         .sheet(isPresented: $isPresentedEditView) {
@@ -188,6 +205,8 @@ struct ParcelsInfoView: View {
                 }
     }
 }
+
+// MARK: Edit
 
 struct ParcelDetailEditView: View {
     
@@ -222,15 +241,19 @@ struct ParcelDetailEditView: View {
                                         Text($0)
                                     }
                                 }
+                                .onChange(of: editedParcel.serviceName, perform: { _ in
+                                    isDisabled = false
+                                })
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 .padding(.bottom)
                                 DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                     .id(calendarId)
                                     .onChange(of: selectedDate, perform: { _ in
-                                      calendarId += 1
+                                        calendarId += 1
+                                        isDisabled = false
                                     })
                                     .onTapGesture {
-                                      calendarId += 1
+                                        calendarId += 1
                                     }
                                     .padding(.top)
                                     .padding(.bottom)
@@ -243,7 +266,6 @@ struct ParcelDetailEditView: View {
                         .frame(height: 150)
                         .scrollContentBackground(.hidden)
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     } else {
@@ -255,14 +277,18 @@ struct ParcelDetailEditView: View {
                                         Text($0)
                                     }
                                 }
+                                .onChange(of: editedParcel.serviceName, perform: { _ in
+                                    isDisabled = false
+                                })
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                                 DatePicker("Select delivery date", selection: $selectedDate , in: Date()..., displayedComponents: .date)
                                     .id(calendarId)
                                     .onChange(of: selectedDate, perform: { _ in
-                                      calendarId += 1
+                                        calendarId += 1
+                                        isDisabled = false
                                     })
                                     .onTapGesture {
-                                      calendarId += 1
+                                        calendarId += 1
                                     }
                                     .padding(.top)
                                     .foregroundColor(Color(UIColor.secondaryLabel))
@@ -276,7 +302,6 @@ struct ParcelDetailEditView: View {
                         }
                         .frame(height: 150)
                         .listStyle(.inset)
-                        .padding(.horizontal, -20)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
                     }

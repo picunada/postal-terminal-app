@@ -18,6 +18,7 @@ target 'locker-test' do
 <<<<<<< HEAD
 =======
   pod 'FirebaseMessaging'
+  pod 'FirebaseStorage'
   pod 'FLAnimatedImage'
 >>>>>>> github/ios
 
