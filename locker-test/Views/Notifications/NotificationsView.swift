@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NotificationsView: View {
+    @EnvironmentObject var notificationsManager: NotificationsManager
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -27,9 +29,25 @@ struct NotificationsView: View {
                     .frame(height: 55)
                     .padding(.horizontal)
                     
-//                    NotificationsListView()
-                    EmptyNotificationsView()
+                    if notificationsManager.notifications.isEmpty {
+                        EmptyNotificationsView()
+                    } else {
+                        NotificationsListView()
+                    }
                 }
+                .onAppear {
+                    notificationsManager.reloadAuthorizationStatus()
+                }
+                .onChange(of: notificationsManager.authorizationStatus, perform: { authorizationStatus in
+                    switch authorizationStatus {
+                    case .notDetermined:
+                        notificationsManager.requestAuthorization()
+                    case .authorized:
+                        notificationsManager.reloadLocalNotifications()
+                    default:
+                        break
+                    }
+                })
                 .padding(.top, 40)
                 .padding(.bottom, 50)
             }
@@ -42,78 +60,91 @@ struct NotificationsView: View {
 }
 
 struct NotificationsListView: View {
+    
+    @EnvironmentObject var notificationsManager: NotificationsManager
+    
     var body: some View {
         if #available(iOS 16.0, *) {
             List {
-                HStack {
-                    VStack {
-                        Image(systemName: "shippingbox")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .padding()
-                            .foregroundColor(Color(UIColor.systemIndigo))
+                ForEach(notificationsManager.notifications, id: \.identifier) { notification in
+                    HStack {
+                        VStack {
+                            Image(systemName: "shippingbox")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                                .padding()
+                                .foregroundColor(Color(UIColor.systemIndigo))
+                        }
+                        .frame(width: 41, height: 41)
+                        .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                        
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(notification.content.title)
+                            Text(notification.content.body)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                        }
+                        .padding(.leading)
+                        
+                        Spacer()
+                        
+                        Button {
+                            //
+                        } label: {
+                            Image(systemName: "trash")
+                                .resizable()
+                                .foregroundColor(.secondary)
+                                .frame(width: 21, height: 23)
+                                .padding(.trailing, 8)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
                     }
-                    .frame(width: 41, height: 41)
-                    .overlay(Circle().stroke(.secondary, lineWidth: 1))
-                    
-                    
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Parcel from DHL")
-                        Text("Delivered today, 10:22")
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                    }
-                    .padding(.leading)
-                    
-                    Spacer()
-                    
-                    Button {
-                        //
-                    } label: {
-                        Image(systemName: "trash")
-                            .resizable()
-                            .foregroundColor(.secondary)
-                            .frame(width: 21, height: 23)
-                            .padding(.trailing, 8)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical)
+                    .padding(.horizontal)
                 }
-                .listRowInsets(EdgeInsets())
-                .padding(.vertical)
-                .padding(.horizontal)
             }
             .scrollContentBackground(.hidden)
         } else {
             // Fallback on earlier versions
             List {
-                HStack {
-                    VStack {
-                        Image(systemName: "shippingbox")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .padding()
-                            .foregroundColor(Color(UIColor.systemIndigo))
-                            .background(Color(UIColor.systemBackground))
-                            .clipShape(Circle())
+                ForEach(notificationsManager.notifications, id: \.identifier) { notification in
+                    HStack {
+                        VStack {
+                            Image(systemName: "shippingbox")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                                .padding()
+                                .foregroundColor(Color(UIColor.systemIndigo))
+                        }
+                        .frame(width: 41, height: 41)
+                        .overlay(Circle().stroke(.secondary, lineWidth: 1))
+                        
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(notification.content.title)
+                            Text(notification.content.body)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                        }
+                        .padding(.leading)
+                        
+                        Spacer()
+                        
+                        Button {
+                            //
+                        } label: {
+                            Image(systemName: "trash")
+                                .resizable()
+                                .foregroundColor(.secondary)
+                                .frame(width: 21, height: 23)
+                                .padding(.trailing, 8)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
                     }
-                    VStack(alignment: .leading) {
-                        Text("DHL")
-                            .font(.callout)
-                        Text("Delivered today, 10:22")
-                            .font(.callout)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                    }
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical)
                     .padding(.horizontal)
-                    Spacer()
-                    Button {
-                        //
-                    } label: {
-                        Image(systemName: "trash")
-                            .foregroundColor(.secondary)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-
                 }
-                .padding(.trailing, 20)
             }
             .onAppear(perform: {
                         // cache the current background color

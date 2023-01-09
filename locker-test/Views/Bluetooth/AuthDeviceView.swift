@@ -43,6 +43,9 @@ struct AuthDeviceView: View {
         VStack(spacing: 45) {
             HStack {
                 VStack(spacing: 10) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        
+                    }
                     if mvm.peripheral != nil {
                         VStack {
                             Image(systemName: "checkmark")

@@ -16,6 +16,7 @@ struct ContentView: View {
     
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
+    @StateObject var notificationsManager: NotificationsManager = NotificationsManager()
     
     @State private var cancellables: Set<AnyCancellable> = .init()
     
@@ -37,6 +38,7 @@ struct ContentView: View {
                 TabView(selection: $selection) {
                     HomeView()
                         .environmentObject(keysState)
+                        .environmentObject(notificationsManager)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
@@ -87,6 +89,7 @@ struct ContentView: View {
                             }
                             .tag(2)
                         NotificationsView()
+                            .environmentObject(notificationsManager)
                             .disabled(true)
                             .tabItem {
                                 Label("Notifications", systemImage: "bell")

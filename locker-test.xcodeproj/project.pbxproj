@@ -26,6 +26,7 @@
 		E67D31F0293627CB006C673B /* InputFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D31EF293627CB006C673B /* InputFields.swift */; };
 		E697E2B528FA709D0027A088 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E697E2B428FA709D0027A088 /* GoogleService-Info.plist */; };
 		E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E697E2B728FA71980027A088 /* AuthViewModel.swift */; };
+		E6AD9A3E296AFEE000EA4A56 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD9A3D296AFEE000EA4A56 /* NotificationsManager.swift */; };
 		E6C6B0062938A23700488E1E /* MainBluetoothViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */; };
 		E6C6B0082938DD8A00488E1E /* BLEDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */; };
 		E6C6B00A2938EB5200488E1E /* DisableScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C6B0092938EB5200488E1E /* DisableScrolling.swift */; };
@@ -76,6 +77,7 @@
 		E67D31EF293627CB006C673B /* InputFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFields.swift; sourceTree = "<group>"; };
 		E697E2B428FA709D0027A088 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E697E2B728FA71980027A088 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		E6AD9A3D296AFEE000EA4A56 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		E6C6B0052938A23700488E1E /* MainBluetoothViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBluetoothViewModel.swift; sourceTree = "<group>"; };
 		E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDataManager.swift; sourceTree = "<group>"; };
 		E6C6B0092938EB5200488E1E /* DisableScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableScrolling.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				E6C6B0072938DD8A00488E1E /* BLEDataManager.swift */,
 				E614AD842943857D00044BC7 /* ErrorHandler.swift */,
 				E62D0C8429548D2F00469759 /* QRManager.swift */,
+				E6AD9A3D296AFEE000EA4A56 /* NotificationsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				E6465F0128FABC3100499DE1 /* HomeView.swift in Sources */,
 				E6F82C1528FC9D790075D224 /* ProfileView.swift in Sources */,
 				E6C6B0062938A23700488E1E /* MainBluetoothViewModel.swift in Sources */,
+				E6AD9A3E296AFEE000EA4A56 /* NotificationsManager.swift in Sources */,
 				E697E2B828FA71980027A088 /* AuthViewModel.swift in Sources */,
 				E6ECC195290A942000D3C13A /* DeviceViewModel.swift in Sources */,
 				E67D31F0293627CB006C673B /* InputFields.swift in Sources */,

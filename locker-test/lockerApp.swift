@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseMessaging
+import FirebaseFirestore
 import UserNotifications
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -65,6 +66,18 @@ extension AppDelegate: MessagingDelegate {
     didReceiveRegistrationToken fcmToken: String?
   ) {
     let tokenDict = ["token": fcmToken ?? ""]
+      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+          if AuthViewModel.shared.state == .signedIn && AuthViewModel.shared.lockerUser != nil {
+              print(AuthViewModel.shared.lockerUser)
+              print(tokenDict)
+              if let lockerId = AuthViewModel.shared.lockerUser?.lockerId {
+                  let db = Firestore.firestore()
+                  print(lockerId)
+                  print(tokenDict)
+                  db.collection("mobile_tokens").document(lockerId).setData(tokenDict)
+              }
+          }
+      }
     NotificationCenter.default.post(
       name: Notification.Name("FCMToken"),
       object: nil,
