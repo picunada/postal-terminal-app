@@ -27,6 +27,7 @@ struct AuthDeviceView: View {
                     VStack(alignment: .center, spacing: 0) {
                         content()
                             .padding(.all, 0)
+                            .animation(.default.delay(1), value: mvm.peripheral)
                     }
                 }
                 .padding(.horizontal)
@@ -42,10 +43,6 @@ struct AuthDeviceView: View {
     private func content() -> some View {
         VStack(spacing: 45) {
             HStack {
-                VStack(spacing: 10) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        
-                    }
                     if mvm.peripheral != nil {
                         VStack {
                             Image(systemName: "checkmark")
@@ -84,7 +81,6 @@ struct AuthDeviceView: View {
                     }
                 }
                 .frame(width: 139)
-                .animation(.default, value: mvm.peripheral != nil)
                 
                 Spacer()
                 
@@ -179,11 +175,11 @@ struct AuthDeviceView: View {
                             .frame(width: 215, height: 242)
                         }
                 }
-                .animation(.default, value: mvm.peripheral != nil)
+                
             }
         }
     }
-}
+
 
 
 struct DeviceWifiView: View {

@@ -103,6 +103,7 @@ struct NotificationsListView: View {
                     .padding(.vertical)
                     .padding(.horizontal)
                 }
+                .onDelete(perform: notificationsManager.deleteNotificationIS)
             }
             .scrollContentBackground(.hidden)
         } else {
@@ -145,6 +146,7 @@ struct NotificationsListView: View {
                     .padding(.vertical)
                     .padding(.horizontal)
                 }
+                .onDelete(perform: notificationsManager.deleteNotificationIS)
             }
             .onAppear(perform: {
                         // cache the current background color

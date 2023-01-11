@@ -9,13 +9,22 @@ import SwiftUI
 import CoreBluetooth
 import Combine
 
+//struct NotificationTest: Identifiable, Codable, Hashable {
+//    var id: UUID = UUID()
+//    var title: String
+//    var description: String
+//}
+
 struct HomeView: View {
     
     @StateObject private var vm: MainViewModel = .init()
     @StateObject private var telemetryVM: TelemetryViewModel = .init()
     @EnvironmentObject var authState: AuthViewModel
+    @EnvironmentObject var notificationsManager: NotificationsManager
     @State private var devicesViewIsPresented = false
     @State var cancellables: Set<AnyCancellable> = .init()
+    
+//    @State var testNotifications: [NotificationTest] = [NotificationTest(title: "Parcel from DHL", description: "Test"), NotificationTest(title: "Parcel from EMS", description: "Test"), NotificationTest(title: "Parcel from FedEx", description: "Test")]
     
     var body: some View {
         ZStack {
@@ -30,10 +39,10 @@ struct HomeView: View {
                 .navigationBarHidden(true)
 
             }
-            .accentColor(.primary)
             .onAppear {
                 vm.start()
-
+                
+                notificationsManager.reloadAuthorizationStatus()
                 
                 authState.$lockerUser
                     .filter({ user in
@@ -44,6 +53,16 @@ struct HomeView: View {
                     }
                     .store(in: &cancellables)
             }
+            .onChange(of: notificationsManager.authorizationStatus, perform: { authorizationStatus in
+                switch authorizationStatus {
+                case .notDetermined:
+                    notificationsManager.requestAuthorization()
+                case .authorized:
+                    notificationsManager.reloadLocalNotifications()
+                default:
+                    break
+                }
+            })
         }
         
     }
@@ -126,6 +145,61 @@ struct HomeView: View {
                 .padding(.bottom, 45)
                 Image("Home Screen")
                     .frame(width: 257, height: 271)
+                
+                if !notificationsManager.notifications.isEmpty {
+                        ZStack {
+                            ForEach(notificationsManager.notifications.indices, id: \.self) { index in
+                                HStack {
+                                    VStack {
+                                        Image(systemName: "shippingbox")
+                                            .resizable()
+                                            .frame(width: 25, height: 25)
+                                            .padding()
+                                            .foregroundColor(Color("AccentColor"))
+                                    }
+                                    .frame(width: 44, height: 44)
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            Text(notificationsManager.notifications[index].content.title)
+                                                .font(.custom("test", size: 17))
+                                                .bold()
+                                            Spacer()
+                                            Button {
+                                                print("current \(index)")
+                                                print("last \(notificationsManager.notifications.endIndex)")
+                                                withAnimation(.spring()) {
+                                                    DispatchQueue.main.async {
+                                                        notificationsManager.deleteNotification(index)
+                                                    }
+                                                }
+                                            } label: {
+                                                Image(systemName: "multiply")
+                                                    .resizable()
+                                                    .frame(width: 12, height: 12)
+                                                    .foregroundColor(.black)
+                                            }
+                                        }
+                                        .padding(.trailing, 3)
+                                        Text(notificationsManager.notifications[index].content.body)
+                                            .font(.custom("test1", size: 15))
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .padding(.trailing, 7)
+                                }
+                                .padding(.vertical, 9)
+                                .padding(.horizontal, 13)
+                                .background(index < notificationsManager.notifications.endIndex - 1 ? Color(UIColor.systemGray5) : Color(UIColor.systemGray6))
+                                .cornerRadius(16)
+                                .scaleEffect(index < notificationsManager.notifications.endIndex - 1 ? 0.9 : 1.0)
+                                .offset(index < notificationsManager.notifications.endIndex - 1 ? CGSize(width: 0, height: 8) : CGSize(width: 0, height: 0))
+                            }
+                            
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 45)
+                        
+                }
+                
                 
                 Spacer()
                 

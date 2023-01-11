@@ -13,50 +13,56 @@ import UserNotifications
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
-    
+        
     func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       
-      // 1
-      FirebaseApp.configure()
-      // 2
-      FirebaseConfiguration.shared.setLoggerLevel(.min)
-      
-      Auth.auth().addStateDidChangeListener { (auth, user) in
+        // 1
+        FirebaseApp.configure()
+        // 2
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
+
+        Auth.auth().addStateDidChangeListener { (auth, user) in
           if user != nil {
               AuthViewModel.shared.state = .signedIn
           } else {
             AuthViewModel.shared.state = .signedOut
           }
-      }
+        }
+
+        UINavigationBar.appearance().backIndicatorImage = UIImage(systemName: "arrow.left")
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.left")
+        UINavigationBar.appearance().tintColor = .black
+        
+        let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithDefaultBackground()
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
       
-      UINavigationBar.appearance().backIndicatorImage = UIImage(systemName: "arrow.left")
-      UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.left")
-      UINavigationBar.appearance().tintColor = .black
-      
-      UNUserNotificationCenter.current().delegate = self
-      // 2
-      let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-      UNUserNotificationCenter.current().requestAuthorization(
+        UNUserNotificationCenter.current().delegate = self
+        // 2
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
         options: authOptions) { _, _ in }
-      // 3
-      application.registerForRemoteNotifications()
-      
-      Messaging.messaging().delegate = self
-      
-      return true
+        // 3
+        application.registerForRemoteNotifications()
+
+        Messaging.messaging().delegate = self
+
+        return true
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-      if let messageID = userInfo[gcmMessageIDKey] {
+        if let messageID = userInfo[gcmMessageIDKey] {
         print("Message ID: \(messageID)")
-      }
+        }
 
-      print(userInfo)
+        print(userInfo)
 
-      completionHandler(UIBackgroundFetchResult.newData)
+        completionHandler(UIBackgroundFetchResult.newData)
     }
 }
 
@@ -68,12 +74,8 @@ extension AppDelegate: MessagingDelegate {
     let tokenDict = ["token": fcmToken ?? ""]
       DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
           if AuthViewModel.shared.state == .signedIn && AuthViewModel.shared.lockerUser != nil {
-              print(AuthViewModel.shared.lockerUser)
-              print(tokenDict)
               if let lockerId = AuthViewModel.shared.lockerUser?.lockerId {
                   let db = Firestore.firestore()
-                  print(lockerId)
-                  print(tokenDict)
                   db.collection("mobile_tokens").document(lockerId).setData(tokenDict)
               }
           }

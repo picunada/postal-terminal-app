@@ -35,5 +35,13 @@ final class NotificationsManager: ObservableObject {
             }
         }
     }
+    
+    func deleteNotification(_ i: Int) {
+        self.notifications.remove(at: i)
+    }
+    
+    func deleteNotificationIS(_ i: IndexSet) {
+        self.notifications.remove(atOffsets: i)
+    }
 }
 

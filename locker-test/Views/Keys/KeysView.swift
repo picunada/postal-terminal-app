@@ -43,7 +43,7 @@ struct KeysView: View {
                             }
                         }
                         .frame(width: 55, height: 55)
-                        .background(Color(UIColor.systemIndigo))
+                        .background(Color("AccentColor"))
                         .clipShape(Circle())
                         
 
