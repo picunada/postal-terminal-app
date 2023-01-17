@@ -44,9 +44,10 @@ final class MainBluetoothViewModel: ObservableObject {
             return
         }
         manager.peripheralSubject
-            .sink { [weak self] in
-                self?.peripheral = $0
-                print($0)
+            .sink { [weak self] peripheral in
+                withAnimation(.default.delay(3)) {
+                    self?.peripheral = peripheral
+                }
             }
             .store(in: &cancellables)
         manager.scan(services: Constants.serviceUUIDs)

@@ -10,6 +10,7 @@ import Firebase
 import FirebaseMessaging
 import FirebaseFirestore
 import UserNotifications
+import Combine
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
@@ -23,8 +24,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseConfiguration.shared.setLoggerLevel(.min)
 
         Auth.auth().addStateDidChangeListener { (auth, user) in
-          if user != nil {
+          if let user = user {
               AuthViewModel.shared.state = .signedIn
+              AuthViewModel.shared.fetchUser(userId: user.uid)
           } else {
             AuthViewModel.shared.state = .signedOut
           }
@@ -67,24 +69,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 extension AppDelegate: MessagingDelegate {
-  func messaging(
-    _ messaging: Messaging,
-    didReceiveRegistrationToken fcmToken: String?
-  ) {
-    let tokenDict = ["token": fcmToken ?? ""]
-      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-          if AuthViewModel.shared.state == .signedIn && AuthViewModel.shared.lockerUser != nil {
-              if let lockerId = AuthViewModel.shared.lockerUser?.lockerId {
-                  let db = Firestore.firestore()
-                  db.collection("mobile_tokens").document(lockerId).setData(tokenDict)
-              }
+      func messaging(
+        _ messaging: Messaging,
+        didReceiveRegistrationToken fcmToken: String?
+      ) {
+      let tokenDict = ["token": fcmToken ?? ""]
+      
+          DispatchQueue.main.async {
+              AuthViewModel.shared.fcmToken = tokenDict
           }
+      
+        NotificationCenter.default.post(
+          name: Notification.Name("FCMToken"),
+          object: nil,
+          userInfo: tokenDict)
       }
-    NotificationCenter.default.post(
-      name: Notification.Name("FCMToken"),
-      object: nil,
-      userInfo: tokenDict)
-  }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

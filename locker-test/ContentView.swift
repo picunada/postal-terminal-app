@@ -8,6 +8,7 @@
 import SwiftUI
 import Inject
 import Combine
+import FirebaseFirestore
 
 struct ContentView: View {
     
@@ -31,6 +32,7 @@ struct ContentView: View {
                 .environmentObject(notificationsManager)
                 .tabItem {
                     Label("Home", systemImage: "house")
+                        .environment(\.symbolVariants, .none)
                 }
                 .tag(0)
             
@@ -38,6 +40,7 @@ struct ContentView: View {
                 ParcelsNotAvailableView()
                     .tabItem {
                         Label("Parcels", systemImage: "shippingbox")
+                            .environment(\.symbolVariants, .none)
                     }
                     .accentColor(.gray)
                     .tag(1)
@@ -45,12 +48,14 @@ struct ContentView: View {
                 KeysNotAvailableView()
                     .tabItem {
                         Label("Keys", systemImage: "lock.rotation")
+                            .environment(\.symbolVariants, .none)
                     }
                     .accentColor(.gray)
                     .tag(2)
                 NotificationsNotAvailableView()
                     .tabItem {
                         Label("Notifications", systemImage: "bell")
+                            .environment(\.symbolVariants, .none)
                     }
                     .accentColor(.gray)
                     .tag(3)
@@ -64,6 +69,7 @@ struct ContentView: View {
                     }
                     .tabItem {
                         Label("Parcels", systemImage: "shippingbox")
+                            .environment(\.symbolVariants, .none)
                     }
                     .tag(1)
                 
@@ -76,6 +82,7 @@ struct ContentView: View {
                     }
                     .tabItem {
                         Label("Keys", systemImage: "lock.rotation")
+                            .environment(\.symbolVariants, .none)
                     }
                     .tag(2)
                 NotificationsView()
@@ -83,6 +90,7 @@ struct ContentView: View {
                     .disabled(true)
                     .tabItem {
                         Label("Notifications", systemImage: "bell")
+                            .environment(\.symbolVariants, .none)
                     }
                     .tag(3)
             }
@@ -92,8 +100,32 @@ struct ContentView: View {
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person")
+                        .environment(\.symbolVariants, .none)
                 }
                 .tag(4)
+        }
+        .onAppear {
+            authState.$lockerUser
+                .compactMap { $0 }
+                .sink { user in
+                    print("=================================================")
+                    print("received")
+                    print(user)
+                    guard let tokenDict = authState.fcmToken else {
+                        print("net tokena")
+                        return
+                    }
+                    if let lockerId = user.lockerId {
+                        guard !lockerId.isEmpty else {
+                            print("Not send. LockerId: \(lockerId)")
+                            return
+                        }
+                        let db = Firestore.firestore()
+                        db.collection("mobile_tokens").document(lockerId).setData(tokenDict)
+                        print("Send to lockerID: \(lockerId)")
+                    }
+                }
+                .store(in: &cancellables)
         }
     }
 }

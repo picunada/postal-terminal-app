@@ -47,7 +47,11 @@ final class MainViewModel: ObservableObject {
         }
         manager.peripheralSubject
             .first()
-            .sink { [weak self] in self?.peripheral = $0 }
+            .sink {[weak self] peripheral in
+                withAnimation(.default.delay(1)) {
+                    self?.peripheral = peripheral
+                }
+            }
             .store(in: &cancellables)
         manager.scan(services: Constants.serviceUUIDs)
     }

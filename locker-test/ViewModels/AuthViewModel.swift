@@ -98,6 +98,8 @@ class AuthViewModel: ObservableObject {
     @Published var user: User?
     @Published var error: Swift.Error?
     
+    @Published var fcmToken: Dictionary<String, String>?
+    
     @Published var state: SignInState = .signedOut {
         didSet {
             if state != .signedOut {
