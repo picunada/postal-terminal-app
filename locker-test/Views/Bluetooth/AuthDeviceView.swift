@@ -155,7 +155,7 @@ struct AuthDeviceView: View {
                     .padding(.top, 60)
                 
             } else if let peripheral = mvm.peripheral {
-//                DeviceWifiView(peripheral: peripheral, vm: mvm)
+                DeviceWifiView(peripheral: peripheral, vm: mvm)
             } else {
                 VStack {
                     
