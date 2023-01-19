@@ -263,6 +263,7 @@ struct ParcelDetailEditView: View {
                             }
                             .listRowInsets(EdgeInsets())
                         }
+                        .scrollDisabled(true)
                         .frame(height: 150)
                         .scrollContentBackground(.hidden)
                         .listStyle(.inset)
@@ -299,6 +300,7 @@ struct ParcelDetailEditView: View {
                         }
                         .onAppear {
                             UITableView.appearance().backgroundColor = .clear
+                            UITableView.appearance().isScrollEnabled = false
                         }
                         .frame(height: 150)
                         .listStyle(.inset)

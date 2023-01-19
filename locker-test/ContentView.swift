@@ -8,6 +8,7 @@
 import SwiftUI
 import Inject
 import Combine
+import FirebaseFirestore
 
 struct ContentView: View {
     
@@ -16,6 +17,7 @@ struct ContentView: View {
     
     @StateObject var parcelState: ParcelViewModel = ParcelViewModel()
     @StateObject var keysState: KeysViewModel = KeysViewModel()
+    @StateObject var notificationsManager: NotificationsManager = NotificationsManager()
     
     @State private var cancellables: Set<AnyCancellable> = .init()
     
@@ -24,88 +26,107 @@ struct ContentView: View {
     @State var selection: Int = 0
     
     var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-//                Capsule()
-//                    .frame(width: 30, height: 5)
-//                    .foregroundColor(Color("AccentColor"))
-//                    .padding(.top, geo.size.height / 5 * 4 + 5)
-//                    .padding(.leading, (geo.size.width / 5) * CGFloat(selection) + 24)
-//                    .zIndex(10)
-//                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: selection)
-                
-                TabView(selection: $selection) {
-                    HomeView()
-                        .environmentObject(keysState)
-                        .tabItem {
-                            Label("Home", systemImage: "house")
-                        }
-                        .tag(0)
-                    
-                    if  (authState.lockerUser?.lockerId ?? "").isEmpty {
-                        ParcelsNotAvailableView()
-                            .tabItem {
-                                Label("Parcels", systemImage: "shippingbox")
-                            }
-                            .accentColor(.gray)
-                            .tag(1)
-                        
-                        KeysNotAvailableView()
-                            .tabItem {
-                                Label("Keys", systemImage: "lock.rotation")
-                            }
-                            .accentColor(.gray)
-                            .tag(2)
-                        NotificationsNotAvailableView()
-                            .tabItem {
-                                Label("Notifications", systemImage: "bell")
-                            }
-                            .accentColor(.gray)
-                            .tag(3)
-                    } else {
-                        ParcelsView(parcelState: parcelState)
-                            .onAppear {
-                                parcelState.subscribe(user: authState.lockerUser!)
-                            }
-                            .onDisappear {
-                                parcelState.unsubscribe()
-                            }
-                            .tabItem {
-                                Label("Parcels", systemImage: "shippingbox")
-                            }
-                            .tag(1)
-                        
-                        KeysView(keyState: keysState)
-                            .onAppear {
-                                keysState.subscribe(user: authState.lockerUser!)
-                            }
-                            .onDisappear {
-                                keysState.unsubscribe()
-                            }
-                            .tabItem {
-                                Label("Keys", systemImage: "lock.rotation")
-                            }
-                            .tag(2)
-                        NotificationsView()
-                            .disabled(true)
-                            .tabItem {
-                                Label("Notifications", systemImage: "bell")
-                            }
-                            .tag(3)
-                    }
-                   
-                        
-                    
-                    ProfileView()
-                        .tabItem {
-                            Label("Profile", systemImage: "person")
-                        }
-                        .tag(4)
+        TabView(selection: $selection) {
+            HomeView()
+                .environmentObject(keysState)
+                .environmentObject(notificationsManager)
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                        .environment(\.symbolVariants, .none)
                 }
+                .tag(0)
+            
+            if  (authState.lockerUser?.lockerId ?? "").isEmpty {
+                ParcelsNotAvailableView()
+                    .tabItem {
+                        Label("Parcels", systemImage: "shippingbox")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .accentColor(.gray)
+                    .tag(1)
+                
+                KeysNotAvailableView()
+                    .tabItem {
+                        Label("Keys", systemImage: "lock.rotation")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .accentColor(.gray)
+                    .tag(2)
+                NotificationsNotAvailableView()
+                    .tabItem {
+                        Label("Notifications", systemImage: "bell")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .accentColor(.gray)
+                    .tag(3)
+            } else {
+                ParcelsView(parcelState: parcelState)
+                    .onAppear {
+                        parcelState.subscribe(user: authState.lockerUser!)
+                    }
+                    .onDisappear {
+                        parcelState.unsubscribe()
+                    }
+                    .tabItem {
+                        Label("Parcels", systemImage: "shippingbox")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .tag(1)
+                
+                KeysView(keyState: keysState)
+                    .onAppear {
+                        keysState.subscribe(user: authState.lockerUser!)
+                    }
+                    .onDisappear {
+                        keysState.unsubscribe()
+                    }
+                    .tabItem {
+                        Label("Keys", systemImage: "lock.rotation")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .tag(2)
+                NotificationsView()
+                    .environmentObject(notificationsManager)
+                    .disabled(true)
+                    .tabItem {
+                        Label("Notifications", systemImage: "bell")
+                            .environment(\.symbolVariants, .none)
+                    }
+                    .tag(3)
             }
-            .enableInjection()
+           
+                
+            
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                        .environment(\.symbolVariants, .none)
+                }
+                .tag(4)
         }
-        .ignoresSafeArea()
+        .onAppear {
+            authState.$lockerUser
+                .compactMap { $0 }
+                .sink { user in
+                    print("=================================================")
+                    print("received")
+                    print(user)
+                    guard let tokenDict = authState.fcmToken else {
+                        print("net tokena")
+                        return
+                    }
+                    if let lockerId = user.lockerId {
+                        guard !lockerId.isEmpty else {
+                            print("Not send. LockerId: \(lockerId)")
+                            return
+                        }
+                        let db = Firestore.firestore()
+                        db.collection("mobile_tokens").document(lockerId).setData(tokenDict)
+                        print("Send to lockerID: \(lockerId)")
+                    }
+                }
+                .store(in: &cancellables)
+        }
     }
 }
 

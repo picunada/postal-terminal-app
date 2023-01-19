@@ -27,6 +27,7 @@ struct AuthDeviceView: View {
                     VStack(alignment: .center, spacing: 0) {
                         content()
                             .padding(.all, 0)
+                            .padding(.top, 55)
                     }
                 }
                 .padding(.horizontal)
@@ -40,9 +41,8 @@ struct AuthDeviceView: View {
     
     @ViewBuilder
     private func content() -> some View {
-        VStack(spacing: 45) {
-            HStack {
-                VStack(spacing: 10) {
+        HStack(spacing: 0) {
+            VStack {
                     if mvm.peripheral != nil {
                         VStack {
                             Image(systemName: "checkmark")
@@ -50,7 +50,7 @@ struct AuthDeviceView: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.white)
                         }
-                        .frame(width: 55, height: 55)
+                        .frame(width: 53, height: 53)
                         .background(Color(.systemGreen))
                         .clipShape(Circle())
                         
@@ -67,7 +67,7 @@ struct AuthDeviceView: View {
                                 .font(.caption)
                                 .foregroundColor(.white)
                         }
-                        .frame(width: 55, height: 55)
+                        .frame(width: 53, height: 53)
                         .background(Color("AccentColor"))
                         .clipShape(Circle())
                         
@@ -81,13 +81,12 @@ struct AuthDeviceView: View {
                     }
                 }
                 .frame(width: 139)
-                .animation(.default, value: mvm.peripheral != nil)
                 
                 Spacer()
                 
                 Path { path in
-                    path.move(to: CGPoint(x: -66, y: 27.5))
-                    path.addLine(to: CGPoint(x: 66, y: 27.5))
+                    path.move(to: CGPoint(x: -66, y: 5))
+                    path.addLine(to: CGPoint(x: 66, y: 5))
                 }
                 .stroke((mvm.peripheral != nil) ? Color(.systemGreen) : .gray , lineWidth: 1)
                 .frame(width: 1)
@@ -103,7 +102,7 @@ struct AuthDeviceView: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.white)
                         }
-                        .frame(width: 55, height: 55)
+                        .frame(width: 53, height: 53)
                         .background(Color(.systemGreen))
                         .clipShape(Circle())
                         
@@ -121,7 +120,7 @@ struct AuthDeviceView: View {
                                 .font(.caption)
                                 .foregroundColor(.white)
                         }
-                        .frame(width: 55, height: 55)
+                        .frame(width: 53, height: 53)
                         .background((mvm.peripheral != nil) ?  Color("AccentColor") : Color(.systemGray))
                         .clipShape(Circle())
                         
@@ -140,7 +139,9 @@ struct AuthDeviceView: View {
                 }
                 .frame(width: 139)
             }
+            .padding(.bottom, 45)
             .frame(height: 105)
+            
             
             if mvm.connectionState == .connected {
                 
@@ -176,11 +177,11 @@ struct AuthDeviceView: View {
                             .frame(width: 215, height: 242)
                         }
                 }
-                .animation(.default, value: mvm.peripheral != nil)
+                
             }
         }
     }
-}
+
 
 
 struct DeviceWifiView: View {

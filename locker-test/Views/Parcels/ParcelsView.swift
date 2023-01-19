@@ -47,7 +47,7 @@ struct ParcelsView: View {
                             }
                         }
                         .frame(width: 55, height: 55)
-                        .background(Color(UIColor.systemIndigo))
+                        .background(Color("AccentColor"))
                         .clipShape(Circle())
                         
                     }
@@ -108,6 +108,7 @@ struct ParcelsView: View {
                             }
                             .listRowInsets(EdgeInsets())
                         }
+                        .scrollDisabled(true)
                         .frame(height: 150)
                         .scrollContentBackground(.hidden)
                         .listStyle(.inset)
@@ -142,10 +143,12 @@ struct ParcelsView: View {
                         .frame(height: 150)
                         .onAppear {
                             UITableView.appearance().backgroundColor = .clear
+                            UITableView.appearance().isScrollEnabled = false
                         }
                         .listStyle(.inset)
                         .padding(.top, -20)
                         .background(Color(UIColor.white))
+                        
                     }
                     
                     Spacer()
@@ -392,6 +395,7 @@ struct ParcelItem: View {
                 }
                 .padding(.leading)
             }
+            .animation(.default, value: image)
         }
         .listRowInsets(EdgeInsets())
         .padding()
